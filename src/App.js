@@ -1,5 +1,6 @@
 import './App.css';
 import Login from './Components/login'
+import SignUp from './Components/SignUp'
 import { loginClasses } from "./Styles/madeStyles";
 
 function App() {

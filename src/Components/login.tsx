@@ -20,24 +20,20 @@ class Login extends React.Component<LoginProps, {}> {
     constructor(props: LoginProps) {
         super(props);
         makeObservable(this);
-        this.login = this.login.bind(this);
-        this.signup = this.signup.bind(this)
-
         this.LoginInfo = {
             username: "",
             password: "",
-        }
+        };
     }
 
 
-    login() {
+    private onClickLogin = () => {
         console.log(`login with: username: ${this.LoginInfo.username}, passward: ${this.LoginInfo.password}`);
     }
 
-    signup() {
+    private onClickSignUp = () => {
         console.log(`login with: username: ${this.LoginInfo.username}, passward: ${this.LoginInfo.password}`);
     }
-
 
     render() {
         return (
@@ -54,8 +50,8 @@ class Login extends React.Component<LoginProps, {}> {
                                 <TextField id="pass" label="password" 
                                            variant="outlined" onChange={(data) => { this.LoginInfo.password = data.target.value } }/>
                                 <br/>
-                                <Button type="submit" onClick={this.login}>Log in</Button>
-                                <Button type="submit" onClick={this.signup}>Sign up</Button>
+                                <Button type="submit" onClick={ this.onClickLogin }>Log in</Button>
+                                <Button type="submit" onClick={ this.onClickSignUp }>Sign up</Button>
                             </form>
                         </Paper>
                     </Grid>
