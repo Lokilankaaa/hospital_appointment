@@ -1,6 +1,6 @@
 import './App.css';
-import Login from './login'
-import {loginClasses} from "./madeStyles";
+import Login from './Components/login'
+import { loginClasses } from "./Styles/madeStyles";
 
 function App() {
   return (
