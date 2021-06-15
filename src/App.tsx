@@ -1,6 +1,7 @@
 import './App.css';
 import Login from './Components/login'
 import SignUp from './Components/SignUp'
+import UserFrontPage from './Components/UserFrontPage'
 import { loginClasses } from "./Styles/madeStyles";
 import { Route, RouteComponentProps, Switch, withRouter,Router } from 'react-router-dom';
 import { getLoginRoute, getSignUpRoute } from "./Helpers/Routers";
@@ -14,7 +15,7 @@ function App() {
       <Switch>
         // add your compoment and URl in here
             <Route exact path={getLoginRoute()} component={fnLogin} />
-            <Route exact path={"/"} component={fnLogin} />
+            <Route exact path={"/"} component={fnUserFrontPage} />
             <Route exact path={getSignUpRoute()} component={fnSignUp} />
       </Switch>
       </Router >
@@ -31,6 +32,12 @@ function fnLogin() {
 function fnSignUp() {
   return  (
     <SignUp classes={loginClasses()} ></SignUp>
+  )
+}
+
+function fnUserFrontPage() {
+  return  (
+    <UserFrontPage classes={loginClasses()} ></UserFrontPage>
   )
 }
 
