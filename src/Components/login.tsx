@@ -7,6 +7,9 @@ import hosLogo from '../Assets/hoslogo.svg'
 import { Lambda, observable, reaction, makeObservable } from "mobx";
 import { inject, observer } from "mobx-react";
 import { LoginProps } from '../Models/Login';
+import { getLoginRoute, getSignUpRoute } from "../Helpers/Routers";
+import { Link } from "react-router-dom";
+import history from '../Helpers/History';
 
 interface LoginFrom {
     username: string;
@@ -32,7 +35,8 @@ class Login extends React.Component<LoginProps, {}> {
     }
 
     private onClickSignUp = () => {
-        console.log(`login with: username: ${this.LoginInfo.username}, passward: ${this.LoginInfo.password}`);
+        console.log(`Sign Up with: username: ${this.LoginInfo.username}, passward: ${this.LoginInfo.password}`);
+        history.push(getSignUpRoute())
     }
 
     render() {
@@ -52,6 +56,7 @@ class Login extends React.Component<LoginProps, {}> {
                                 <br/>
                                 <Button type="submit" onClick={ this.onClickLogin }>Log in</Button>
                                 <Button type="submit" onClick={ this.onClickSignUp }>Sign up</Button>
+
                             </form>
                         </Paper>
                     </Grid>

@@ -2,21 +2,22 @@ import './App.css';
 import Login from './Components/login'
 import SignUp from './Components/SignUp'
 import { loginClasses } from "./Styles/madeStyles";
-import { Route, RouteComponentProps, Switch, withRouter, BrowserRouter } from 'react-router-dom';
+import { Route, RouteComponentProps, Switch, withRouter,Router } from 'react-router-dom';
 import { getLoginRoute, getSignUpRoute } from "./Helpers/Routers";
 import { Provider, observer } from "mobx-react";
+import history from './Helpers/History';
 
-
+// page navigation https://rookiecoder.medium.com/react-button-click-navigate-to-new-page-6af7397ea220
 function App() {
   return (
-    <BrowserRouter >
+    <Router history={history}>
       <Switch>
         // add your compoment and URl in here
             <Route exact path={getLoginRoute()} component={fnLogin} />
             <Route exact path={"/"} component={fnLogin} />
             <Route exact path={getSignUpRoute()} component={fnSignUp} />
       </Switch>
-      </BrowserRouter >
+      </Router >
   );
 }
 
