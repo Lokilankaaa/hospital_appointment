@@ -51,7 +51,7 @@ class Login extends React.Component<LoginProps, {}> {
                                 <TextField id="username" label="username" 
                                            variant="outlined" onChange={(data) => { this.LoginInfo.username = data.target.value } }/>
                                 <br/>
-                                <TextField id="pass" label="password" 
+                                <TextField id="pass" label="password" type="password"
                                            variant="outlined" onChange={(data) => { this.LoginInfo.password = data.target.value } }/>
                                 <br/>
                                 <Button type="submit" onClick={ this.onClickLogin }>Log in</Button>

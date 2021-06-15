@@ -51,10 +51,10 @@ class SignUp extends React.Component<SignUpProps, {}> {
                                 <TextField id="pass" label="User Name" 
                                            variant="outlined" onChange={(data) => { this.SignUpInfo.UserName = data.target.value } }/>
                                 <br/>
-                                <TextField id="pass" label="Password" 
+                                <TextField id="pass" label="Password" type="password"
                                            variant="outlined" onChange={(data) => { this.SignUpInfo.Passward = data.target.value } }/>
                                 <br/>
-                                <TextField id="pass" label="ReConfirme Password" 
+                                <TextField id="pass" label="ReConfirme Password" type="password"
                                            variant="outlined" onChange={(data) => { this.SignUpInfo.PasswardConfirm = data.target.value } }/>
                                 <br/>
                                 <Button type="submit" disabled={ !this.InfoValid() } onClick={ this.onClickSignUp }>Sign up</Button>
