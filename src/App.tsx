@@ -6,11 +6,12 @@ import { Route, RouteComponentProps, Switch, withRouter, BrowserRouter } from 'r
 import { getLoginRoute, getSignUpRoute } from "./Helpers/Routers";
 import { Provider, observer } from "mobx-react";
 
-// todo: this is not working???
+
 function App() {
   return (
     <BrowserRouter >
       <Switch>
+        // add your compoment and URl in here
             <Route exact path={getLoginRoute()} component={fnLogin} />
             <Route exact path={"/"} component={fnLogin} />
             <Route exact path={getSignUpRoute()} component={fnSignUp} />
@@ -18,6 +19,8 @@ function App() {
       </BrowserRouter >
   );
 }
+
+// warp to pass argument
 function fnLogin() {
   return  (
     <Login classes={loginClasses()} identity={"Admin"} ></Login>
