@@ -6,28 +6,23 @@ import TextField from '@material-ui/core/TextField';
 import hosLogo from '../Assets/hoslogo.svg'
 import { Lambda, observable, reaction, makeObservable } from "mobx";
 import { inject, observer } from "mobx-react";
-import { LoginProps } from '../Models/Login';
+import { SignUpProps } from '../Models/Login';
 
 interface SignUpFrom {
-    PhoneNumber: string;
-    UserName: string;
-    Passward: string;
-    PasswardConfirm: string; 
+    PhoneNumber?: string;
+    UserName?: string;
+    Passward?: string;
+    PasswardConfirm?: string; 
 }
 
 @observer
-class SignUp extends React.Component<LoginProps, {}> {
+class SignUp extends React.Component<SignUpProps, {}> {
 
     @observable private SignUpInfo: SignUpFrom;
-    constructor(props: LoginProps) {
+    constructor(props: SignUpProps) {
         super(props);
         makeObservable(this);
-        this.SignUpInfo = {
-            PhoneNumber: "",
-            UserName: "",
-            Passward: "",
-            PasswardConfirm: "",
-        }
+        this.SignUpInfo = {}
     }
 
     private onClickSignUp = () => {
@@ -49,7 +44,6 @@ class SignUp extends React.Component<LoginProps, {}> {
                     <Grid item xs={12}>
                         <Paper className={this.props.classes.paper} elevation={3} >
                             <img src={hosLogo} className="hos-logo" alt="logo" />
-                            <p>Hello, {this.props.identity}!</p>
                             <form className={this.props.classes.loginForm} onSubmit={(e) => e.preventDefault()}>
                                 <TextField id="username" label="Phone Number" 
                                            variant="outlined" onChange={(data) => { this.SignUpInfo.PhoneNumber = data.target.value } }/>

@@ -3,4 +3,9 @@ interface LoginProps {
     classes: ClassNameMap;
     identity: string;
 }
-export type { LoginProps }
+
+interface SignUpProps {
+    classes: ClassNameMap;
+}
+
+export type { LoginProps, SignUpProps }
