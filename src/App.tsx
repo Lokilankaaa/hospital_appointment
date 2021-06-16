@@ -2,7 +2,7 @@ import './App.css';
 import Login from './Components/login'
 import SignUp from './Components/SignUp'
 import UserFrontPage from './Components/UserFrontPage'
-import { loginClasses } from "./Styles/madeStyles";
+import { loginClasses, FrontStyles } from "./Styles/madeStyles";
 import { Route, RouteComponentProps, Switch, withRouter,Router } from 'react-router-dom';
 import { getLoginRoute, getSignUpRoute } from "./Helpers/Routers";
 import { Provider, observer } from "mobx-react";
@@ -37,7 +37,7 @@ function fnSignUp() {
 
 function fnUserFrontPage() {
   return  (
-    <UserFrontPage classes={loginClasses()} ></UserFrontPage>
+    <UserFrontPage classes={FrontStyles()} ></UserFrontPage>
   )
 }
 
