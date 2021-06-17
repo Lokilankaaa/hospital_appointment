@@ -9,77 +9,86 @@ export const loginClasses = makeStyles((theme) => ({
         flexGrow: 1,
     },
     loginForm: {
-        '& > *': {
+      '& .MuiTextField-root': {
             margin: theme.spacing(1),
-            width: '25ch',
+            height: '5ch',
+            width: "100%",
         },
+    },
+    loginButton: {
+      backgroundColor: "#28A745", 
+      color: "white", 
+      width: "100%",
+      marginTop: "2%"
+    },
+    GetValidationButton: {
+      backgroundColor: "#28A745", 
+      color: "white", 
+      marginTop:"2%"
     },
     paper: {
-        padding: theme.spacing(2),
+        padding: theme.spacing(0),
         textAlign: 'center',
         color: theme.palette.text.secondary,
+        width: "100%",
+        height: '80%',
     },
-    appBar: {
-        borderBottom: `1px solid ${theme.palette.divider}`,
-      },
-      toolbar: {
-        flexWrap: 'wrap',
-      },
-      toolbarTitle: {
-        flexGrow: 1,
-      },
-      link: {
-        margin: theme.spacing(1, 1.5),
-      },
-      heroContent: {
-        padding: theme.spacing(8, 0, 6),
-      },
-      cardHeader: {
-        backgroundColor:
-          theme.palette.type === 'light' ? theme.palette.grey[200] : theme.palette.grey[700],
-      },
-      cardPricing: {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'baseline',
-        marginBottom: theme.spacing(2),
-      },
-      footer: {
-        borderTop: `1px solid ${theme.palette.divider}`,
-        marginTop: theme.spacing(8),
-        paddingTop: theme.spacing(3),
-        paddingBottom: theme.spacing(3),
-        [theme.breakpoints.up('sm')]: {
-          paddingTop: theme.spacing(6),
-          paddingBottom: theme.spacing(6),
-        },
-      },
 }));
 
 
 export const FrontStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    minWidth: 100,
+    height: "100%",
+    width: "100%",
+    alignItems: 'center',
+
+    backgroundColor: 'transparent', //transparent #0BDAA4
+  },
+
+  footTextBox: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    minWidth: 100,
+    height: "100%",
+    width: "80%",
+    alignItems: 'center',
+    marginTop: theme.spacing(2),
+    marginLeft: "14%",
+    marginRight: "14%",
+  },
+
+  footText: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    minWidth: 100,
+    height: "100%",
+    alignItems: 'center',
+  },
+
   backgroundImg: {
     display: 'flex',
     flexWrap: 'wrap',
     minWidth: 100,
-    height: 800,
-    width: "80%",
+    height: "100%",
+    width: "100%",
     alignItems: 'center',
-    marginTop: theme.spacing(20),
-    marginLeft: theme.spacing(20),
-    marginRight: theme.spacing(20),
-    backgroundColor: '#F8F8F8'
-
+    marginTop: theme.spacing(2),
+    marginBottom: "1%",
+    marginLeft: "10%",
+    marginRight: "10%",
   },
 
-  root: {
+  tabsRoot: {
     display: 'flex',
     flexWrap: 'wrap',
     height: "80%",
     width: "100%",
     alignItems: 'center',
     backgroundColor: 'transparent', //transparent #0BDAA4
-    marginTop: "1%",
+    marginTop: "0%",
     marginBottom: "5%",
     marginLeft: "5%",
     marginRight: "5%",
@@ -87,24 +96,22 @@ export const FrontStyles = makeStyles((theme) => ({
 
   FrontText: {
     display: 'flex',
-    flexWrap: 'wrap',
     backgroundColor: 'transparent', //transparent #0BDA05
-    width: "10%",
-    marginTop: "0%",
+    width: 120,
   },
 
-  image: {
+  ButonBase: {
     position: 'relative',
-    height: 400,
+    height: 600,
     width: '23%',
-    marginTop: "2%",
     marginRight: "1%",
     marginLeft: "1%",
+    backgroundColor: theme.palette.common.white, //transparent #0BDAA4
 
     '&:hover, &$focusVisible': {
       zIndex: 1,
       '& $imageBackdrop': {
-        opacity: 0.05,
+        opacity: 0.00,
       },
       '& $imageTitle': {
         border: '4px solid transparent',
@@ -122,16 +129,11 @@ export const FrontStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
     color: '#0BDAA4',
+    opacity: 0.9,
     // marginTop: theme.spacing(10),
   },
   imageSrc: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    backgroundSize: 'auto',
-    backgroundPosition: 'center 50%',
+    width: '100%',
   },
   imageBackdrop: {
     position: 'absolute',
