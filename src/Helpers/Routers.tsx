@@ -13,3 +13,8 @@ export function getDocDetail() {
 export function getLookup() {
     return '/lookup';
 }
+
+export function getUserInfoRoute() {
+    return `/user`;
+
+}
