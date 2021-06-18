@@ -30,25 +30,25 @@ class UserFrontPage extends React.Component<SignUpProps, {}> {
     images = [
       {
         url: Register,
-        title: 'Appointment',
+        title: '挂号预约',
         width: '23%',
         Onclick: () => { console.log(`Click Appointment}`); }
       },
       {
         url: login,
-        title: 'Login',
+        title: '登录',
         width: '23%',
         Onclick: () => { history.push(getLoginRoute()) }
       },
       {
         url: lookup,
-        title: 'LookUp',
+        title: '查询',
         width: '23%',
         Onclick: () => { console.log(`Click LookUp}`); }
       },
       {
         url: more,
-        title: 'More',
+        title: '更多',
         width: '23%',
         Onclick: () => { console.log(`Click More}`); }
       },
@@ -67,7 +67,7 @@ class UserFrontPage extends React.Component<SignUpProps, {}> {
                     variant="h6"
                     color="inherit"
                     className={this.props.classes.FrontText}>
-                  { "Front Page" }
+                  { "首页" }
                 </Typography>
               </Box>
                 
@@ -77,14 +77,14 @@ class UserFrontPage extends React.Component<SignUpProps, {}> {
                     variant="subtitle1"
                     color="inherit"
                     className={this.props.classes.FrontText}  >
-                  { "Welcome, XXX!" }
+                  { "欢迎, XXX!" }
                 </Typography>
               </Box>
 
               <Box p={1} flexShrink={0}>
                 <Button className={this.props.classes.FrontText}
                     style={{backgroundColor: "#F67665", color: "white", width: 80, height: "100%"}}  >
-                            { "QUIt" }
+                            { "退出" }
                 </Button>
               </Box>
             </Box >
@@ -95,7 +95,7 @@ class UserFrontPage extends React.Component<SignUpProps, {}> {
                       <ButtonBase
                         focusRipple
                         key={image.title}
-                        className={this.props.classes.image}
+                        className={this.props.classes.ButonBase}
                         focusVisibleClassName={this.props.classes.focusVisible}
                         onClick={ image.Onclick }
                       >
@@ -112,7 +112,7 @@ class UserFrontPage extends React.Component<SignUpProps, {}> {
                             </Typography>
                           </span>
                         <div className="container">
-                          <img src={image.url} alt="fireSpot"/>
+                          <img className={this.props.classes.imageSrc} src={image.url} alt="fireSpot"/>
                         </div>
                       </ButtonBase>
               ))}
@@ -124,7 +124,6 @@ class UserFrontPage extends React.Component<SignUpProps, {}> {
       );
     }
 
-    //             <span  className={this.props.classes.backgroundImg} style={{ backgroundImage: `url(${this.baseImage.url})` }}> </span>
     render() {
       let date = moment().format('YYYY-MM-DD hh:mm:ss dddd');
 
@@ -141,7 +140,7 @@ class UserFrontPage extends React.Component<SignUpProps, {}> {
                             color='inherit'
                             className={this.props.classes.footText} 
                             style={{color:"#0BDAA4"}} >
-                          { "XXX University XX hospital" }
+                          { "XXX 大学 XX 医院" }
                         </Typography>
                   </Box>
                   <Box p={0} flexShrink={0}>

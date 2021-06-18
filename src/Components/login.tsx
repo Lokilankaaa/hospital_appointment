@@ -3,13 +3,14 @@ import Button from "@material-ui/core/Button";
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-import hosLogo from '../Assets/hoslogo.svg'
+import loginBg from '../Assets/loginBg.png'
 import { Lambda, observable, reaction, makeObservable } from "mobx";
 import { inject, observer } from "mobx-react";
 import { LoginProps } from '../Models/Login';
 import { getLoginRoute, getSignUpRoute } from "../Helpers/Routers";
 import { Link } from "react-router-dom";
 import history from '../Helpers/History';
+import Typography from '@material-ui/core/Typography';
 
 interface LoginFrom {
     username: string;
@@ -42,25 +43,40 @@ class Login extends React.Component<LoginProps, {}> {
     render() {
         return (
             <div className={this.props.classes.root}>
-                <Grid container spacing={3}>
-                    <Grid item xs={12}>
-                        <Paper className={this.props.classes.paper} elevation={3} >
-                            <img src={hosLogo} className="hos-logo" alt="logo" />
-                            <p>Hello, {this.props.identity}!</p>
-                            <form className={this.props.classes.loginForm} onSubmit={(e) => e.preventDefault()}>
-                                <TextField id="username" label="username" 
-                                           variant="outlined" onChange={(data) => { this.LoginInfo.username = data.target.value } }/>
-                                <br/>
-                                <TextField id="pass" label="password" type="password"
-                                           variant="outlined" onChange={(data) => { this.LoginInfo.password = data.target.value } }/>
-                                <br/>
-                                <Button type="submit" onClick={ this.onClickLogin }>Log in</Button>
-                                <Button type="submit" onClick={ this.onClickSignUp }>Sign up</Button>
-
-                            </form>
-                        </Paper>
+                <Paper className={this.props.classes.paper} elevation={3} >
+                    <Grid container spacing={0}>
+                            <img src={loginBg} className="hos-logo" alt="logo" style={{width:"50%"}}/>
+                        <Grid item style={{marginLeft:"5%", width:"45%"}}>
+                            <Grid item style={{marginTop:"5%", width:"80%"}}>
+                                <Typography
+                                    component="span"
+                                    variant="h4"
+                                    color="inherit"
+                                    className={this.props.classes.FrontText}>
+                                您好, {this.props.identity}!
+                                </Typography>
+                            </Grid>
+                            <Grid item style={{marginTop:"5%", marginRight:"15%", width:"80%"}}>
+                                <form className={this.props.classes.loginForm} onSubmit={(e) => e.preventDefault()}>
+                                    <Grid item>
+                                        <TextField fullWidth id="username" label="用户名" defaultValue="用户名" style={{marginTop:20}}
+                                                    onChange={(data) => { this.LoginInfo.username = data.target.value } }/>
+                                    </Grid>
+                                    <Grid item>
+                                        <TextField fullWidth id="pass" label="密码" type="password" defaultValue="密码" style={{marginTop:20}}
+                                                onChange={(data) => { this.LoginInfo.password = data.target.value } }/>
+                                    </Grid>
+                                    <Grid item>
+                                            <Button type="submit" className={this.props.classes.loginButton} onClick={ this.onClickLogin }>登录</Button>
+                                    </Grid>
+                                    <Grid item>
+                                        <Button type="submit" className={this.props.classes.loginButton} onClick={ this.onClickSignUp }>注册</Button>
+                                    </Grid>
+                                </form>
+                            </Grid>
+                        </Grid>
                     </Grid>
-                </Grid>
+                </Paper>
             </div>
         )
     }

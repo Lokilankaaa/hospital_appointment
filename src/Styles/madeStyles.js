@@ -9,15 +9,29 @@ export const loginClasses = makeStyles((theme) => ({
         flexGrow: 1,
     },
     loginForm: {
-        '& > *': {
+      '& .MuiTextField-root': {
             margin: theme.spacing(1),
-            width: '25ch',
+            height: '5ch',
+            width: "100%",
         },
     },
+    loginButton: {
+      backgroundColor: "#28A745", 
+      color: "white", 
+      width: "100%",
+      marginTop: "2%"
+    },
+    GetValidationButton: {
+      backgroundColor: "#28A745", 
+      color: "white", 
+      marginTop:"2%"
+    },
     paper: {
-        padding: theme.spacing(2),
+        padding: theme.spacing(0),
         textAlign: 'center',
         color: theme.palette.text.secondary,
+        width: "100%",
+        height: '80%',
     },
 }));
 
@@ -59,7 +73,7 @@ export const FrontStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
     minWidth: 100,
     height: "100%",
-    width: "80%",
+    width: "100%",
     alignItems: 'center',
     marginTop: theme.spacing(2),
     marginBottom: "1%",
@@ -86,7 +100,7 @@ export const FrontStyles = makeStyles((theme) => ({
     width: 120,
   },
 
-  image: {
+  ButonBase: {
     position: 'relative',
     height: 600,
     width: '23%',
@@ -119,13 +133,7 @@ export const FrontStyles = makeStyles((theme) => ({
     // marginTop: theme.spacing(10),
   },
   imageSrc: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    backgroundSize: 'auto',
-    backgroundPosition: 'center 50%',
+    width: '100%',
   },
   imageBackdrop: {
     position: 'absolute',
