@@ -5,3 +5,7 @@ export function getLoginRoute() {
 export function getSignUpRoute() {
     return `/signup`;
 }
+
+export function getDocDetail() {
+    return '/docs'
+}
