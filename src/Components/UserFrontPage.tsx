@@ -19,7 +19,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import history from '../Helpers/History';
-import { getLoginRoute, getSignUpRoute } from "../Helpers/Routers";
+import { getLoginRoute, getSignUpRoute, getDocDetail } from "../Helpers/Routers";
 import moment from "moment";
 class UserFrontPage extends React.Component<SignUpProps, {}> {
 
@@ -44,7 +44,7 @@ class UserFrontPage extends React.Component<SignUpProps, {}> {
         url: lookup,
         title: '查询',
         width: '23%',
-        Onclick: () => { console.log(`Click LookUp}`); }
+        Onclick: () => { history.push(getDocDetail()); }
       },
       {
         url: more,
