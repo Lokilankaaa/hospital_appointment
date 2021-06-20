@@ -1,5 +1,5 @@
 import {makeStyles} from "@material-ui/core/styles";
-import { red } from '@material-ui/core/colors';
+import {red} from '@material-ui/core/colors';
 
 export const cardClasses = makeStyles({
     root: {
@@ -9,18 +9,21 @@ export const cardClasses = makeStyles({
     title: {
         fontSize: 14,
     },
-    pos: {
-
-    },
+    pos: {},
 });
 
 export const detailPageClasses = makeStyles({
     root: {
         margin: "3%",
-
+        // backgroundColor: "gray"
     },
     title: {
         margin: "1%",
+    },
+    innerTitle: {
+        margin: "1%",
+        paddingLeft: "2%",
+        borderLeft: "3px solid RGB(70,167,12)",
     },
     searchButton: {
         marginLeft: "-25%",
@@ -31,7 +34,15 @@ export const detailPageClasses = makeStyles({
         }
     },
     buttonG: {
-
+        fontSize: 17,
+        color: "RGB(0,0,0)",
+        borderBottom: "1px solid RGB(70,167,12) !important",
+    },
+    buttonActive:{
+      color: "#0BDAA4",
+    },
+    buttonGroup: {
+        marginLeft: "10%",
     }
 })
 

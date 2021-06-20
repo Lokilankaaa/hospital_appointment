@@ -7,5 +7,5 @@ export function getSignUpRoute() {
 }
 
 export function getDocDetail() {
-    return '/docs'
+    return '/register'
 }

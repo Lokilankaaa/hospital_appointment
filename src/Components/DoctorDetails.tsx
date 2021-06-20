@@ -23,6 +23,9 @@ import {cardClasses} from "../Styles/madeStyles";
 class DocDetails extends React.Component<detailPageProps, {}> {
     @observable private date: Date;
     @observable private details: Array<detailProps>;
+    @observable private types: Array<string>;
+    @observable private currentType: string | null;
+    @observable private searchDocName: string;
 
     constructor(props: detailPageProps) {
         super(props);
@@ -30,13 +33,27 @@ class DocDetails extends React.Component<detailPageProps, {}> {
         this.handleDateChange.bind(this);
         this.requestDocs.bind(this);
         this.renderDocList.bind(this);
+        this.requestDocTypes.bind(this);
+        this.requestSearch.bind(this);
         this.details = new Array<detailProps>();
         this.date = new Date();
+        this.types = new Array<string>();
+        this.currentType = "中医肛肠科";
+        this.searchDocName = "";
+    }
 
+    requestDocTypes(t: string | null) {
+        if (!t) {
+            const a = ["中医肛肠科", "皮肤性病科", "小儿普外科", "消化内科", "血液病科", "神经内科", "耳鼻咽喉科", "小儿内科", "小儿骨科", "呼吸科"]
+            for (let aa in a) {
+                this.types.push(a[aa]);
+                console.log(a[aa])
+            }
+        }
     }
 
     requestDocs(date: Date) {
-        for (let i = 0; i < 10; i++)
+        for (let i = 0; i < 10; i++) {
             this.details.push(
                 {
                     classes: this.props.cardClasses,
@@ -44,9 +61,15 @@ class DocDetails extends React.Component<detailPageProps, {}> {
                     docTitle: "string",
                     remaining: 1,
                     fee: 2,
-                    docImg: ""
+                    docImg: "",
+                    isam: i % 2 === 0,
                 }
             )
+        }
+    }
+
+    requestSearch() {
+        console.log(this.searchDocName);
     }
 
     handleDateChange() {
@@ -55,23 +78,61 @@ class DocDetails extends React.Component<detailPageProps, {}> {
         this.requestDocs(this.date);
     }
 
+    renderButtonList() {
+        if (this.types.length > 0) {
+            return this.types.map((type) => (
+                <Button
+                    className={`${this.props.classes.buttonG} ${type === this.currentType ? this.props.classes.buttonActive : ''}`}
+                    id={type} onClick={(e) => {
+                    const el = e.target as HTMLInputElement;
+                    this.currentType = el.getAttribute('id')
+                }}>
+                    <Typography id={type} onClick={(e) => {
+                        const el = e.target as HTMLInputElement;
+                        if (this.currentType !== el.getAttribute('id')) {
+                            this.currentType = el.getAttribute('id')
+                            this.requestDocTypes(this.currentType);
+                        }
+
+                    }}>{type}
+                    </Typography>
+                </Button>
+            ))
+        } else {
+            return (<h2>No doctor found</h2>)
+        }
+    }
+
     renderDocList() {
-        if (this.details.length > 0)
-            return this.details.map((detail) => (
-                    <Grid item xs={3}>
+        if (this.details.length > 0) {
+            let morningDoc = this.details.filter((detail) => detail.isam).map((detail) => (
+                    <Grid item xs={9} sm={3}>
                         <DetailCard classes={detail.classes} docName={detail.docName} docTitle={detail.docTitle}
-                                    remaining={detail.remaining} fee={detail.fee} docImg={detail.docImg}/>
+                                    remaining={detail.remaining} fee={detail.fee} docImg={detail.docImg}
+                                    isam={detail.isam}/>
                     </Grid>
                 )
-            )
-        else
-            return (<h2>No doctor found</h2>)
+            );
+
+            let afternoonDoc = this.details.filter((detail) => !detail.isam).map((detail) => (
+                    <Grid item xs={9} sm={3}>
+                        <DetailCard classes={detail.classes} docName={detail.docName} docTitle={detail.docTitle}
+                                    remaining={detail.remaining} fee={detail.fee} docImg={detail.docImg}
+                                    isam={detail.isam}/>
+                    </Grid>
+                )
+            );
+            morningDoc = morningDoc.length > 0 ? morningDoc : [(<h2>No doctor found</h2>)];
+            afternoonDoc = afternoonDoc.length > 0 ? afternoonDoc : [(<h2>No doctor found</h2>)];
+            return [morningDoc, afternoonDoc];
+        } else
+            return [(<h2>No doctor found</h2>), (<h2>No doctor found</h2>)];
     }
 
     componentDidMount() {
         //request for doc details
         this.requestDocs(new Date());
-        this.renderDocList()
+        this.requestDocTypes(null);
     }
 
     render() {
@@ -81,10 +142,11 @@ class DocDetails extends React.Component<detailPageProps, {}> {
                 <Grid container spacing={3}>
                     <Grid container item xs={12}>
                         <Grid item xs={2}>
-                            <TextField id="filled-basic" label="搜索医生姓名" variant="filled" inputProps={{maxLength: 6}}/>
+                            <TextField id="filled-basic" label="搜索医生姓名" variant="filled" inputProps={{maxLength: 6}}
+                                       onChange={(e) => this.searchDocName = e.target.value}/>
                         </Grid>
                         <Grid item xs={1}>
-                            <div className={this.props.classes.searchButton} onClick={()=>console.log(0)}>
+                            <div className={this.props.classes.searchButton} onClick={() => this.requestSearch()}>
                                 <svg viewBox="0 0 1024 1024" width="30"
                                      height="30">
                                     <path
@@ -125,15 +187,19 @@ class DocDetails extends React.Component<detailPageProps, {}> {
                                 color="primary"
                                 aria-label="vertical contained primary button group"
                                 variant="text"
+                                className={this.props.classes.buttonGroup}
                             >
-                                <Button>One</Button>
-                                <Button>Two</Button>
-                                <Button>Three</Button>
+                                {this.renderButtonList()}
 
                             </ButtonGroup>
                         </Grid>
                         <Grid container item xs={9}>
-                            {this.renderDocList()}
+                            <Grid item xs={9} sm={10}><Typography variant={"h4"}
+                                                                  className={this.props.classes.innerTitle}>上午</Typography></Grid>
+                            {this.renderDocList()[0]}
+                            <Grid item xs={9} sm={10}><Typography variant={"h4"}
+                                                                  className={this.props.classes.innerTitle}>下午</Typography></Grid>
+                            {this.renderDocList()[1]}
                         </Grid>
                     </Grid>
                 </Grid>

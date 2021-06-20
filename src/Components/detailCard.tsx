@@ -33,6 +33,7 @@ class DetailCard extends React.Component<detailProps, {}> {
                 </CardContent>
                 <CardActions>
                     <Button size="small">挂号</Button>
+                    <Button size="small">详情</Button>
                 </CardActions>
             </Card>
         )

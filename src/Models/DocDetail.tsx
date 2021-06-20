@@ -6,7 +6,8 @@ export interface detailProps {
     docTitle: string,
     remaining: number,
     fee: number,
-    docImg: string
+    docImg: string,
+    isam: boolean
 }
 
 export interface detailPageProps {
