@@ -47,10 +47,7 @@ class DocDetails extends React.Component<detailPageProps, {}> {
     requestDocTypes(t: string | null) {
         if (!t) {
             const a = ["中医肛肠科", "皮肤性病科", "小儿普外科", "消化内科", "血液病科", "神经内科", "耳鼻咽喉科", "小儿内科", "小儿骨科", "呼吸科"]
-            for (let aa in a) {
-                this.types.push(a[aa]);
-                console.log(a[aa])
-            }
+            a.map((aa) => this.types.push(aa))
         }
     }
 
@@ -140,7 +137,7 @@ class DocDetails extends React.Component<detailPageProps, {}> {
     render() {
         return (
             <div>
-                <WelcomeHeader today={new Date()} classes={this.props.headerClasses}/>
+                <WelcomeHeader classes={this.props.headerClasses}/>
                 <div className={this.props.classes.root}>
                     <Typography variant="h4" color="inherit" className={this.props.classes.title}>预约挂号</Typography>
                     <Grid container spacing={3}>

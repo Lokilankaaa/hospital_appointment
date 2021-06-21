@@ -1,5 +1,23 @@
 import {makeStyles} from "@material-ui/core/styles";
-import {red} from '@material-ui/core/colors';
+
+export const recordClasses = makeStyles({
+    root: {
+        width: 'fit-content',
+        '& hr': {
+            margin: "1px",
+        },
+    },
+    block: {
+
+    }
+})
+
+export const recordsClasses = makeStyles({
+        root: {
+
+        }
+    }
+)
 
 export const headerClasses = makeStyles({
     root: {

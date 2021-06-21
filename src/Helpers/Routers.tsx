@@ -7,5 +7,9 @@ export function getSignUpRoute() {
 }
 
 export function getDocDetail() {
-    return '/register'
+    return '/register';
+}
+
+export function getLookup() {
+    return '/lookup';
 }
