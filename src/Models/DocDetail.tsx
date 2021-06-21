@@ -12,5 +12,6 @@ export interface detailProps {
 
 export interface detailPageProps {
     classes: ClassNameMap,
-    cardClasses: ClassNameMap
+    cardClasses: ClassNameMap,
+    headerClasses: ClassNameMap
 }

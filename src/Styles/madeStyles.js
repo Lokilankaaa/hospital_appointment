@@ -1,6 +1,48 @@
 import {makeStyles} from "@material-ui/core/styles";
 import {red} from '@material-ui/core/colors';
 
+export const headerClasses = makeStyles({
+    root: {
+        position: "fixed",
+        // padding: "0",
+        height: "30px",
+        // marginTop: "-9%",
+        width: "100%",
+        margin: "0",
+        top: "0%",
+        // backgroundColor: "#edf1ec",
+        zIndex: 100,
+        paddingTop: "1%",
+        paddingBottom: "1%"
+    },
+    img: {
+        marginLeft: "3%",
+        // transform: "scale(0.3)",
+        float: "left",
+        // marginTop: "-8%",
+        width: "30px",
+    },
+    title1: {
+        display: "inline-block",
+        fontSize: 20,
+        float: "left",
+        color: "#077921"
+    },
+    button: {
+        float: "right",
+        height: "30px",
+        marginLeft: "3%",
+        marginRight: "3%"
+    },
+    title2: {
+        fontSize: 20,
+        display: "inline-block",
+        float: "right",
+        alignItems: "center"
+    },
+
+})
+
 export const cardClasses = makeStyles({
     root: {
         // minWidth: 275,
@@ -14,8 +56,10 @@ export const cardClasses = makeStyles({
 
 export const detailPageClasses = makeStyles({
     root: {
-        margin: "3%",
-        // backgroundColor: "gray"
+        // margin: "3%",
+        marginTop: "3%",
+        padding: "3%",
+        backgroundColor: "#f6f6f6"
     },
     title: {
         margin: "1%",
@@ -26,7 +70,7 @@ export const detailPageClasses = makeStyles({
         borderLeft: "3px solid RGB(70,167,12)",
     },
     searchButton: {
-        marginLeft: "-25%",
+        marginLeft: "-20%",
         marginTop: "12%",
         // float: "left",
         "&:hover": {
@@ -38,8 +82,8 @@ export const detailPageClasses = makeStyles({
         color: "RGB(0,0,0)",
         borderBottom: "1px solid RGB(70,167,12) !important",
     },
-    buttonActive:{
-      color: "#0BDAA4",
+    buttonActive: {
+        color: "#0BDAA4",
     },
     buttonGroup: {
         marginLeft: "10%",
@@ -76,7 +120,6 @@ export const loginClasses = makeStyles((theme) => ({
         height: '80%',
     },
 }));
-
 
 export const FrontStyles = makeStyles((theme) => ({
     root: {

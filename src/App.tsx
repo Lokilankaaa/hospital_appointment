@@ -3,7 +3,7 @@ import Login from './Components/login'
 import SignUp from './Components/SignUp'
 import UserFrontPage from './Components/UserFrontPage'
 import DocDetails from './Components/DoctorDetails'
-import {loginClasses, FrontStyles, detailPageClasses, cardClasses} from "./Styles/madeStyles";
+import {loginClasses, FrontStyles, detailPageClasses, cardClasses, headerClasses} from "./Styles/madeStyles";
 import {Route, RouteComponentProps, Switch, withRouter, Router} from 'react-router-dom';
 import {getLoginRoute, getSignUpRoute, getDocDetail} from "./Helpers/Routers";
 import {Provider, observer} from "mobx-react";
@@ -45,7 +45,7 @@ function fnUserFrontPage() {
 
 function fnDocDetail() {
     return (
-        <DocDetails classes={detailPageClasses()} cardClasses={cardClasses()}/>
+        <DocDetails classes={detailPageClasses()} cardClasses={cardClasses()} headerClasses={headerClasses()}/>
     )
 }
 
