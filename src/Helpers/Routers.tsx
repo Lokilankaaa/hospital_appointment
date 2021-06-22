@@ -9,3 +9,16 @@ export function getSignUpRoute() {
 export function getAdminRoute(){
     return `/admin`;
 }
+
+export function getDocDetail() {
+    return '/register';
+}
+
+export function getLookup() {
+    return '/lookup';
+}
+
+export function getUserInfoRoute() {
+    return `/user`;
+
+}
