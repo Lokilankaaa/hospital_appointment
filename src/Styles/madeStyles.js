@@ -253,3 +253,34 @@ export const FrontStyles = makeStyles((theme) => ({
         padding: `${theme.spacing(2)}px ${theme.spacing(4)}px ${theme.spacing(1) + 6}px`,
     },
 }));
+
+export const UserInfoStyles = makeStyles((theme) => ({
+    sideBarButton: {
+        fontSize: 17,
+        color: "RGB(0,0,0)",
+        borderBottom: "1px solid RGB(70,167,12) !important",
+    },
+    buttonActive: {
+        color: "#0BDAA4",
+    },
+
+    header: {
+        color: '#0BDAA4',
+        borderBottom: "2px solid RGB(70,167,12)",
+    },
+
+    innerTitle: {
+        width: '9%',
+        justifyContent: 'left',
+        color: '#0BDAA4',
+        borderBottom: "4px solid RGB(70,167,12)",
+    },
+    ConfirmPasswordButton: {
+        backgroundColor: "#28A745",
+        color: "white",
+        width:"20%",
+        marginTop: "5%",
+        marginLeft: "45%",
+    },
+
+  }))

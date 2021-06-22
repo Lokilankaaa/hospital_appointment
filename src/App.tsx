@@ -1,12 +1,15 @@
 import './App.css';
 import Login from './Components/login'
 import SignUp from './Components/SignUp'
+import UserInfo from './Components/UserInfo'
 import UserFrontPage from './Components/UserFrontPage'
+
 import DocDetails from './Components/DoctorDetails'
-import {loginClasses, FrontStyles, detailPageClasses, cardClasses, headerClasses, recordClasses, recordsClasses} from "./Styles/madeStyles";
+import {loginClasses, FrontStyles, detailPageClasses, cardClasses, headerClasses, recordClasses, recordsClasses, UserInfoStyles} from "./Styles/madeStyles";
 import {Route, RouteComponentProps, Switch, withRouter, Router} from 'react-router-dom';
-import {getLoginRoute, getSignUpRoute, getDocDetail, getLookup} from "./Helpers/Routers";
+import {getLoginRoute, getSignUpRoute, getDocDetail, getLookup, getUserInfoRoute} from "./Helpers/Routers";
 import {Provider, observer} from "mobx-react";
+
 import history from './Helpers/History';
 import RecordPage from "./Components/registeryRecords";
 
@@ -21,6 +24,7 @@ function App() {
                 <Route exact path={getSignUpRoute()} component={fnSignUp}/>
                 <Route exact path={getDocDetail()} component={fnDocDetail}/>
                 <Route exact path={getLookup()} component={fnLookup}/>
+                <Route exact path={getUserInfoRoute()} component={fnUserInfoPage} />
             </Switch>
         </Router>
     );
@@ -55,6 +59,12 @@ function fnLookup() {
     return (
         <RecordPage classes={recordsClasses()} recordClasses={recordClasses()} headerClasses={headerClasses()}/>
     )
+}
+
+function fnUserInfoPage() {
+  return  (
+    <UserInfo classes={UserInfoStyles()} ></UserInfo>
+  )
 }
 
 // todo: this shoulf be fixed
