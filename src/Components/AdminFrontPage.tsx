@@ -29,22 +29,22 @@ class AdminFrontPage extends React.Component<SignUpProps, {}> {
 
     images = [
         {
-            url: Register,
+            url: login,
             title: '个人信息管理',
             width: '23%',
-            Onclick: () => { console.log(`Click Appointment}`); }
+            Onclick: () => { console.log(`Click admin1}`); }
         },
         {
-            url: login,
+            url: Register,
             title: '预约管理',
             width: '23%',
-            Onclick: () => { history.push(getLoginRoute()) }
+            Onclick: () => { console.log(`Click admin2}`) }
         },
         {
             url: lookup,
             title: '反馈管理',
             width: '23%',
-            Onclick: () => { console.log(`Click LookUp}`); }
+            Onclick: () => { console.log(`Click admin3}`); }
         },
         {
             url: more,
