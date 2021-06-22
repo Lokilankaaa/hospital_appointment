@@ -3,11 +3,11 @@ import Login from './Components/login'
 import SignUp from './Components/SignUp'
 import UserInfo from './Components/UserInfo'
 import UserFrontPage from './Components/UserFrontPage'
-
+import AdminFrontPage from './Components/AdminFrontPage'
 import DocDetails from './Components/DoctorDetails'
 import {loginClasses, FrontStyles, detailPageClasses, cardClasses, headerClasses, recordClasses, recordsClasses, UserInfoStyles} from "./Styles/madeStyles";
 import {Route, RouteComponentProps, Switch, withRouter, Router} from 'react-router-dom';
-import {getLoginRoute, getSignUpRoute, getDocDetail, getLookup, getUserInfoRoute} from "./Helpers/Routers";
+import {getLoginRoute, getSignUpRoute, getDocDetail, getLookup, getUserInfoRoute, getAdminRoute} from "./Helpers/Routers";
 import {Provider, observer} from "mobx-react";
 
 import history from './Helpers/History';
@@ -25,6 +25,7 @@ function App() {
                 <Route exact path={getDocDetail()} component={fnDocDetail}/>
                 <Route exact path={getLookup()} component={fnLookup}/>
                 <Route exact path={getUserInfoRoute()} component={fnUserInfoPage} />
+                <Route exact path={getAdminRoute()} component={fnAdminFrontPage} />
             </Switch>
         </Router>
     );
@@ -65,6 +66,12 @@ function fnUserInfoPage() {
   return  (
     <UserInfo classes={UserInfoStyles()} ></UserInfo>
   )
+}
+
+function fnAdminFrontPage(){
+    return (
+        <AdminFrontPage classes={FrontStyles()}></AdminFrontPage>
+    )
 }
 
 // todo: this shoulf be fixed

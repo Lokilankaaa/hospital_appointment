@@ -6,6 +6,10 @@ export function getSignUpRoute() {
     return `/signup`;
 }
 
+export function getAdminRoute(){
+    return `/admin`;
+}
+
 export function getDocDetail() {
     return '/register';
 }
