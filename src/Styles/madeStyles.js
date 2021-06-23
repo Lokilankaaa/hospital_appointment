@@ -284,3 +284,49 @@ export const UserInfoStyles = makeStyles((theme) => ({
     },
 
   }))
+
+  export const AppointmentReviewStyles = makeStyles((theme) => ({
+    appointmentInfo: {
+        boxShadow: "none" 
+    },
+
+    sideBarButton: {
+        fontSize: 17,
+        color: "RGB(0,0,0)",
+        borderBottom: "1px solid RGB(70,167,12) !important",
+    },
+
+    PublishReviewButton: {
+        backgroundColor: "#28A745",
+        color: "white",
+        width:"20%",
+        border: "transparent",
+    },
+}))
+
+export const DoctorReviewHistoryStyles = makeStyles((theme) => ({
+    appointmentInfo: {
+        
+    },
+    
+    ReviewButton: {
+        fontSize: 17,
+        color: "RGB(0,0,0)",
+        borderBottom: "1px solid RGB(70,167,12) !important",
+    },
+
+    PublishReviewButton: {
+        backgroundColor: "#28A745",
+        color: "white",
+        width:"20%",
+        border: "transparent",
+    },
+    small: {
+        width: theme.spacing(3),
+        height: theme.spacing(3),
+      },
+    large: {
+        width: theme.spacing(9),
+        height: theme.spacing(9),
+      },
+}))

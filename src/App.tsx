@@ -5,9 +5,12 @@ import UserInfo from './Components/UserInfo'
 import UserFrontPage from './Components/UserFrontPage'
 import AdminFrontPage from './Components/AdminFrontPage'
 import DocDetails from './Components/DoctorDetails'
-import {loginClasses, FrontStyles, detailPageClasses, cardClasses, headerClasses, recordClasses, recordsClasses, UserInfoStyles} from "./Styles/madeStyles";
+import AppointmentReview from './Components/AppointmentReview'
+import DoctorReviewHistory from './Components/DoctorReviewHistory'
+
+import {loginClasses, FrontStyles, detailPageClasses, cardClasses, headerClasses, recordClasses, recordsClasses, UserInfoStyles, AppointmentReviewStyles, DoctorReviewHistoryStyles} from "./Styles/madeStyles";
 import {Route, RouteComponentProps, Switch, withRouter, Router} from 'react-router-dom';
-import {getLoginRoute, getSignUpRoute, getDocDetail, getLookup, getUserInfoRoute, getAdminRoute} from "./Helpers/Routers";
+import {getLoginRoute, getSignUpRoute, getDocDetail, getLookup, getUserInfoRoute, getAdminRoute, getAppointmentReviewRoute, getDoctorReviewHistoryRoute} from "./Helpers/Routers";
 import {Provider, observer} from "mobx-react";
 
 import history from './Helpers/History';
@@ -26,6 +29,9 @@ function App() {
                 <Route exact path={getLookup()} component={fnLookup}/>
                 <Route exact path={getUserInfoRoute()} component={fnUserInfoPage} />
                 <Route exact path={getAdminRoute()} component={fnAdminFrontPage} />
+                <Route exact path={getAppointmentReviewRoute()} component={fnAdminAppointmentReview} />
+                <Route exact path={getDoctorReviewHistoryRoute()} component={fnDoctorReviewHistory} />
+
             </Switch>
         </Router>
     );
@@ -74,7 +80,18 @@ function fnAdminFrontPage(){
     )
 }
 
-// todo: this shoulf be fixed
+function fnAdminAppointmentReview(){
+    return (
+        <AppointmentReview classes={AppointmentReviewStyles()}></AppointmentReview>
+    )
+}
+
+function fnDoctorReviewHistory(){
+    return (
+        <DoctorReviewHistory classes={DoctorReviewHistoryStyles()}></DoctorReviewHistory>
+    )
+}
+// todo: this should be fixed
 const wrapper = withRouter(App);
 export default App;
 export {wrapper as App};
