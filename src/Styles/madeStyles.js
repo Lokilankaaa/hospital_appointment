@@ -3,31 +3,28 @@ import {makeStyles} from "@material-ui/core/styles";
 export const recordClasses = makeStyles({
     root: {
         marginLeft: "3%",
-        // width: 'fit-content',
         // '& hr': {
         //     margin: "1px",
         // },
     },
-    block: {
-        marginRight: "3%",
-        paddingLeft: "3%",
-        borderLeft: "1px solid RGB(70,167,12)"
+    button: {
+        borderRadius: "10px",
+        backgroundColor: "#62a778"
     }
 })
 
 export const recordsClasses = makeStyles({
         root: {
-            marginTop: "50px",
-            padding: "3%"
+            width: '90%',
+            // marginTop: '3%',
+            padding: '5%',
+            backgroundColor: '#f6f6f6'
         },
-        info: {
-            margin: "0 auto",
-            backgroundColor: "#f6f6f6"
+        container: {
+            // padding: "0 2%"
         },
-        block: {
-            marginRight: "3%",
-            paddingLeft: "3%",
-            borderLeft: "1px solid RGB(70,167,12)"
+        title: {
+            margin: "2%"
         }
     }
 )
@@ -63,7 +60,8 @@ export const headerClasses = makeStyles({
         float: "right",
         height: "30px",
         marginLeft: "3%",
-        marginRight: "3%"
+        marginRight: "3%",
+        backgroundColor: '#e05353'
     },
     title2: {
         fontSize: 20,
@@ -291,16 +289,16 @@ export const UserInfoStyles = makeStyles((theme) => ({
     ConfirmPasswordButton: {
         backgroundColor: "#28A745",
         color: "white",
-        width:"20%",
+        width: "20%",
         marginTop: "5%",
         marginLeft: "45%",
     },
 
-  }))
+}))
 
-  export const AppointmentReviewStyles = makeStyles((theme) => ({
+export const AppointmentReviewStyles = makeStyles((theme) => ({
     appointmentInfo: {
-        boxShadow: "none" 
+        boxShadow: "none"
     },
 
     sideBarButton: {
@@ -312,16 +310,14 @@ export const UserInfoStyles = makeStyles((theme) => ({
     PublishReviewButton: {
         backgroundColor: "#28A745",
         color: "white",
-        width:"20%",
+        width: "20%",
         border: "transparent",
     },
 }))
 
 export const DoctorReviewHistoryStyles = makeStyles((theme) => ({
-    appointmentInfo: {
-        
-    },
-    
+    appointmentInfo: {},
+
     ReviewButton: {
         fontSize: 17,
         color: "RGB(0,0,0)",
@@ -331,15 +327,15 @@ export const DoctorReviewHistoryStyles = makeStyles((theme) => ({
     PublishReviewButton: {
         backgroundColor: "#28A745",
         color: "white",
-        width:"20%",
+        width: "20%",
         border: "transparent",
     },
     small: {
         width: theme.spacing(3),
         height: theme.spacing(3),
-      },
+    },
     large: {
         width: theme.spacing(9),
         height: theme.spacing(9),
-      },
+    },
 }))
