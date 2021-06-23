@@ -2,19 +2,32 @@ import {makeStyles} from "@material-ui/core/styles";
 
 export const recordClasses = makeStyles({
     root: {
+        marginLeft: "3%",
         width: 'fit-content',
         '& hr': {
             margin: "1px",
         },
     },
     block: {
-
+        // marginRight: "3%",
+        // paddingLeft: "3%",
+        borderLeft: "1px solid RGB(70,167,12)"
     }
 })
 
 export const recordsClasses = makeStyles({
         root: {
-
+            marginTop: "50px",
+            padding: "3%"
+        },
+        info: {
+            margin: "0 auto",
+            backgroundColor: "#f6f6f6"
+        },
+        block: {
+            marginRight: "3%",
+            paddingLeft: "3%",
+            borderLeft: "1px solid RGB(70,167,12)"
         }
     }
 )
