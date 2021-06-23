@@ -58,14 +58,15 @@ class RecordPage extends React.Component<recordProps, {}> {
 
     renderOneRecord(record: recordForm) {
         return (
-            <ListItem className={this.props.classes.root}>
+            <ListItem className={this.props.recordClasses.root}>
                 <>
-                    <span>{record.order}</span>
-                    <span>{record.type}</span>
-                    <span>{record.docName}</span>
-                    <span>{record.time.getSeconds()}</span>
-                    <span>{record.fee}</span>
-                    <span>{record.status}</span>
+                    <Grid item xs={7} sm={1} className={this.props.recordClasses.block}>{record.order}</Grid>
+                    <Grid item xs={7} sm={1} className={this.props.recordClasses.block}>{record.type}</Grid>
+                    <Grid item xs={7} sm={1} className={this.props.recordClasses.block}>{record.docName}</Grid>
+                    <Grid item xs={7} sm={1} className={this.props.recordClasses.block}>{record.time.getSeconds()}</Grid>
+                    <Grid item xs={7} sm={1} className={this.props.recordClasses.block}>{record.fee}</Grid>
+                    <Grid item xs={7} sm={1} className={this.props.recordClasses.block}>{record.status}</Grid>
+                    <Grid item xs={7} sm={1} className={this.props.recordClasses.block}><Button>取消</Button></Grid>
                 </>
             </ListItem>
         )
@@ -76,10 +77,8 @@ class RecordPage extends React.Component<recordProps, {}> {
         if (this.records.length > 0)
             return (
                 <>
-                    {
-                        this.records.map((record) => (
-                            this.renderOneRecord(record)
-                        ))}
+                    {this.records.map((record) => (
+                        this.renderOneRecord(record)))}
                 </>
             )
         else {
@@ -91,19 +90,27 @@ class RecordPage extends React.Component<recordProps, {}> {
 
     render() {
         return (
-
-            <div className={
-                this
-                    .props
-                    .classes
-                    .root
-            }
-
-            >
+            <div>
                 <WelcomeHeader classes={this.props.headerClasses}/>
-                <List>
-                    {this.renderRecords()}
-                </List>
+                <div className={this.props.classes.root}>
+                    <Paper className={this.props.classes.info} elevation={1} variant={"outlined"}>
+                        <Grid container xs={7}>
+                            <Grid xs={7} sm={1} className={this.props.recordClasses.block}>序号</Grid>
+                            <Grid xs={7} sm={1} className={this.props.recordClasses.block}>科室</Grid>
+                            <Grid xs={7} sm={1} className={this.props.recordClasses.block}>医生</Grid>
+                            <Grid xs={7} sm={1} className={this.props.recordClasses.block}>日期</Grid>
+                            <Grid xs={7} sm={1} className={this.props.recordClasses.block}>费用</Grid>
+                            <Grid xs={7} sm={1} className={this.props.recordClasses.block}>状态</Grid>
+                            <Grid xs={7} sm={1} className={this.props.recordClasses.block}>操作</Grid>
+                            <Grid item xs={7} sm={7}>
+                                <List>
+                                    {this.renderRecords()}
+                                </List>
+                            </Grid>
+                        </Grid>
+                    </Paper>
+
+                </div>
             </div>
         )
     }
