@@ -138,8 +138,10 @@ class RecordPage extends React.Component<recordProps, {}> {
     renderRecords() {
         if (this.records.length > 0)
             return (
-                this.records.map((record) => (
-                    this.renderOneRecord(record)))
+                <>
+                    {this.records.map((record) => (
+                        this.renderOneRecord(record)))}
+                </>
             )
         else {
             return (
