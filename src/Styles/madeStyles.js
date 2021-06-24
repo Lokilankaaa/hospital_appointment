@@ -147,6 +147,7 @@ export const loginClasses = makeStyles((theme) => ({
         color: theme.palette.text.secondary,
         width: "100%",
         height: '80%',
+        boxShadow: "none"
     },
 }));
 
