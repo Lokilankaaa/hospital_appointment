@@ -13,7 +13,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from "@material-ui/core/Typography";
 import {userStateInfoManager} from "../Helpers/UserStateInfoManager";
-import axios from "axios";
+import {requestManager} from "../Helpers/RequestManager";
 
 interface Column {
     id: '序号' | '科室' | '医生姓名' | '预约日期' | '挂号费' | '状态' | '操作';
@@ -32,7 +32,7 @@ interface recordForm extends Dictionary {
     docName: string,
     time: Date,
     fee: number,
-    status: boolean,
+    status: string,
 }
 
 interface recordProps {
@@ -94,7 +94,7 @@ class RecordPage extends React.Component<recordProps, {}> {
         //         status: false
         //     })
         // }
-
+        requestManager.search_appointment("", this.records);
     }
 
     componentDidMount() {

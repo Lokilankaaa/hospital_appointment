@@ -1,25 +1,17 @@
 import * as React from "react";
 import Button from "@material-ui/core/Button";
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import {MuiPickersUtilsProvider, KeyboardDatePicker} from '@material-ui/pickers';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
-import avatar_g from '../Assets/per_girl.png';
-import avatar_b from '../Assets/per_boy.png';
 import {Lambda, observable, reaction, makeObservable} from "mobx";
 import DateFnsUtils from '@date-io/date-fns';
 import {inject, observer} from "mobx-react";
-import {LoginProps} from '../Models/Login';
-import {getLoginRoute, getSignUpRoute} from "../Helpers/Routers";
-import {Link} from "react-router-dom";
-import history from '../Helpers/History';
 import Typography from '@material-ui/core/Typography';
 import DetailCard from "./detailCard";
 import {detailPageProps, detailProps} from "../Models/DocDetail";
-import {ClassNameMap} from "@material-ui/styles/withStyles";
-import {cardClasses} from "../Styles/madeStyles";
 import WelcomeHeader from "./welcomeHeader";
+import {requestManager} from "../Helpers/RequestManager";
 
 @observer
 class DocDetails extends React.Component<detailPageProps, {}> {
@@ -46,25 +38,27 @@ class DocDetails extends React.Component<detailPageProps, {}> {
 
     requestDocTypes(t: string | null) {
         if (!t) {
-            const a = ["中医肛肠科", "皮肤性病科", "小儿普外科", "消化内科", "血液病科", "神经内科", "耳鼻咽喉科", "小儿内科", "小儿骨科", "呼吸科"]
-            a.map((aa) => this.types.push(aa))
+            // const a = ["中医肛肠科", "皮肤性病科", "小儿普外科", "消化内科", "血液病科", "神经内科", "耳鼻咽喉科", "小儿内科", "小儿骨科", "呼吸科"]
+            // a.map((aa) => this.types.push(aa))
+            requestManager.search_depart("", this.types);
         }
     }
 
     requestDocs(date: Date) {
-        for (let i = 0; i < 10; i++) {
-            this.details.push(
-                {
-                    classes: this.props.cardClasses,
-                    docName: "string",
-                    docTitle: "string",
-                    remaining: 1,
-                    fee: 2,
-                    docImg: i % 2 === 0 ? avatar_g : avatar_b,
-                    isam: i % 2 === 0,
-                }
-            )
-        }
+        // for (let i = 0; i < 10; i++) {
+        //     this.details.push(
+        //         {
+        //             classes: this.props.cardClasses,
+        //             docName: "string",
+        //             docTitle: "string",
+        //             remaining: 1,
+        //             fee: 2,
+        //             docImg: i % 2 === 0 ? avatar_g : avatar_b,
+        //             isam: i % 2 === 0,
+        //         }
+        //     )
+        // }
+        requestManager.search_docs(this.types[0], "", this.details, true);
     }
 
     requestSearch() {
@@ -199,7 +193,7 @@ class DocDetails extends React.Component<detailPageProps, {}> {
                                 <Grid item xs={10} sm={10}><Typography variant={"h4"}
                                                                        className={this.props.classes.innerTitle}>上午</Typography></Grid>
                                 {this.renderDocList()[0]}
-                                <Grid item xs={9} sm={10}><Typography variant={"h4"}
+                                <Grid item xs={10} sm={10}><Typography variant={"h4"}
                                                                       className={this.props.classes.innerTitle}>下午</Typography></Grid>
                                 {this.renderDocList()[1]}
                             </Grid>

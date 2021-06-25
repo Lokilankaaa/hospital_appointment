@@ -1,13 +1,15 @@
 import {ClassNameMap} from "@material-ui/styles/withStyles";
+import {timesForm} from "./ResponseForm";
 
 export interface detailProps {
-    classes: ClassNameMap
+    classes: ClassNameMap,
+    did: string,
     docName: string,
     docTitle: string,
-    remaining: number,
     fee: number,
     docImg: string,
-    isam: boolean
+    times: Array<timesForm>,
+    gender: boolean,
 }
 
 export interface detailPageProps {
