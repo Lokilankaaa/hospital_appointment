@@ -29,7 +29,8 @@
     "typescript": "^4.3.2",
     "valid-url": "^1.0.9",
     "validatorjs": "^3.22.1",
-    "web-vitals": "^1.0.1"
+    "web-vitals": "^1.0.1",
+    "axios": "^0.21.1"
   },
   "scripts": {
     "start": "react-scripts start",

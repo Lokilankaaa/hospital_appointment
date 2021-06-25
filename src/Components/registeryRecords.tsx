@@ -12,6 +12,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from "@material-ui/core/Typography";
+import {userStateInfoManager} from "../Helpers/UserStateInfoManager";
+import axios from "axios";
 
 interface Column {
     id: '序号' | '科室' | '医生姓名' | '预约日期' | '挂号费' | '状态' | '操作';
@@ -82,16 +84,17 @@ class RecordPage extends React.Component<recordProps, {}> {
     }
 
     requestRecords() {
-        for (let i = 0; i < 20; i++) {
-            this.records.push({
-                order: i + 1,
-                type: "asd",
-                docName: "AAA",
-                time: new Date(),
-                fee: 12,
-                status: false
-            })
-        }
+        // for (let i = 0; i < 20; i++) {
+        //     this.records.push({
+        //         order: i + 1,
+        //         type: "asd",
+        //         docName: "AAA",
+        //         time: new Date(),
+        //         fee: 12,
+        //         status: false
+        //     })
+        // }
+
     }
 
     componentDidMount() {
@@ -171,7 +174,14 @@ class RecordPage extends React.Component<recordProps, {}> {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {this.renderRecords()}
+                                    {
+                                        (() => {
+                                            if (userStateInfoManager.isLogin())
+                                                return this.renderRecords();
+                                            else
+                                                return (<Typography className={this.props.classes.warning}>请先登录</Typography>)
+                                        })()
+                                    }
                                 </TableBody>
                             </Table>
                         </TableContainer>

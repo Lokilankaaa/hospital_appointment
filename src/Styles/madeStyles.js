@@ -25,6 +25,12 @@ export const recordsClasses = makeStyles({
         },
         title: {
             margin: "2%"
+        },
+        warning: {
+            padding: "40%",
+            height: "500px",
+            width: "100%",
+            margin: "0 490%"
         }
     }
 )
