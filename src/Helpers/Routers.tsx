@@ -22,3 +22,11 @@ export function getUserInfoRoute() {
     return `/user`;
 
 }
+
+export function getAppointmentReviewRoute() {
+    return `/review`;
+}
+
+export function getDoctorReviewHistoryRoute() {
+    return `/review/history`;
+}

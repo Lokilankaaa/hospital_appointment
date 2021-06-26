@@ -1,24 +1,40 @@
 import React from 'react';
 import {ClassNameMap} from "@material-ui/styles/withStyles";
-import welcomelogo from '../Assets/Register.png';
-import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import {observer} from "mobx-react";
 import {makeObservable, observable} from "mobx";
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import WelcomeHeader from './welcomeHeader';
-import Grid from '@material-ui/core/Grid';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Typography from "@material-ui/core/Typography";
+import {userStateInfoManager} from "../Helpers/UserStateInfoManager";
+import {requestManager} from "../Helpers/RequestManager";
 
-interface recordForm {
+interface Column {
+    id: '序号' | '科室' | '医生姓名' | '预约日期' | '挂号费' | '状态' | '操作';
+    label: string;
+    minWidth?: number;
+    align?: 'right';
+}
+
+declare global {
+    type Dictionary = { [key: string]: any };
+}
+
+interface recordForm extends Dictionary {
+    tid: number,
+    did: string,
     order: number,
     type: string,
     docName: string,
     time: Date,
     fee: number,
-    status: boolean,
+    status: string,
 }
 
 interface recordProps {
@@ -31,25 +47,52 @@ interface recordProps {
 class RecordPage extends React.Component<recordProps, {}> {
     @observable private records: Array<recordForm>;
 
+    private columns: Column[] = [
+        {id: '序号', label: 'order', minWidth: 60,},
+        {id: '科室', label: 'type', minWidth: 100,},
+        {
+            id: '医生姓名',
+            label: 'docName',
+            minWidth: 70,
+        },
+        {
+            id: '预约日期',
+            label: 'time',
+            minWidth: 270,
+        },
+        {
+            id: '挂号费',
+            label: 'fee',
+            minWidth: 170,
+        },
+        {
+            id: '状态',
+            label: 'status',
+            minWidth: 150,
+        },
+        {
+            id: '操作',
+            label: 'operation',
+            minWidth: 60,
+        }
+    ];
+
     constructor(props: recordProps) {
         super(props);
         makeObservable(this);
         this.records = new Array<recordForm>();
         this.requestRecords.bind(this);
         this.renderRecords.bind(this);
+        this.cancel_appointment.bind(this);
     }
 
     requestRecords() {
-        for (let i = 0; i < 3; i++) {
-            this.records.push({
-                order: 1,
-                type: "asd",
-                docName: "AAA",
-                time: new Date(),
-                fee: 12,
-                status: false
-            })
-        }
+        requestManager.search_appointment("", this.records);
+    }
+
+    cancel_appointment(order: number) {
+        requestManager.cancel_appointment(this.records[order - 1].tid)
+        this.records = this.records.filter((record) => record.order !== order);
     }
 
     componentDidMount() {
@@ -58,29 +101,48 @@ class RecordPage extends React.Component<recordProps, {}> {
 
     renderOneRecord(record: recordForm) {
         return (
-            <ListItem className={this.props.classes.root}>
-                <>
-                    <span>{record.order}</span>
-                    <span>{record.type}</span>
-                    <span>{record.docName}</span>
-                    <span>{record.time.getSeconds()}</span>
-                    <span>{record.fee}</span>
-                    <span>{record.status}</span>
-                </>
-            </ListItem>
+            <TableRow hover tabIndex={-1} key={record.order}>
+                {this.columns.map((column) => {
+                    if (column.label === 'operation')
+                        return (
+                            <TableCell key={column.id} align={column.align}>
+                                <Button variant="contained" className={this.props.recordClasses.button}
+                                        disabled={record.status === "未取号"}
+                                        onClick={() => this.cancel_appointment(record.order)}>取消</Button>
+                            </TableCell>
+                        )
+                    else {
+                        const value = record[column.label];
+                        return (
+                            <TableCell key={column.id} align={column.align}>
+                                {
+                                    ((value: Date | boolean | number | string, label: string) => {
+                                        if (value instanceof Date)
+                                            return value.toLocaleString();
+                                        else if (typeof value == 'boolean')
+                                            return value ? '已取号' : '未取号';
+                                        else if (typeof value == 'number') {
+                                            if (label === 'order')
+                                                return value;
+                                            else
+                                                return '¥' + value.toFixed(2);
+                                        } else
+                                            return value;
+                                    })(value, column.label)
+                                }
+                            </TableCell>
+                        );
+                    }
+                })}
+            </TableRow>
         )
-
     }
 
     renderRecords() {
         if (this.records.length > 0)
             return (
-                <>
-                    {
-                        this.records.map((record) => (
-                            this.renderOneRecord(record)
-                        ))}
-                </>
+                this.records.map((record) => (
+                    this.renderOneRecord(record)))
             )
         else {
             return (
@@ -91,19 +153,41 @@ class RecordPage extends React.Component<recordProps, {}> {
 
     render() {
         return (
-
-            <div className={
-                this
-                    .props
-                    .classes
-                    .root
-            }
-
-            >
+            <div>
                 <WelcomeHeader classes={this.props.headerClasses}/>
-                <List>
-                    {this.renderRecords()}
-                </List>
+                <div className={this.props.classes.root}>
+                    <Typography variant={"h4"} className={this.props.classes.title}>请确认您的预约信息</Typography>
+                    <Paper>
+                        <TableContainer className={this.props.classes.container}>
+                            <Table stickyHeader aria-label="sticky table">
+                                <TableHead>
+                                    <TableRow>
+                                        {this.columns.map((column) => (
+                                            <TableCell
+                                                key={column.id}
+                                                align={column.align}
+                                                style={{minWidth: column.minWidth}}
+                                            >
+                                                {column.id}
+                                            </TableCell>
+                                        ))}
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {
+                                        (() => {
+                                            if (userStateInfoManager.isLogin())
+                                                return this.renderRecords();
+                                            else
+                                                return (<Typography
+                                                    className={this.props.classes.warning}>请先登录</Typography>)
+                                        })()
+                                    }
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </Paper>
+                </div>
             </div>
         )
     }
