@@ -13,6 +13,7 @@ import { SignUpForm, SignupResponse } from '../Models/SignUp'
 import { convertSignupFormToRequest, convertFromSignupResponse } from './LoginConverter'
 import { LoginFrom, LoginResponse } from '../Models/Login'
 import { convertLoginFormToRequest, convertFromLoginResponse } from './LoginConverter'
+import  OperationStateManager  from "../Helpers/OperationStateManager"
 
 class RequestManager {
     private m_path: string = '/user/';
@@ -24,27 +25,38 @@ class RequestManager {
         axios.defaults.headers.post['Content-Type'] = "text/plain";
     }
 
-    user_login(info: LoginFrom) {
+    user_login(info: LoginFrom, status: OperationStateManager) {
         const path = this.m_path + 'login';
+        status.Trigged();
         axios.post(path, convertLoginFormToRequest(info)).then((response) => {
             console.log(response.status);
             if (response.status === 200) {
                 let result = convertFromLoginResponse(response.data)
                 if(result.success) {
                     userStateInfoManager.UserLogin(result.login_token, info.username);
+                    status.Successful();
+                } else{
+                    status.Failed(result.err);
                 }
+                
             }
         }).catch((e) => {
             console.log(e);
         })
     }
 
-    user_signup(info: SignUpForm)  {
+    user_signup(info: SignUpForm, status: OperationStateManager)  {
         const path = this.m_path + 'register';
+        status.Trigged();
         axios.post(path, convertSignupFormToRequest(info)).then((response) => {
             console.log(response.status);
+            let result = convertFromSignupResponse(response.data)
             if (response.status === 200) {
-                let result = convertFromSignupResponse(response.data)
+                if(result.success) {
+                    status.Successful();
+                } else{
+                status.Failed(result.err);
+                }
             }
         }).catch((e) => {
             console.log(e);

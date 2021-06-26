@@ -46,7 +46,7 @@ class WelcomeHeader extends React.Component<headerProps, {}> {
                             if (userStateInfoManager.isLogin()) {
                                 return "登出";
                             } else {
-                                return "登陆"
+                                return "登录"
                             }
                         })()
                     }

@@ -21,6 +21,7 @@ import Box from '@material-ui/core/Box';
 import history from '../Helpers/History';
 import {getLoginRoute, getSignUpRoute, getDocDetail, getLookup, getUserInfoRoute} from "../Helpers/Routers";
 import moment from "moment";
+import WelcomeHeader from "./welcomeHeader";
 
 class UserFrontPage extends React.Component<SignUpProps, {}> {
 
@@ -134,41 +135,18 @@ class UserFrontPage extends React.Component<SignUpProps, {}> {
     }
 
     render() {
-        let date = moment().format('YYYY-MM-DD hh:mm:ss dddd');
-
         return (
             <div className={this.props.classes.root}>
-                <div className={this.props.classes.footTextBox}>
-                    <Container maxWidth="xl" component="main">
-                        <Box display="flex" p={1}>
-
-                            <Box p={1} width="100%">
-                                <Typography
-                                    component="span"
-                                    variant="subtitle1"
-                                    color='inherit'
-                                    className={this.props.classes.footText}
-                                    style={{color: "#0BDAA4"}}>
-                                    {"XXX 大学 XX 医院"}
-                                </Typography>
-                            </Box>
-                            <Box p={0} flexShrink={0}>
-                                <Typography
-                                    component="span"
-                                    variant="subtitle1"
-                                    color="inherit"
-                                    className={this.props.classes.footText}>
-                                    {date}
-                                </Typography>
-                            </Box>
-
-                        </Box>
-                    </Container>
-                </div>
-
-                <span className={this.props.classes.backgroundImg} style={{backgroundImage: `url(${frontPage})`}}>
-              {this.renderTabs()}
-            </span>
+                    <Grid container>
+                        <Grid xs={12} item>
+                            <WelcomeHeader classes={this.props.headerClasses}/>
+                        </Grid>
+                        <Grid xs={12} item className={this.props.classes.footTextBox}>
+                            <span className={this.props.classes.backgroundImg} style={{backgroundImage: `url(${frontPage})`}}>
+                                {this.renderTabs()}
+                            </span>
+                        </Grid>
+                </Grid>
             </div>
         );
     }

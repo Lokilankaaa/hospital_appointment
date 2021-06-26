@@ -37,7 +37,6 @@ export const recordsClasses = makeStyles({
 
 export const headerClasses = makeStyles({
     root: {
-        position: "fixed",
         // padding: "0",
         height: "30px",
         // marginTop: "-9%",
@@ -129,6 +128,7 @@ export const detailPageClasses = makeStyles({
 export const loginClasses = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
+        backgroundColor: '#f6f6f6',
     },
     loginForm: {
         '& .MuiTextField-root': {
@@ -154,30 +154,24 @@ export const loginClasses = makeStyles((theme) => ({
         color: theme.palette.text.secondary,
         width: "100%",
         height: '80%',
-        boxShadow: "none"
+        boxShadow: "none",
+        backgroundColor: '#f6f6f6',
     },
 }));
 
 export const FrontStyles = makeStyles((theme) => ({
     root: {
-        display: 'flex',
-        flexWrap: 'wrap',
-        minWidth: 100,
-        height: "100%",
-        width: "100%",
-        alignItems: 'center',
-
-        backgroundColor: 'transparent', //transparent #0BDAA4
+        flexGrow: 1,
+        backgroundColor: '#f6f6f6', //transparent #0BDAA4
     },
 
     footTextBox: {
-        display: 'flex',
+
         flexWrap: 'wrap',
-        minWidth: 100,
+        minWidth: 200,
         height: "100%",
         width: "80%",
         alignItems: 'center',
-        marginTop: theme.spacing(2),
         marginLeft: "14%",
         marginRight: "14%",
     },
@@ -193,14 +187,11 @@ export const FrontStyles = makeStyles((theme) => ({
     backgroundImg: {
         display: 'flex',
         flexWrap: 'wrap',
-        minWidth: 100,
         height: "100%",
         width: "100%",
         alignItems: 'center',
-        marginTop: theme.spacing(2),
-        marginBottom: "1%",
-        marginLeft: "10%",
-        marginRight: "10%",
+        marginTop: theme.spacing(10),
+        marginBottom: "5%",
     },
 
     tabsRoot: {

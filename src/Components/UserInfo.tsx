@@ -20,6 +20,7 @@ import moment from "moment";
 import Typography from '@material-ui/core/Typography';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
+import WelcomeHeader from "./welcomeHeader";
 
 interface UserInfoProps {
     Name: string;
@@ -154,7 +155,7 @@ class UserInfo extends React.Component<SignUpProps, {}> {
         return (
             <div style={{margin:"0%"}}>
                 <form onSubmit={(e) => e.preventDefault()}>
-                    <Container maxWidth="xl" component="main" style={{marginTop:"0%"}}>
+                    <Container maxWidth="xl" component="main">
                         {this.infoTitles.map((title) => (
                             <Grid container>
                                 <div style={{margin:"1%", height: "20%", width:"20%"}}>
@@ -179,7 +180,7 @@ class UserInfo extends React.Component<SignUpProps, {}> {
     private renderSideBar() {
         return(
             <div style={{marginLeft:"5%"}}>
-                <Grid container>
+                <Grid container style={{display: "flex", justifyContent: "center"}}>
                 <h3 style={{width:"100%"}}>用户管理信息</h3>
                     <Grid item>
                         <Grid item>
@@ -224,8 +225,8 @@ class UserInfo extends React.Component<SignUpProps, {}> {
 
     private renderChangePassword() {
         return(
-            <Grid style={ {justifyContent: 'center'} }>
-                <form onSubmit={(e) => e.preventDefault()}>
+            <Grid style={ {justifyContent: 'center', backgroundColor: '#f6f6f6'} }>
+                <form onSubmit={(e) => e.preventDefault() }>
                     <Container maxWidth="xl" component="main" style={{marginTop:"5%"}}>
                         {this.passWordsTab.map((pass) => (
                             <Grid container>
@@ -278,26 +279,26 @@ class UserInfo extends React.Component<SignUpProps, {}> {
     }
     render() {
         return (
-            <Grid container>
-                <Grid item style={{marginTop:"3%", height: "20%", width:"15%"}}>
-                <div style={{marginLeft:"20%", marginTop:"100%", height: "20%", width:"100%"}}>
-                    { this.renderSideBar() }
-                </div>
-                    
+            <div style={{backgroundColor: '#f6f6f6'}}>
+                <WelcomeHeader classes={this.props.headerClasses}/>
+                <Grid container>
+                    <Grid item style={{display: "flex", justifyContent: "center"}}>
+                            { this.renderSideBar() }
+                    </Grid>
+                    <Grid item xs={9} style={{marginTop:"3%", height: "20%", width:"75%"}}>
+                        <div className={ this.props.classes.header } >
+            
+                                <Typography variant={"h5"} className={ this.props.classes.innerTitle }>{"个人信息"}</Typography>
+                                
+                        
+                        </div>
+
+
+                        { this.getRenderTabs() }
+
+                    </Grid>
                 </Grid>
-                <Grid item style={{marginTop:"3%", height: "20%", width:"75%"}}>
-                    <div className={ this.props.classes.header } >
-           
-                            <Typography variant={"h5"} className={ this.props.classes.innerTitle }>{"个人信息"}</Typography>
-                              
-                      
-                    </div>
-
-
-                    { this.getRenderTabs() }
-
-                </Grid>
-            </Grid>
+            </div>
         )
     }
 }

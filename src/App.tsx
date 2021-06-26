@@ -21,7 +21,7 @@ function App() {
     return (
         <Router history={history}>
             <Switch>
-                // add your compoment and URl in here
+                // add your component and URl in here
                 <Route exact path={getLoginRoute()} component={fnLogin}/>
                 <Route exact path={"/"} component={fnUserFrontPage}/>
                 <Route exact path={getSignUpRoute()} component={fnSignUp}/>
@@ -40,19 +40,19 @@ function App() {
 // warp to pass argument
 function fnLogin() {
     return (
-        <Login classes={loginClasses()} identity={"Admin"}></Login>
+        <Login classes={loginClasses()} identity={"Admin"} headerClasses={headerClasses()}></Login>
     )
 }
 
 function fnSignUp() {
     return (
-        <SignUp classes={loginClasses()}></SignUp>
+        <SignUp classes={loginClasses()} headerClasses={headerClasses()}></SignUp>
     )
 }
 
 function fnUserFrontPage() {
     return (
-        <UserFrontPage classes={FrontStyles()}></UserFrontPage>
+        <UserFrontPage classes={FrontStyles()} headerClasses={headerClasses()}></UserFrontPage>
     )
 }
 
@@ -70,25 +70,25 @@ function fnLookup() {
 
 function fnUserInfoPage() {
   return  (
-    <UserInfo classes={UserInfoStyles()} ></UserInfo>
+    <UserInfo classes={UserInfoStyles()} headerClasses={headerClasses()}></UserInfo>
   )
 }
 
 function fnAdminFrontPage(){
     return (
-        <AdminFrontPage classes={FrontStyles()}></AdminFrontPage>
+        <AdminFrontPage classes={FrontStyles()} headerClasses={headerClasses()}></AdminFrontPage>
     )
 }
 
 function fnAdminAppointmentReview(){
     return (
-        <AppointmentReview classes={AppointmentReviewStyles()}></AppointmentReview>
+        <AppointmentReview classes={AppointmentReviewStyles()} headerClasses={headerClasses()}></AppointmentReview>
     )
 }
 
 function fnDoctorReviewHistory(){
     return (
-        <DoctorReviewHistory classes={DoctorReviewHistoryStyles()}></DoctorReviewHistory>
+        <DoctorReviewHistory classes={DoctorReviewHistoryStyles()} headerClasses={headerClasses()}></DoctorReviewHistory>
     )
 }
 // todo: this should be fixed

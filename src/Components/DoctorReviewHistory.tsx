@@ -188,48 +188,50 @@ class DoctorReviewHistory extends React.Component<SignUpProps, {}> {
 
     private renderOneComment(comment: UserReview) {
         return (
-            <Grid container style={{marginTop:"5%"}} spacing={3}>
-                <Grid item xs={1}>
-                    <Grid container >
-                        <Grid item xs={12} style={{ display: "flex", justifyContent: "center"}}>
-                            <Avatar className={this.props.classes.large} src={comment.userImg}/>
-                        </Grid>
-                        <Grid item xs={12} style={{ display: "flex", justifyContent: "center"}}>
-                            <Typography variant="subtitle2" color="textSecondary" gutterBottom >
-                                        {comment.userName}
-                            </Typography>
-                        </Grid>
-                    </Grid>
-                </Grid>
-                <Grid item xs={11} >
-                    <Grid container>
-                        <Grid item xs={12}>
-                            <Grid container spacing={0} style={{ backgroundColor: "#F5F5F5"}}>
-
-                                <Grid item xs={5} style={{ marginLeft: "5%",  backgroundColor: "#F5F5F5"}}>
-                                    <Typography variant="subtitle1"  >
-                                        { `疾病: ${comment.disease}` }
-                                    </Typography>
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <Typography variant="subtitle1" color="textSecondary" >
-                                        { `满意度: ${comment.rating}` }
-                                    </Typography>
-                                </Grid>
-
+            <Grid item style={{borderBottom: '4px solid #D9D9D9', display: "flex", justifyContent: "center"}}>
+                <Grid container style={{marginTop:"5%"}} spacing={3} item xs={11}>
+                    <Grid item xs={1}>
+                        <Grid container >
+                            <Grid item xs={12} style={{ display: "flex", justifyContent: "center"}}>
+                                <Avatar className={this.props.classes.large} src={comment.userImg}/>
+                            </Grid>
+                            <Grid item xs={12} style={{ display: "flex", justifyContent: "center"}}>
+                                <Typography variant="subtitle2" color="textSecondary" gutterBottom >
+                                            {comment.userName}
+                                </Typography>
                             </Grid>
                         </Grid>
-                        <Grid item xs={12}>
-                            <Grid container spacing={2}>
-                                <Grid item xs={12} style={{marginTop: "2%"}}>
-                                    <Typography variant="subtitle2" >
-                                        { `${comment.content}` }
-                                    </Typography>
+                    </Grid>
+                    <Grid item xs={11} >
+                        <Grid container>
+                            <Grid item xs={12}>
+                                <Grid container spacing={0} style={{ backgroundColor: "#F5F5F5"}}>
+
+                                    <Grid item xs={5} style={{ marginLeft: "5%",  backgroundColor: "#F5F5F5"}}>
+                                        <Typography variant="subtitle1"  >
+                                            { `疾病: ${comment.disease}` }
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item xs={4}>
+                                        <Typography variant="subtitle1" color="textSecondary" >
+                                            { `满意度: ${comment.rating}` }
+                                        </Typography>
+                                    </Grid>
+
                                 </Grid>
-                                <Grid item xs={12} style={{marginBottom: "2%"}}>
-                                    <Typography variant="subtitle2" color="textSecondary" >
-                                        { `${comment.date}(就诊后${comment.delay}天)` }
-                                    </Typography>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Grid container spacing={2}>
+                                    <Grid item xs={12} style={{marginTop: "2%"}}>
+                                        <Typography variant="subtitle2" >
+                                            { `${comment.content}` }
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item xs={12} style={{marginBottom: "2%"}}>
+                                        <Typography variant="subtitle2" color="textSecondary" >
+                                            { `${comment.date}(就诊后${comment.delay}天)` }
+                                        </Typography>
+                                    </Grid>
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -242,39 +244,42 @@ class DoctorReviewHistory extends React.Component<SignUpProps, {}> {
 
     render() {
         return (
-            <Grid container style={{marginTop:"10%", marginLeft:"10%", width:"100%"}} spacing={1}>
-                <Grid item xs={8}>
-                    <Grid container>
-                        <Grid item xs={12}>
-                            <Typography className={this.props.classes.title} variant="h4" gutterBottom>
-                                { '患者评价' }
-                            </Typography>
-                        </Grid>
-                        
-                        <Grid item xs={12} style={{marginTop:"5%", marginBottom:"5%"}}>
-                            { this.renderRatingBar() }
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Grid container item xs={12} >
-                                {this.userReview.map((comment) => (
-                                    this.renderOneComment(comment)
-                                ))}
+            <div style={{backgroundColor: '#f6f6f6'}}>
+                <WelcomeHeader classes={this.props.headerClasses}/>
+                <Grid container style={{marginTop:"6%", display: "flex", justifyContent: "center"}} spacing={1}>
+                    <Grid item xs={8}>
+                        <Grid container>
+                            <Grid item xs={12}>
+                                <Typography className={this.props.classes.title} variant="h4" gutterBottom>
+                                    { '患者评价' }
+                                </Typography>
                             </Grid>
+                            
+                            <Grid item xs={12} style={{marginTop:"5%", marginBottom:"5%"}}>
+                                { this.renderRatingBar() }
+                            </Grid>
+                            <Grid item xs={12} style={{backgroundColor: 'white', display: "flex", justifyContent: "center"}}>
+                                <Grid container item xs={12} style={{display: "flex", justifyContent: "center"}}>
+                                    {this.userReview.map((comment) => (
+                                        this.renderOneComment(comment)
+                                    ))}
+                                </Grid>
+                            </Grid>
+                            <Grid item></Grid>
+                            <Grid item></Grid>
+                        </Grid>
+                    </Grid>
+
+                    <Grid item xs={2}>
+                        { this.renderDoctorInfo() }
+                        <Grid item>
+                            { this.renderStarRatingCurrrent() }
                         </Grid>
                         <Grid item></Grid>
-                        <Grid item></Grid>
                     </Grid>
-                </Grid>
 
-                <Grid item xs={2}>
-                    { this.renderDoctorInfo() }
-                    <Grid item>
-                        { this.renderStarRatingCurrrent() }
-                    </Grid>
-                    <Grid item></Grid>
                 </Grid>
-
-            </Grid>
+            </div>
         )
     }
 }

@@ -123,29 +123,33 @@ class AppointmentReview extends React.Component<SignUpProps, {}> {
 
     render() {
         return (
-            <Grid container style={{marginTop:"10%", marginLeft:"20%", width:"60%"}}>
-                <Grid item  xs={8}>
-                    <Grid container spacing={5}>
-                        <Grid item xs={5}>
-                            { this.renderDoctorInfo() }
-                        </Grid>
-                        <Grid item xs={7}  alignItems="flex-end" justify="flex-end" style={{ display: "flex"}}>
-                            {this.renderStarRating()} 
+            <div style={{backgroundColor: '#f6f6f6', marginBottom:"10%"}}>
+                <WelcomeHeader classes={this.props.headerClasses}/>
+            
+                <Grid container style={{marginTop:"6%", marginLeft:"20%", width:"60%", backgroundColor: 'white', display: "flex", justifyContent: "center"}}>
+                    <Grid item  xs={8}>
+                        <Grid container spacing={5}>
+                            <Grid item xs={5}>
+                                { this.renderDoctorInfo() }
+                            </Grid>
+                            <Grid item xs={7}  alignItems="flex-end" justify="flex-end" style={{ display: "flex"}}>
+                                {this.renderStarRating()} 
+                            </Grid>
                         </Grid>
                     </Grid>
+                    <Grid item  xs={8} style={{marginTop:"1%"}}>
+                        { this.renderWriteComments() }
+                    </Grid>
+                    <Grid item  xs={8} style={{marginTop:"1%", display: "flex"}} justify="center" >
+                        <Button type="submit" className={ this.props.classes.PublishReviewButton } disabled={ this.review.content === "" || this.review.star === 0  }
+                                onClick={() => { this.publishReview() }  } style={{width:"20%"}} >
+                                        {"提交"}
+                                        
+                        </Button>
+                    </Grid>
+            
                 </Grid>
-                <Grid item  xs={8} style={{marginTop:"1%"}}>
-                    { this.renderWriteComments() }
-                </Grid>
-                <Grid item  xs={8} style={{marginTop:"1%", display: "flex"}} justify="center" >
-                    <Button type="submit" className={ this.props.classes.PublishReviewButton } disabled={ this.review.content === ""  }
-                            onClick={() => { this.publishReview() }  } style={{width:"20%"}} >
-                                    {"提交"}
-                                    
-                    </Button>
-                </Grid>
-           
-            </Grid>
+            </div>
         )
     }
 }
