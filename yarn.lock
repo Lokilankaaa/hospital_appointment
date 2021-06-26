@@ -10335,11 +10335,6 @@ react-app-polyfill@^2.0.0:
     regenerator-runtime "^0.13.7"
     whatwg-fetch "^3.4.1"
 
-react-axios@^0.21.1:
-  version "2.0.5"
-  resolved "https://registry.nlark.com/react-axios/download/react-axios-2.0.5.tgz#ad24cfc9927a03f607b530a02b86af3da62b997a"
-  integrity sha1-rSTPyZJ6A/YHtTCgK4avPaYrmXo=
-
 react-dev-utils@^11.0.3:
   version "11.0.4"
   resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-11.0.4.tgz#a7ccb60257a1ca2e0efe7a83e38e6700d17aa37a"
