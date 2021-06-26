@@ -25,9 +25,7 @@ class WelcomeHeader extends React.Component<headerProps, {}> {
     }
 
     logout() {
-        userStateInfoManager.setIsLogin(false);
-        userStateInfoManager.setUserName("");
-        userStateInfoManager.setLoginToken("");
+        userStateInfoManager.UserLogout();
     }
 
     render() {

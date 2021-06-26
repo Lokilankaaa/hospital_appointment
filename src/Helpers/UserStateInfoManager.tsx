@@ -3,25 +3,27 @@ class UserStateInfoManager {
     private userName: string = "";
     private loginToken: string = "";
 
+    // setters
+    UserLogin(token: string, name: string) {
+        console.log(`User ${name} logined with token ${token}`)
+        this._isLogin = true;
+        this.loginToken = token;
+        this.userName = name;
+    }
+
+    UserLogout() {
+        this._isLogin = false;
+        this.loginToken = "";
+        this.userName = "";
+    }
+
+    // getters
     isLogin() {
         return this._isLogin;
     }
 
-    setIsLogin(value: boolean) {
-        this._isLogin = value;
-    }
-
-    setLoginToken(value: string) {
-        this._isLogin = true;
-        this.loginToken = value;
-    }
-
     getLoginToken() {
-        return this._isLogin;
-    }
-
-    setUserName(value: string) {
-        this.userName = value;
+        return this.loginToken;
     }
 
     getUserName() {

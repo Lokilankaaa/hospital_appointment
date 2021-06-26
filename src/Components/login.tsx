@@ -11,11 +11,8 @@ import { getLoginRoute, getSignUpRoute } from "../Helpers/Routers";
 import { Link } from "react-router-dom";
 import history from '../Helpers/History';
 import Typography from '@material-ui/core/Typography';
-
-interface LoginFrom {
-    username: string;
-    password: string;
-}
+import { LoginFrom, LoginResponse } from '../Models/Login'
+import { requestManager } from "../Helpers/RequestManager";
 
 @observer
 class Login extends React.Component<LoginProps, {}> {
@@ -33,6 +30,11 @@ class Login extends React.Component<LoginProps, {}> {
 
     private onClickLogin = () => {
         console.log(`login with: username: ${this.LoginInfo.username}, passward: ${this.LoginInfo.password}`);
+        requestManager.user_login(this.LoginInfo)
+    }
+
+    public loginCallBack = (result: LoginResponse) => {
+        console.log(`Sign Up is: ${result.success}, with msg: ${result.err}`);
     }
 
     private onClickSignUp = () => {
