@@ -13,7 +13,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from "@material-ui/core/Typography";
 import {userStateInfoManager} from "../Helpers/UserStateInfoManager";
-import axios from "axios";
+import {requestManager} from "../Helpers/RequestManager";
 
 interface Column {
     id: '序号' | '科室' | '医生姓名' | '预约日期' | '挂号费' | '状态' | '操作';
@@ -27,12 +27,14 @@ declare global {
 }
 
 interface recordForm extends Dictionary {
+    tid: number,
+    did: string,
     order: number,
     type: string,
     docName: string,
     time: Date,
     fee: number,
-    status: boolean,
+    status: string,
 }
 
 interface recordProps {
@@ -81,20 +83,16 @@ class RecordPage extends React.Component<recordProps, {}> {
         this.records = new Array<recordForm>();
         this.requestRecords.bind(this);
         this.renderRecords.bind(this);
+        this.cancel_appointment.bind(this);
     }
 
     requestRecords() {
-        // for (let i = 0; i < 20; i++) {
-        //     this.records.push({
-        //         order: i + 1,
-        //         type: "asd",
-        //         docName: "AAA",
-        //         time: new Date(),
-        //         fee: 12,
-        //         status: false
-        //     })
-        // }
+        requestManager.search_appointment("", this.records);
+    }
 
+    cancel_appointment(order: number) {
+        requestManager.cancel_appointment(this.records[order - 1].tid)
+        this.records = this.records.filter((record) => record.order !== order);
     }
 
     componentDidMount() {
@@ -108,7 +106,9 @@ class RecordPage extends React.Component<recordProps, {}> {
                     if (column.label === 'operation')
                         return (
                             <TableCell key={column.id} align={column.align}>
-                                <Button variant="contained" className={this.props.recordClasses.button}>取消</Button>
+                                <Button variant="contained" className={this.props.recordClasses.button}
+                                        disabled={record.status === "未取号"}
+                                        onClick={() => this.cancel_appointment(record.order)}>取消</Button>
                             </TableCell>
                         )
                     else {
@@ -179,7 +179,8 @@ class RecordPage extends React.Component<recordProps, {}> {
                                             if (userStateInfoManager.isLogin())
                                                 return this.renderRecords();
                                             else
-                                                return (<Typography className={this.props.classes.warning}>请先登录</Typography>)
+                                                return (<Typography
+                                                    className={this.props.classes.warning}>请先登录</Typography>)
                                         })()
                                     }
                                 </TableBody>

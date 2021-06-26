@@ -94,7 +94,8 @@ export const detailPageClasses = makeStyles({
         // margin: "3%",
         marginTop: "3%",
         padding: "3%",
-        backgroundColor: "#f6f6f6"
+        backgroundColor: "#f6f6f6",
+        minHeight:"500px"
     },
     title: {
         margin: "1%",
