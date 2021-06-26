@@ -2,7 +2,6 @@ import axios from "axios";
 import {userStateInfoManager} from './UserStateInfoManager';
 import {appointment, search_doctor_response, timesForm} from "../Models/ResponseForm";
 import {detailProps} from "../Models/DocDetail";
-import {recordClasses} from "../Styles/madeStyles";
 import avatar_g from '../Assets/per_girl.png';
 import avatar_b from '../Assets/per_boy.png';
 import moment from "moment";
