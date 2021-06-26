@@ -9,26 +9,31 @@ import { inject, observer } from "mobx-react";
 import { SignUpProps } from '../Models/Login';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
-
-interface SignUpFrom {
-    PhoneNumber?: string;
-    UserName?: string;
-    Passward?: string;
-    PasswardConfirm?: string; 
-}
+import { requestManager } from '../Helpers/RequestManager'
+import { SignUpForm, SignupResponse, SignupRequest } from '../Models/SignUp'
 
 @observer
 class SignUp extends React.Component<SignUpProps, {}> {
 
-    @observable private SignUpInfo: SignUpFrom;
+    @observable private SignUpInfo: SignUpForm;
     constructor(props: SignUpProps) {
         super(props);
         makeObservable(this);
-        this.SignUpInfo = {}
+        this.SignUpInfo = {
+            PhoneNumber: "",
+            UserName: "",
+            Passward: "",
+            PasswardConfirm: ""
+        }
     }
 
     private onClickSignUp = () => {
         console.log(`Sign Up with: username: ${this.SignUpInfo.UserName}, passward: ${this.SignUpInfo.PasswardConfirm}`);
+        requestManager.user_signup(this.SignUpInfo);
+    }
+
+    private SignUpCallBack = (result: SignupResponse) => {
+        console.log(`Sign Up is: ${result.success}, with msg: ${result.err}`);
     }
 
     private onClickSendValidation = () => {

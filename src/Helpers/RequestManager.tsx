@@ -9,14 +9,48 @@ import moment from "moment";
 import history from '../Helpers/History';
 import {getLoginRoute} from "./Routers";
 import {ClassNameMap} from "@material-ui/styles/withStyles";
+import { SignUpForm, SignupResponse } from '../Models/SignUp'
+import { convertSignupFormToRequest, convertFromSignupResponse } from './LoginConverter'
+import { LoginFrom, LoginResponse } from '../Models/Login'
+import { convertLoginFormToRequest, convertFromLoginResponse } from './LoginConverter'
 
 class RequestManager {
     private m_path: string = '/user/';
 
     constructor() {
-        axios.defaults.baseURL = "http://60.205.206.96";
-        axios.defaults.headers.post['Content-Type'] = "application/json";
+        // A workaround for CORS ,
+        // see https://stackoverflow.com/questions/43871637/no-access-control-allow-origin-header-is-present-on-the-requested-resource-whe
+        axios.defaults.baseURL = "https://serene-shore-59752.herokuapp.com/http://60.205.206.96";
+        axios.defaults.headers.post['Content-Type'] = "text/plain";
     }
+
+    user_login(info: LoginFrom) {
+        const path = this.m_path + 'login';
+        axios.post(path, convertLoginFormToRequest(info)).then((response) => {
+            console.log(response.status);
+            if (response.status === 200) {
+                let result = convertFromLoginResponse(response.data)
+                if(result.success) {
+                    userStateInfoManager.UserLogin(result.login_token, info.username);
+                }
+            }
+        }).catch((e) => {
+            console.log(e);
+        })
+    }
+
+    user_signup(info: SignUpForm)  {
+        const path = this.m_path + 'register';
+        axios.post(path, convertSignupFormToRequest(info)).then((response) => {
+            console.log(response.status);
+            if (response.status === 200) {
+                let result = convertFromSignupResponse(response.data)
+            }
+        }).catch((e) => {
+            console.log(e);
+        })
+    }
+
 
     search_depart(value: string, types: Array<string>) {
         const path = this.m_path + 'search_depart';
