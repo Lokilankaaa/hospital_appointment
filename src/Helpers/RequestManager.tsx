@@ -19,8 +19,8 @@ class RequestManager {
     constructor() {
         // A workaround for CORS ,
         // see https://stackoverflow.com/questions/43871637/no-access-control-allow-origin-header-is-present-on-the-requested-resource-whe
-        axios.defaults.baseURL = "https://serene-shore-59752.herokuapp.com/http://60.205.206.96";
-        axios.defaults.headers.post['Content-Type'] = "text/plain";
+        axios.defaults.baseURL = "http://60.205.206.96";
+        axios.defaults.headers.post['Content-Type'] = "application/json";
     }
 
     user_login(info: LoginFrom) {
@@ -109,8 +109,8 @@ class RequestManager {
                             docImg: doctor['gender'] === '男' ? avatar_b : avatar_g,
                             gender: doctor['gender'] === '男',
                             isam: true,
-                            capacity: 0,
-                            rest: 0,
+                            capacity: 1,
+                            rest: 1,
                         })
                 })
             }
@@ -186,6 +186,7 @@ class RequestManager {
     appoint(tid: number) {
         if (userStateInfoManager.isLogin()) {
             const path = this.m_path + 'appoint';
+            console.log(userStateInfoManager.getLoginToken())
             axios.post(path, {
                 "login_token": userStateInfoManager.getLoginToken(),
                 "tid": tid
