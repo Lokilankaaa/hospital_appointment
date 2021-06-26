@@ -1,8 +1,10 @@
 export interface timesForm {
     "tid": number,
+    "date": string,
+    "time": string,
     "did": string,
-    "start_time": string,
-    "end_time": string,
+    "doctor_name": string,
+    "depart_name": string,
     "capacity": number,
     "rest": number
 }
@@ -20,7 +22,7 @@ export interface search_doctor_response {
 export interface appointment {
     "did": string,
     "doctor_name": string,
-    "depart":string,
+    "doctor_depart":string,
     "start_time": string,
     "end_time": string,
     "status": string,

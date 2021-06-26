@@ -5,7 +5,10 @@ import {detailProps} from "../Models/DocDetail";
 import {recordClasses} from "../Styles/madeStyles";
 import avatar_g from '../Assets/per_girl.png';
 import avatar_b from '../Assets/per_boy.png';
-
+import moment from "moment";
+import history from '../Helpers/History';
+import {getLoginRoute} from "./Routers";
+import {ClassNameMap} from "@material-ui/styles/withStyles";
 
 class RequestManager {
     private m_path: string = '/user/';
@@ -24,59 +27,75 @@ class RequestManager {
         }).then((response) => {
             console.log(response.status);
             if (response.status === 200) {
-                response.data["departments"].map((department: { name: string, info: string }) => {
-                    types.push(department["name"]);
-                })
+                response.data["departments"].map((department: { name: string, info: string }) =>
+                    types.push(department["name"])
+                )
             }
         }).catch((e) => {
             console.log(e);
         })
     }
 
-    search_docs(depart_name: string, docName: string, res: Array<detailProps>, depart: boolean) {
+    search_docs(depart_name: string, docName: string, res: Array<detailProps>, classes: ClassNameMap) {
         const path = this.m_path + 'search_doctor';
         axios.post(path, {
-            "depart_name": depart_name,
             "doctor_name": docName,
+            "depart_name": depart_name,
             "rank": "",
             "first_index": 0,
             "limit": 20,
         }).then((response) => {
             if (response.status === 200) {
-                if (depart)
-                    response.data.map((doctor: search_doctor_response) => {
-                        const doctimes = new Array<timesForm>();
-                        const start = new Date();
-                        const end = new Date(start.getDate() + 24 * 60 * 60 * 1000 - 1);
-                        this.search_time(doctor['did'], start, end, doctimes)
+                response.data['doctors'].map((doctor: search_doctor_response) => {
+                    const doctimes = new Array<timesForm>();
+                    this.search_time(doctor['did'], doctimes)
+                    if (doctimes.length > 0)
+                        for (let i = 0; i < doctimes.length; i++)
+                            res.push({
+                                classes: classes,
+                                tid: doctimes[i]['tid'],
+                                did: doctor['did'],
+                                docName: doctor["name"],
+                                docTitle: doctor["rank"],
+                                fee: 10,
+                                docImg: doctor['gender'] === '男' ? avatar_b : avatar_g,
+                                gender: doctor['gender'] === '男',
+                                isam: doctimes[i]['time'] === '上午',
+                                capacity: doctimes[i]['capacity'],
+                                rest: doctimes[i]['rest'],
+                            })
+
+                    else
                         res.push({
-                            classes: recordClasses(),
+                            classes: classes,
+                            tid: -1,
                             did: doctor['did'],
                             docName: doctor["name"],
                             docTitle: doctor["rank"],
                             fee: 10,
                             docImg: doctor['gender'] === '男' ? avatar_b : avatar_g,
-                            times: doctimes,
-                            gender: doctor['gender'] === '男'
+                            gender: doctor['gender'] === '男',
+                            isam: true,
+                            capacity: 0,
+                            rest: 0,
                         })
-                    })
+                })
             }
         })
     }
 
-    search_time(did: string, start: Date, end: Date, times: Array<timesForm>) {
+    search_time(did: string, times: Array<timesForm>) {
         const path = this.m_path + 'search_time';
         axios.post(path, {
             'did': did,
-            'start_time': start.toISOString(),
-            'end_time': end.toISOString(),
+            'date': moment().format('YYYY-MM-DD'),
             'first_index': 0,
             'limit': 20,
         }).then((response) => {
             if (response.status === 200) {
-                response.data.map((time: timesForm) => {
+                response.data['times'].map((time: timesForm) =>
                     times.push(time)
-                })
+                )
             }
         }).catch(e => {
             console.log(e);
@@ -95,23 +114,25 @@ class RequestManager {
                 "limit": 20
             }).then((response) => {
                 let i = 0;
-                response.data.map((appointment: appointment) => {
+                response.data['appointments'].map((appointment: appointment) =>
                     appointments.push({
+                        did: appointment['did'],
                         order: i++,
-                        type: appointment['depart'],
+                        type: appointment['doctor_depart'],
                         docName: appointment['doctor_name'],
                         time: appointment['time'],
                         fee: 10,
                         status: appointment['status']
                     })
-                })
+                )
             })
         } else {
-            alert("Login first please!");
+            alert("请先登陆！");
+            history.replace(getLoginRoute());
         }
     }
 
-    cancel_appointment(tid: string) {
+    cancel_appointment(tid: number) {
         if (userStateInfoManager.isLogin()) {
             const path = this.m_path + 'cancel_appoint';
             axios.post(path, {
@@ -129,7 +150,7 @@ class RequestManager {
         }
     }
 
-    appoint(tid: string) {
+    appoint(tid: number) {
         if (userStateInfoManager.isLogin()) {
             const path = this.m_path + 'appoint';
             axios.post(path, {

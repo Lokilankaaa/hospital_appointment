@@ -24,6 +24,7 @@ class DocDetails extends React.Component<detailPageProps, {}> {
     constructor(props: detailPageProps) {
         super(props);
         makeObservable(this);
+        this.handleDepartChange.bind(this);
         this.handleDateChange.bind(this);
         this.requestDocs.bind(this);
         this.renderDocList.bind(this);
@@ -32,7 +33,7 @@ class DocDetails extends React.Component<detailPageProps, {}> {
         this.details = new Array<detailProps>();
         this.date = new Date();
         this.types = new Array<string>();
-        this.currentType = "中医肛肠科";
+        this.currentType = "";
         this.searchDocName = "";
     }
 
@@ -45,29 +46,23 @@ class DocDetails extends React.Component<detailPageProps, {}> {
     }
 
     requestDocs(date: Date) {
-        // for (let i = 0; i < 10; i++) {
-        //     this.details.push(
-        //         {
-        //             classes: this.props.cardClasses,
-        //             docName: "string",
-        //             docTitle: "string",
-        //             remaining: 1,
-        //             fee: 2,
-        //             docImg: i % 2 === 0 ? avatar_g : avatar_b,
-        //             isam: i % 2 === 0,
-        //         }
-        //     )
-        // }
-        requestManager.search_docs(this.types[0], "", this.details, true);
+        this.details = new Array<detailProps>();
+        requestManager.search_docs(this.currentType === null ? this.types[0] : this.currentType, "", this.details, this.props.cardClasses);
     }
 
     requestSearch() {
-        console.log(this.searchDocName);
+        this.details = new Array<detailProps>();
+        requestManager.search_docs(this.currentType === null ? this.types[0] : this.currentType, this.searchDocName, this.details, this.props.cardClasses);
     }
 
     handleDateChange() {
         //request for new doc details
         console.log(this.date);
+        this.requestDocs(this.date);
+    }
+
+    handleDepartChange() {
+        console.log(this.currentType);
         this.requestDocs(this.date);
     }
 
@@ -100,32 +95,33 @@ class DocDetails extends React.Component<detailPageProps, {}> {
         if (this.details.length > 0) {
             let morningDoc = this.details.filter((detail) => detail.isam).map((detail) => (
                     <Grid item xs={9} sm={3}>
-                        <DetailCard classes={detail.classes} docName={detail.docName} docTitle={detail.docTitle}
-                                    remaining={detail.remaining} fee={detail.fee} docImg={detail.docImg}
-                                    isam={detail.isam}/>
+                        <DetailCard classes={detail.classes} did={detail.did} docName={detail.docName} docTitle={detail.docTitle}
+                                    rest={detail.rest} fee={detail.fee} docImg={detail.docImg}
+                                    isam={detail.isam} capacity={detail.capacity} gender={detail.gender} tid={detail.tid}/>
                     </Grid>
                 )
             );
 
             let afternoonDoc = this.details.filter((detail) => !detail.isam).map((detail) => (
                     <Grid item xs={9} sm={3}>
-                        <DetailCard classes={detail.classes} docName={detail.docName} docTitle={detail.docTitle}
-                                    remaining={detail.remaining} fee={detail.fee} docImg={detail.docImg}
-                                    isam={detail.isam}/>
+                        <DetailCard classes={detail.classes} did={detail.did} docName={detail.docName} docTitle={detail.docTitle}
+                                    rest={detail.rest} fee={detail.fee} docImg={detail.docImg}
+                                    isam={detail.isam} capacity={detail.capacity} gender={detail.gender} tid={detail.tid}/>
                     </Grid>
                 )
             );
-            morningDoc = morningDoc.length > 0 ? morningDoc : [(<h2>No doctor found</h2>)];
-            afternoonDoc = afternoonDoc.length > 0 ? afternoonDoc : [(<h2>No doctor found</h2>)];
+            morningDoc = morningDoc.length > 0 ? morningDoc : [(<Grid item xs={9} sm={9}><h2>No doctor found</h2></Grid>)];
+            afternoonDoc = afternoonDoc.length > 0 ? afternoonDoc : [(<Grid item xs={9} sm={9}><h2>No doctor found</h2></Grid>)];
             return [morningDoc, afternoonDoc];
         } else
-            return [(<h2>No doctor found</h2>), (<h2>No doctor found</h2>)];
+            return [(<Grid item xs={9} sm={9}><h2>No doctor found</h2></Grid>), (<Grid item xs={9} sm={9}><h2>No doctor found</h2></Grid>)];
     }
 
     componentDidMount() {
         //request for doc details
-        this.requestDocs(new Date());
         this.requestDocTypes(null);
+        this.currentType = this.types[0];
+        this.requestDocs(this.date);
     }
 
     render() {

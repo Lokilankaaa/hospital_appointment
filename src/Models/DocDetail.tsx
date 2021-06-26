@@ -3,13 +3,16 @@ import {timesForm} from "./ResponseForm";
 
 export interface detailProps {
     classes: ClassNameMap,
+    tid: number,
     did: string,
     docName: string,
     docTitle: string,
     fee: number,
     docImg: string,
-    times: Array<timesForm>,
     gender: boolean,
+    isam: boolean,
+    capacity: number,
+    rest: number
 }
 
 export interface detailPageProps {
