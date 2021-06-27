@@ -7,7 +7,7 @@ import {MuiPickersUtilsProvider, KeyboardDatePicker} from '@material-ui/pickers'
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import avatar_g from '../Assets/per_girl.png';
 import avatar_b from '../Assets/per_boy.png';
-import {Lambda, observable, reaction, makeObservable} from "mobx";
+import {Lambda, observable, reaction, makeObservable, action} from "mobx";
 import DateFnsUtils from '@date-io/date-fns';
 import {inject, observer} from "mobx-react";
 import {SignUpProps} from '../Models/Login';
@@ -25,28 +25,41 @@ import {cardClasses} from "../Styles/madeStyles";
 import WelcomeHeader from "./welcomeHeader";
 import Avatar from '@material-ui/core/Avatar';
 
+import  OperationStateManager  from "../Helpers/OperationStateManager"
+import { OperationStates, OPerationStatus } from '../Models/OperationState'
+
 import Rating from '@material-ui/lab/Rating';
 import { DoctorInfo, AppointmentInfo, Review, UserReview } from '../Models/ReviewHistory'
+import { requestManager } from "../Helpers/RequestManager";
 
+import {RouteComponentProps} from 'react-router';
 
 @observer
 class DoctorReviewHistory extends React.Component<SignUpProps, {}> {
 
-    constructor(props: SignUpProps) {
-        super(props);
-        makeObservable(this);
-        this.userReview = this.getUserReiviews();
-    }
-    @observable private docInfo: DoctorInfo = {
-        docName: "华佗",
-        docImg: "None",
-        docTitle: "副主任医师",
-        docDepartment: "呼吸科专家诊室"
+    public DoctorReviewHistoryCallBack = (state: OperationStates, msg: string) => {
+        this.GetDocReviewHistoryStatus.state = state;
+        this.GetDocReviewHistoryStatus.msg = msg;
+        console.log(msg, this.GetDocReviewHistoryStatus.msg)
     }
 
-    @observable private appointment: AppointmentInfo = {
-        Department: "呼吸科专家诊室",
-        time: "2021/04/11"
+    private LoginStatusManager = new OperationStateManager(this.DoctorReviewHistoryCallBack);
+    @observable GetDocReviewHistoryStatus: OPerationStatus = {
+        state: OperationStates.NotTriggered,
+        msg: ""
+    };
+
+    @observable private DoctorReviews = new Array<UserReview>();
+
+    constructor(props: any) {
+        super(props);
+        makeObservable(this);
+    }
+    
+    @observable private docInfo: DoctorInfo = {
+        docName: "未知",
+        docImg: "未知",
+        docTitle: "未知"
     }
 
     @observable private DocReview: Review = {
@@ -56,31 +69,26 @@ class DoctorReviewHistory extends React.Component<SignUpProps, {}> {
         doctorID: "None"
     }
 
-    @observable private userReview: Array<UserReview>;
+    @observable private test = "NO";
+    SetDoctorReviewsCallBack = (reviews: Array<UserReview>) => {
+        action(() => {
+            for(let i = 0; i < reviews.length; i++) {
+                this.DoctorReviews.push(reviews[i]);
+            }
+            this.test = "yes";
+            console.log("DoctorReviews loaded: ", this.DoctorReviews.length, this.test)            
+        })()
 
-    private getUserReiviews() {
-        let userReviews: Array<UserReview> = [
-        {
-            rating: "很满意",
-            content: "太好了，治好了拖延症. 太好了，治好了拖延症. 太好了，治好了拖延症. 太好了，治好了拖延症. 太好了，治好了拖延症. 太好了，治好了拖延症. 太好了，治好了拖延症.",
-            date: "2021/12/31",
-            disease: "肺结核",
-            delay: 5,
-            userName: "王小明",
-            userImg: avatar_g,
-        },
-        {
-            rating: " 不满意",
-            content: "不行啊，不会治病。不行啊，不会治病。不行啊，不会治病。不行啊，不会治病。不行啊，不会治病。不行啊，不会治病。不行啊，不会治病。不行啊，不会治病。不行啊，不会治病。不行啊，不会治病。",
-            date: "2020/12/31",
-            disease: "COVOID19",
-            delay: 0,
-            userName: "李华",
-            userImg: avatar_b,
-        }
-    ]
+    }
+    
+    componentDidMount() {
+        let id = localStorage.getItem('docID');
+        let name = localStorage.getItem('docName');
+        let title = localStorage.getItem('docdocTitle');
 
-        return userReviews
+        this.docInfo.docName = name ? name : "";
+        this.docInfo.docTitle = title ? title : "";
+        requestManager.search_reviews({docID: id ? id : ""}, this.LoginStatusManager, this.SetDoctorReviewsCallBack)
     }
 
     private renderDoctorInfo() {
@@ -93,68 +101,15 @@ class DoctorReviewHistory extends React.Component<SignUpProps, {}> {
                 title={this.docInfo.docName}
                 subheader={this.docInfo.docTitle}
             />
-
-            <CardContent>
-                <Typography className={this.props.classes.title} color="textSecondary" gutterBottom>
-                    {this.appointment.Department}
-                </Typography>
-                <Typography className={this.props.classes.title} color="textSecondary" gutterBottom>
-                    挂号时间: {this.appointment.time}
-                </Typography>
-            </CardContent>
         </Card>)
-    }
-
-    private renderStarRating() {
-        return ( 
-        <Grid container spacing={1} justify="flex-start">
-            <Grid item>
-                <Rating
-                    name="simple-controlled" size="large" value={this.DocReview.star} color="textSecondary" precision={0.5}
-                    readOnly
-                />
-             </Grid>
-             <Grid item>
-                <Typography variant="h6" color="textSecondary"> { this.DocReview.star } |</Typography>
-            </Grid>
-             <Grid item alignItems="center" style={{ display: "flex"}}>
-                <Typography variant="subtitle1" color="textSecondary">{ `医生态度${this.DocReview.star}%满意` }</Typography>
-            </Grid>
-          </Grid>
-        )
-    }
-
-    private renderStarRatingCurrrent() {
-        return ( 
-        <Grid container spacing={1} justify="flex-start">
-            <Grid item>
-                <Typography variant="h6" color="textSecondary"> { `医生评分${this.DocReview.star}` } </Typography>
-                <Rating
-                    name="simple-controlled" size="large" value={this.DocReview.star} 
-                    color="textSecondary" precision={0.5} 
-                    onChange={(event, newValue) => {
-                    this.DocReview.star = newValue ? newValue : 5;
-                    }} readOnly
-                />
-                <Button type="submit" className={ this.props.classes.PublishReviewButton } 
-                            onClick={ () => { history.push( getAppointmentReviewRoute()) }} style={{width:"100%"}} >
-                    {"评价打分"}
-                                    
-                </Button>
-            </Grid>
-          </Grid>
-        )
     }
 
     private renderRatingBar() {
         return (
-            <Grid container spacing={5} >
-                <Grid item xs={8}>
-                    { this.renderStarRating() }
-                </Grid>
-                <Grid item xs={4} justify="flex-end" style={{ display: "flex"}}>
-                    <Typography variant="h6" color="textSecondary" style={{ display: "flex", justifyContent: "flex-end"}} >
-                        { `${this.DocReview.commentNum}人分享` }
+            <Grid container  >
+                <Grid item xs={4} justify="flex-start" style={{ display: "flex"}}>
+                    <Typography variant="h6" color="textSecondary" style={{ display: "flex", justifyContent: "flex-start"}} >
+                        { `${this.DoctorReviews.length}人分享` }
                     </Typography>
                 </Grid>
             </Grid>
@@ -163,7 +118,7 @@ class DoctorReviewHistory extends React.Component<SignUpProps, {}> {
 
     private renderOneComment(comment: UserReview) {
         return (
-            <Grid item style={{borderBottom: '4px solid #D9D9D9', display: "flex", justifyContent: "center"}}>
+            <Grid item xs={12} style={{borderBottom: '4px solid #D9D9D9', display: "flex", justifyContent: "center"}}>
                 <Grid container style={{marginTop:"5%"}} spacing={3} item xs={11}>
                     <Grid item xs={1}>
                         <Grid container >
@@ -216,8 +171,9 @@ class DoctorReviewHistory extends React.Component<SignUpProps, {}> {
         )
     }
 
-
     render() {
+        const userReview = this.DoctorReviews.slice();
+        console.log("reviews len for render:", userReview.length, this.test)
         return (
             <div style={{backgroundColor: '#f6f6f6'}}>
                 <WelcomeHeader classes={this.props.headerClasses}/>
@@ -230,12 +186,12 @@ class DoctorReviewHistory extends React.Component<SignUpProps, {}> {
                                 </Typography>
                             </Grid>
                             
-                            <Grid item xs={12} style={{marginTop:"5%", marginBottom:"5%"}}>
+                            <Grid item xs={12} style={{marginTop:"1%", marginBottom:"1%"}}>
                                 { this.renderRatingBar() }
                             </Grid>
                             <Grid item xs={12} style={{backgroundColor: 'white', display: "flex", justifyContent: "center"}}>
                                 <Grid container item xs={12} style={{display: "flex", justifyContent: "center"}}>
-                                    {this.userReview.map((comment) => (
+                                    {userReview.map((comment) => (
                                         this.renderOneComment(comment)
                                     ))}
                                 </Grid>
@@ -248,7 +204,6 @@ class DoctorReviewHistory extends React.Component<SignUpProps, {}> {
                     <Grid item xs={2}>
                         { this.renderDoctorInfo() }
                         <Grid item>
-                            { this.renderStarRatingCurrrent() }
                         </Grid>
                         <Grid item></Grid>
                     </Grid>

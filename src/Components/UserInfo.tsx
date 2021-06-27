@@ -33,12 +33,9 @@ class UserInfo extends React.Component<SignUpProps, {}> {
     @observable private user: UserInfoProps = {
         Name : " ",
         Gender : "",
-        ID : " ",
-        IDValidDateFrom : " ",
-        IDValidDateTo : " ",
-        Nationality : " ",
+        ID_Number : " ",
+        Birthday: " ",
         PhoneNumber : " ",
-        Passsword : " "
     }
     @observable private userChangePassword: UserPasswordProps = {
         OldPassword: "",
@@ -90,12 +87,9 @@ class UserInfo extends React.Component<SignUpProps, {}> {
         this.user = {
             Name : data['name'],
             Gender : data['gender'],
-            ID : data['id_number'],
-            IDValidDateFrom : data['telephone'],
-            IDValidDateTo : data['telephone'],
-            Nationality : data['telephone'],
+            ID_Number : data['id_number'],
+            Birthday : data['birthday'],
             PhoneNumber : data['telephone'],
-            Passsword : data['telephone']
         }
     }
 
@@ -189,8 +183,8 @@ class UserInfo extends React.Component<SignUpProps, {}> {
                                         <h3 style={{width:"100%", display:"flex", justifyContent:"flex-end"}}> {'*身份证号码'}: </h3>
                                 </Grid>
                                 <Grid item xs={8} style={{marginTop:"1.5%", marginLeft:"3%", height: "20%", width:"75%"}}>
-                                    <TextField fullWidth variant="outlined" id={ "userinfo" + '*身份证号码' } value={ info.ID }
-                                             onChange={(data) => { this.user.ID = data.target.value } }/> 
+                                    <TextField fullWidth variant="outlined" id={ "userinfo" + '*身份证号码' } value={ info.ID_Number }
+                                             onChange={(data) => { this.user.ID_Number = data.target.value } }/> 
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -200,8 +194,8 @@ class UserInfo extends React.Component<SignUpProps, {}> {
                                         <h3 style={{width:"100%", display:"flex", justifyContent:"flex-end"}}> {'*生日'} </h3>
                                 </Grid>
                                 <Grid item xs={8} style={{marginTop:"1.5%", marginLeft:"3%", height: "20%", width:"75%"}}>
-                                    <TextField fullWidth variant="outlined" id={ "userinfo" + '*姓名' } value={ info.ID }
-                                             onChange={(data) => { this.user.ID = data.target.value } }/> 
+                                    <TextField fullWidth variant="outlined" id={ "userinfo" + '*生日' } value={ info.Birthday }
+                                             onChange={(data) => { this.user.Birthday = data.target.value } }/> 
                                 </Grid>
                             </Grid>
                         </Grid>

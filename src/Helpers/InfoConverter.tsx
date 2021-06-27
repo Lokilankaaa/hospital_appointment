@@ -14,7 +14,6 @@ export function convertUserinfoToResponse() : getinfo{
       }
 }
 
-
 export function convertToChangePasswordRequest(pass: UserPasswordProps): changePasswordRequest {
     return {
         login_token: userStateInfoManager.getLoginToken(),
@@ -28,8 +27,8 @@ export function convertToUserInfoRequest(info: UserInfoProps): changeUserInfoReq
         login_token: userStateInfoManager.getLoginToken(),
         name: info.Name,
         gender: info.Gender,
-        birthday: info.ID,
-        id_number: info.ID,
+        birthday: info.Birthday,
+        id_number: info.ID_Number,
         telephone: info.PhoneNumber
     }
 }

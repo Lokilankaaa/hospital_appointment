@@ -41,7 +41,7 @@ export const headerClasses = makeStyles({
         height: "30px",
         // marginTop: "-9%",
         width: "100%",
-        margin: "0",
+        marginRight: "1",
         top: "0%",
         // backgroundColor: "#edf1ec",
         zIndex: 100,
@@ -56,23 +56,15 @@ export const headerClasses = makeStyles({
         width: "30px",
     },
     title1: {
-        display: "inline-block",
         fontSize: 20,
-        float: "left",
         color: "#077921"
     },
     button: {
-        float: "right",
         height: "30px",
-        marginLeft: "3%",
-        marginRight: "3%",
         backgroundColor: '#e05353'
     },
     title2: {
         fontSize: 20,
-        display: "inline-block",
-        float: "right",
-        alignItems: "center"
     },
 
 })

@@ -18,12 +18,13 @@ import  OperationStateManager  from "../Helpers/OperationStateManager"
 import { UserPasswordProps, UserInfoProps } from '../Models/UserInfo'
 import { convertUserinfoToRequest, convertToChangePasswordRequest, convertToUserInfoRequest } from './InfoConverter'
 
+import { convertToDoctorReviewHistoryRequest, convertToDoctorReviewHistoryResonse, convertToReviewRequest } from './ReviewConverter'
+import { DoctorReviewFilter, UserReview } from '../Models/ReviewHistory'
+
 class RequestManager {
     private m_path: string = '/user/';
 
     constructor() {
-        // A workaround for CORS ,
-        // see https://stackoverflow.com/questions/43871637/no-access-control-allow-origin-header-is-present-on-the-requested-resource-whe
         axios.defaults.baseURL = "http://60.205.206.96";
         axios.defaults.headers.post['Content-Type'] = "text/plain";
     }
@@ -122,6 +123,44 @@ class RequestManager {
                     status.Successful();
                 } else{
                 status.Failed(result.err);
+                }
+            }
+        }).catch((e) => {
+            console.log(e);
+        })
+    }
+
+    search_reviews(filter: DoctorReviewFilter, status: OperationStateManager, callBack: any)  {
+        const path = this.m_path + 'search_comment';
+        status.Trigged();
+        axios.post(path, convertToDoctorReviewHistoryRequest(filter)).then((response) => {
+            console.log(response.status);
+            let result = convertFromSimpleResponse(response.data)
+            if (response.status === 200) {
+                if(result.success) {
+                    let comments = convertToDoctorReviewHistoryResonse(response.data['comments'])
+                    callBack(comments)
+                    status.Successful();
+                } else{
+                status.Failed(result.err);
+                }
+            }
+        }).catch((e) => {
+            console.log(e);
+        })
+    }
+
+    post_review(review: UserReview, status: OperationStateManager)  {
+        const path = this.m_path + 'comment';
+        status.Trigged();
+        axios.post(path, convertToReviewRequest(review)).then((response) => {
+            console.log(response.status);
+            let result = convertFromSimpleResponse(response.data)
+            if (response.status === 200) {
+                if(result.success) {
+                    status.Successful();
+                } else{
+                    status.Failed(result.err);
                 }
             }
         }).catch((e) => {

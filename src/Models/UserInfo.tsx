@@ -1,12 +1,9 @@
 export interface UserInfoProps {
     Name: string;
     Gender: string;
-    ID: string;
-    IDValidDateFrom: string;
-    IDValidDateTo: string;
-    Nationality: string;
+    ID_Number: string;
+    Birthday: string;
     PhoneNumber: string;
-    Passsword: string
 }
 
 export interface getinfo {

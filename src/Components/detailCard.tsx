@@ -22,6 +22,13 @@ class DetailCard extends React.Component<detailProps, {}> {
         requestManager.appoint(tid);
     }
 
+    onClickDetail = () => {
+        localStorage.setItem('docID', this.props.did)
+        localStorage.setItem('docdocTitle', this.props.docTitle)
+        localStorage.setItem('docName', this.props.docName)
+        history.push(getDoctorReviewHistoryRoute(this.props.did)) 
+    }
+
     render() {
         return (
             <Card className={this.props.classes.root}>
@@ -46,11 +53,11 @@ class DetailCard extends React.Component<detailProps, {}> {
                             this.appoint(this.props.tid);
                             history.push(getLookup());
                         } else {
-                            alert("请先登陆！")
+                            alert("请先登陆")
                             history.push(getLoginRoute());
                         }
                     }} disabled={!(this.props.rest > 0)}>挂号</Button>
-                    <Button size="small" onClick={() => history.push(getDoctorReviewHistoryRoute())}>详情</Button>
+                    <Button size="small" onClick={ this.onClickDetail }>详情</Button>
                 </CardActions>
             </Card>
         )

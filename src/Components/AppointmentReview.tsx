@@ -25,27 +25,29 @@ import {cardClasses} from "../Styles/madeStyles";
 import WelcomeHeader from "./welcomeHeader";
 import Avatar from '@material-ui/core/Avatar';
 
+import  OperationStateManager  from "../Helpers/OperationStateManager"
+import { OperationStates, OPerationStatus } from '../Models/OperationState'
+
 import Rating from '@material-ui/lab/Rating';
+import { DoctorInfo, AppointmentInfo, Review, UserReview } from '../Models/ReviewHistory'
+import { requestManager } from "../Helpers/RequestManager";
 
-interface DoctorInfo{
-    docName: string,
-    docImg: string,
-    docTitle: string,
-    docDepartment: string
-}
-
-interface AppointmentInfo {
-    Department: string,
-    time: string
-}
-
-interface Review {
-    content:string,
-    star: number
-}
+import Alert from '@material-ui/lab/Alert';
 
 @observer
 class AppointmentReview extends React.Component<SignUpProps, {}> {
+
+    public postReviewCallBack = (state: OperationStates, msg: string) => {
+        this.postReviewStatus.state = state;
+        this.postReviewStatus.msg = msg;
+        console.log(msg, this.postReviewStatus.msg)
+    }
+
+    private postReviewManager = new OperationStateManager(this.postReviewCallBack);
+    @observable postReviewStatus: OPerationStatus = {
+        state: OperationStates.NotTriggered,
+        msg: ""
+    };
 
     constructor(props: SignUpProps) {
         super(props);
@@ -53,10 +55,9 @@ class AppointmentReview extends React.Component<SignUpProps, {}> {
     }
 
     @observable private docInfo: DoctorInfo = {
-        docName: "华佗",
-        docImg: "None",
-        docTitle: "副主任医师",
-        docDepartment: "呼吸科专家诊室"
+        docName: "未知",
+        docImg: "未知",
+        docTitle: "未知"
     }
 
     @observable private appointment: AppointmentInfo = {
@@ -64,13 +65,14 @@ class AppointmentReview extends React.Component<SignUpProps, {}> {
         time: "2021/04/11"
     }
 
-    @observable private review: Review = {
+    @observable private review: UserReview = {
+        rating: "未知",
         content: "",
-        star: 0
-    }
-
-    private publishReview() {
-        console.log("Published!")
+        date: "未知",
+        disease: "未知",
+        delay: 0,
+        userName: "未知",
+        userImg: "未知"
     }
 
     private renderDoctorInfo() {
@@ -95,6 +97,32 @@ class AppointmentReview extends React.Component<SignUpProps, {}> {
         )
     }
 
+    componentDidMount() {
+        let name = localStorage.getItem('docName');
+        let title = localStorage.getItem('docdocTitle');
+        let depart = localStorage.getItem('doctor_depart');
+        let time = localStorage.getItem('time');
+
+        this.docInfo.docName = name ? name : "";
+        this.docInfo.docTitle = title ? title : "";
+
+        this.appointment.Department = depart ? depart : "";
+        this.appointment.time = time ? time : "";
+    }
+    
+    renderAlert = (state: OperationStates, msg: string) => {
+        return new Map([
+        [OperationStates.Successful, <Alert severity="success">评论成功!</Alert> ],
+        [OperationStates.Failed, <Alert severity="error"> 评论失败：{ msg }</Alert>],
+        [OperationStates.Triggered, <Alert severity="info"> 正在评论....... </Alert>],
+        [OperationStates.NotTriggered, <div />],
+    ]).get(state);
+}
+
+    private publishReview() {
+        requestManager.post_review(this.review, this.postReviewManager)
+    }
+
     private renderWriteComments() {
         return ( 
         <TextField fullWidth multiline id="userinfo.Gender" variant="outlined" placeholder={ "从多个角度评价医生，可以帮助更多患者" }  
@@ -103,25 +131,9 @@ class AppointmentReview extends React.Component<SignUpProps, {}> {
         )
     }
 
-    private renderStarRating() {
-        return ( 
-        <Grid container spacing={5} justify="flex-end">
-            <Grid item>
-                <Typography variant="h5">综合评分</Typography>
-            </Grid>
-            <Grid item>
-                <Rating
-                    name="simple-controlled" size="large" precision={0.5}
-                    onChange={(event, newValue) => {
-                    this.review.star = newValue ? newValue : 5;
-                    }}
-                />
-             </Grid>
-          </Grid>
-        )
-    }
-
     render() {
+        const postReviewMsg = this.postReviewStatus.msg
+        const postReviewstate = this.postReviewStatus.state
         return (
             <div style={{backgroundColor: '#f6f6f6', marginBottom:"10%"}}>
                 <WelcomeHeader classes={this.props.headerClasses}/>
@@ -129,11 +141,8 @@ class AppointmentReview extends React.Component<SignUpProps, {}> {
                 <Grid container style={{marginTop:"6%", marginLeft:"20%", width:"60%", backgroundColor: 'white', display: "flex", justifyContent: "center"}}>
                     <Grid item  xs={8}>
                         <Grid container spacing={5}>
-                            <Grid item xs={5}>
+                            <Grid item xs={12}>
                                 { this.renderDoctorInfo() }
-                            </Grid>
-                            <Grid item xs={7}  alignItems="flex-end" justify="flex-end" style={{ display: "flex"}}>
-                                {this.renderStarRating()} 
                             </Grid>
                         </Grid>
                     </Grid>
@@ -141,14 +150,14 @@ class AppointmentReview extends React.Component<SignUpProps, {}> {
                         { this.renderWriteComments() }
                     </Grid>
                     <Grid item  xs={8} style={{marginTop:"1%", display: "flex"}} justify="center" >
-                        <Button type="submit" className={ this.props.classes.PublishReviewButton } disabled={ this.review.content === "" || this.review.star === 0  }
+                        <Button type="submit" className={ this.props.classes.PublishReviewButton } disabled={ this.review.content === ""  }
                                 onClick={() => { this.publishReview() }  } style={{width:"20%"}} >
                                         {"提交"}
                                         
                         </Button>
                     </Grid>
-            
                 </Grid>
+                { this.renderAlert(postReviewstate, postReviewMsg) }
             </div>
         )
     }

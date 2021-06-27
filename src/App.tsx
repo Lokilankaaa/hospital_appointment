@@ -30,7 +30,7 @@ function App() {
                 <Route exact path={getUserInfoRoute()} component={fnUserInfoPage} />
                 <Route exact path={getAdminRoute()} component={fnAdminFrontPage} />
                 <Route exact path={getAppointmentReviewRoute()} component={fnAdminAppointmentReview} />
-                <Route exact path={getDoctorReviewHistoryRoute()} component={fnDoctorReviewHistory} />
+                <Route exact path={getDoctorReviewHistoryRoute(`:docID`)} component={fnDoctorReviewHistory} />
 
             </Switch>
         </Router>
