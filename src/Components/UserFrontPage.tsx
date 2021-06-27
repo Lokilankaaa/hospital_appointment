@@ -22,6 +22,7 @@ import history from '../Helpers/History';
 import {getLoginRoute, getSignUpRoute, getDocDetail, getLookup, getUserInfoRoute} from "../Helpers/Routers";
 import moment from "moment";
 import WelcomeHeader from "./welcomeHeader";
+import {userStateInfoManager} from '../Helpers/UserStateInfoManager';
 
 class UserFrontPage extends React.Component<SignUpProps, {}> {
 
@@ -87,15 +88,8 @@ class UserFrontPage extends React.Component<SignUpProps, {}> {
                                 variant="subtitle1"
                                 color="inherit"
                                 className={this.props.classes.FrontText}>
-                                {"欢迎, XXX!"}
+                                {`欢迎, ${userStateInfoManager.isLogin() ? userStateInfoManager.getUserName() : "请登录"}!`}
                             </Typography>
-                        </Box>
-
-                        <Box p={1} flexShrink={0}>
-                            <Button className={this.props.classes.FrontText}
-                                    style={{backgroundColor: "#F67665", color: "white", width: 80, height: "100%"}}>
-                                {"退出"}
-                            </Button>
                         </Box>
                     </Box>
 

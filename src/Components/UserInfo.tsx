@@ -21,38 +21,18 @@ import Typography from '@material-ui/core/Typography';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import WelcomeHeader from "./welcomeHeader";
-
-interface UserInfoProps {
-    Name: string;
-    Gender: string;
-    ID: string;
-    IDValidDateFrom: string;
-    IDValidDateTo: string;
-    Nationality: string;
-    PhoneNumber: string;
-    Passsword: string
-}
-
-interface UserPasswordProps {
-    OldPassword: string;
-    NewPassword: string;
-    ConfoirmPassword: string;
-}
-
-enum InfoTypes {
-    Info,
-    ChangePassword,
-    Patients,
-    Appointments,
-    Focus
-}
+import { requestManager } from "../Helpers/RequestManager";
+import { UserInfoProps, UserPasswordProps, InfoTypes } from "../Models/UserInfo"
+import  OperationStateManager  from "../Helpers/OperationStateManager"
+import { OperationStates, OPerationStatus } from '../Models/OperationState'
+import Alert from '@material-ui/lab/Alert';
 
 @observer
 class UserInfo extends React.Component<SignUpProps, {}> {
 
     @observable private user: UserInfoProps = {
         Name : " ",
-        Gender : "男/女",
+        Gender : "",
         ID : " ",
         IDValidDateFrom : " ",
         IDValidDateTo : " ",
@@ -68,6 +48,36 @@ class UserInfo extends React.Component<SignUpProps, {}> {
 
     @observable private selectType: InfoTypes = InfoTypes.Info;
     
+    public ChangePassswordStateCallBack = (state: OperationStates, msg: string) => {
+        this.ChangePassswordStatus.state = state;
+        this.ChangePassswordStatus.msg = msg;
+        console.log(msg, this.ChangePassswordStatus.msg)
+    }
+
+    private ChangePassswordStatusManager = new OperationStateManager(this.ChangePassswordStateCallBack);
+    @observable ChangePassswordStatus: OPerationStatus = {
+        state: OperationStates.NotTriggered,
+        msg: ""
+    };
+
+
+    public ChangeInfoStateCallBack = (state: OperationStates, msg: string) => {
+        this.ChangeInfoStatus.state = state;
+        this.ChangeInfoStatus.msg = msg;
+        console.log(msg, this.ChangeInfoStatus.msg)
+    }
+
+    private ChangeInfoStatusManager = new OperationStateManager(this.ChangeInfoStateCallBack);
+    @observable ChangeInfoStatus: OPerationStatus = {
+        state: OperationStates.NotTriggered,
+        msg: ""
+    };
+
+    @observable ConfirmPassswordStatus: OPerationStatus = {
+        state: OperationStates.NotTriggered,
+        msg: ""
+    };
+
     private renderTabs = new Map([
         [InfoTypes.Info, () => this.renderInfo()],
         [InfoTypes.ChangePassword, () => this.renderChangePassword()],
@@ -76,49 +86,32 @@ class UserInfo extends React.Component<SignUpProps, {}> {
         [InfoTypes.Focus, () => this.renderFocus()]
     ]);
 
-
+    private getUserCallBack = (data: any) => {
+        this.user = {
+            Name : data['name'],
+            Gender : data['gender'],
+            ID : data['id_number'],
+            IDValidDateFrom : data['telephone'],
+            IDValidDateTo : data['telephone'],
+            Nationality : data['telephone'],
+            PhoneNumber : data['telephone'],
+            Passsword : data['telephone']
+        }
+    }
 
     constructor(props: SignUpProps) {
         super(props);
         makeObservable(this);
+        requestManager.user_getinfo(this.getUserCallBack)
     }
+
+    componentDidMount() {
+   
+        requestManager.user_getinfo(this.getUserCallBack)
+    }
+
     private getButtonTextClass = (infoType: InfoTypes) =>
         { return `${this.props.classes.sideBarButton} ${this.selectType === infoType ? this.props.classes.buttonActive : '' }`;}
-    
-    infoTitles = [
-        {Name: "基本信息"},
-
-        {Name: "*姓名",
-        textBox: (<TextField fullWidth  variant="outlined" id="userinfo.Name" defaultValue={ this.user.Name }
-        onChange={(data) => { this.user.Name = data.target.value } }/>)}, 
-
-        {Name: "*性别",
-        textBox: (<TextField fullWidth  id="userinfo.Gender" variant="outlined" defaultValue={ this.user.Gender } 
-                                    onChange={(data) => { this.user.Gender = data.target.value } }/>)}, 
-
-        {Name: "*身份证号码",
-        textBox: ( <TextField fullWidth  id="userinfo.ID" variant="outlined" defaultValue={ this.user.ID } 
-                                    onChange={(data) => { this.user.ID = data.target.value } }/>)}, 
-
-        {Name: "*身份证有效期",
-        textBox: (<Box display="flex" p={0}>
-                    <TextField fullWidth  id="userinfo.IDValidDateFrom" variant="outlined" defaultValue={ this.user.IDValidDateFrom }
-                        onChange={(data) => { this.user.IDValidDateFrom = data.target.value } }/>
-                    <TextField  disabled id="userinfo.IDValidDateFrom" variant="outlined" defaultValue={ "至" }/>
-                    <TextField fullWidth  id="userinfo.IDValidDateTo" variant="outlined" defaultValue={ this.user.IDValidDateTo }
-                        onChange={(data) => { this.user.IDValidDateTo = data.target.value } }/>
-                    </Box>)},  
-
-        {Name: "*民族",
-        textBox: (<TextField fullWidth  variant="outlined" id="userinfo.Nationality" defaultValue={ this.user.Nationality } 
-        onChange={(data) => { this.user.Name = data.target.value } }/>)},
-
-        {Name: "联系方式"},
-
-        {Name: "*手机号码", 
-        textBox: (<TextField fullWidth  variant="outlined" id="userinfo.PhoneNumber" defaultValue={ this.user.PhoneNumber } 
-        onChange={(data) => { this.user.Name = data.target.value } }/>)}
-    ];
 
     passWordsTab = [
         {
@@ -138,45 +131,118 @@ class UserInfo extends React.Component<SignUpProps, {}> {
         }
     ]
 
-    private changePassword = () => {
-        if(this.user.Passsword === this.userChangePassword.OldPassword) {
-            this.user.Passsword = this.userChangePassword.OldPassword;
-            console.log("Change successfully!")
-        } else {
-            console.log("Change Failed?!")
-        }
-    }
-
     private passwordValid = () => {
+        if(this.userChangePassword.NewPassword === this.userChangePassword.ConfoirmPassword) {
+            this.ConfirmPassswordStatus.state = OperationStates.NotTriggered
+        }
+        else {
+            this.ConfirmPassswordStatus.state = OperationStates.Failed;
+            this.ConfirmPassswordStatus.msg = '两次输入的密码不一致';
+        }
         return  this.userChangePassword.NewPassword === this.userChangePassword.ConfoirmPassword
     }
 
-    private renderInfo() {
-        return (
-            <div style={{margin:"0%"}}>
-                <form onSubmit={(e) => e.preventDefault()}>
-                    <Container maxWidth="xl" component="main">
-                        {this.infoTitles.map((title) => (
-                            <Grid container>
-                                <div style={{margin:"1%", height: "20%", width:"20%"}}>
-                                    <Box display="flex" p={0} width="100%">
-                                        <Box p={0} width="100%"></Box>
-                                        <Box p={0} flexShrink={0}>
-                                            <h3 style={{width:"100%"}}> {title.Name + ":"} </h3>
-                                        </Box>
-                                    </Box> 
-                                </div>
-                                <div style={{marginTop:"1.5%", marginLeft:"3%", height: "20%", width:"75%"}}>
-                                    { title.textBox }
-                                </div>
-                            </Grid>
+    private changeInfo = () => {
+        requestManager.user_changeUserInfo(this.user, this.ChangeInfoStatusManager)
+    }
 
-                        ))}
-                    </Container>
+
+    private renderInfo() {
+        const info = this.user
+        const msg = this.ChangeInfoStatus.msg;
+        return (
+            <div style={{marginBottom:"2%"}}>
+                <form onSubmit={(e) => e.preventDefault()}>
+                    <Grid container>
+                        <Grid item xs={12}>
+                            <Grid container style={{display:"flex", justifyContent:"center"}}>
+                                <Grid item xs={2} style={{height: "20%", width:"20%", display:"flex", justifyContent:"flex-end"}}>
+                                        <h3 style={{width:"100%", display:"flex", justifyContent:"flex-end"}}> {'基本信息'} </h3>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Grid container style={{display:"flex", justifyContent:"center"}}>
+                                <Grid item xs={2} style={{height: "20%", width:"20%", display:"flex", justifyContent:"flex-end"}}>
+                                        <h3 style={{width:"100%", display:"flex", justifyContent:"flex-end"}}> {'*姓名'}: </h3>
+                                </Grid>
+                                <Grid color="primary" item xs={8} style={{marginTop:"1.5%", marginLeft:"3%", height: "20%", width:"75%", color:"black"}}>
+                                    <TextField disabled fullWidth variant="outlined" id={ "userinfo" + '*姓名' } value={ info.Name }
+                                             onChange={(data) => { this.user.Name = data.target.value } }/> 
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Grid container style={{display:"flex", justifyContent:"center"}}>
+                                <Grid item xs={2} style={{height: "20%", width:"20%", display:"flex", justifyContent:"flex-end"}}>
+                                        <h3 style={{width:"100%", display:"flex", justifyContent:"flex-end"}}> {'*性别'}: </h3>
+                                </Grid>
+                                <Grid item xs={8} style={{marginTop:"1.5%", marginLeft:"3%", height: "20%", width:"75%"}}>
+                                    <TextField fullWidth variant="outlined" id={ "userinfo" + '*性别' } value={ info.Gender }
+                                             onChange={(data) => { this.user.Gender = data.target.value } }/> 
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Grid container style={{display:"flex", justifyContent:"center"}}>
+                                <Grid item xs={2} style={{height: "20%", width:"20%", display:"flex", justifyContent:"flex-end"}}>
+                                        <h3 style={{width:"100%", display:"flex", justifyContent:"flex-end"}}> {'*身份证号码'}: </h3>
+                                </Grid>
+                                <Grid item xs={8} style={{marginTop:"1.5%", marginLeft:"3%", height: "20%", width:"75%"}}>
+                                    <TextField fullWidth variant="outlined" id={ "userinfo" + '*身份证号码' } value={ info.ID }
+                                             onChange={(data) => { this.user.ID = data.target.value } }/> 
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Grid container style={{display:"flex", justifyContent:"center"}}>
+                                <Grid item xs={2} style={{height: "20%", width:"20%", display:"flex", justifyContent:"flex-end"}}>
+                                        <h3 style={{width:"100%", display:"flex", justifyContent:"flex-end"}}> {'*生日'} </h3>
+                                </Grid>
+                                <Grid item xs={8} style={{marginTop:"1.5%", marginLeft:"3%", height: "20%", width:"75%"}}>
+                                    <TextField fullWidth variant="outlined" id={ "userinfo" + '*姓名' } value={ info.ID }
+                                             onChange={(data) => { this.user.ID = data.target.value } }/> 
+                                </Grid>
+                            </Grid>
+                        </Grid>
+
+                        <Grid item xs={12}>
+                            <Grid container style={{display:"flex", justifyContent:"center"}}>
+                                <Grid item xs={2} style={{height: "20%", width:"20%", display:"flex", justifyContent:"flex-end"}}>
+                                        <h3 style={{width:"100%", display:"flex", justifyContent:"flex-end"}}> {'联系方式'} </h3>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Grid container style={{display:"flex", justifyContent:"center"}}>
+                                <Grid item xs={2} style={{height: "20%", width:"20%", display:"flex", justifyContent:"flex-end"}}>
+                                        <h3 style={{width:"100%", display:"flex", justifyContent:"flex-end"}}> {'*手机号码'} </h3>
+                                </Grid>
+                                <Grid item xs={8} style={{marginTop:"1.5%", marginLeft:"3%", height: "20%", width:"75%", color:"black"}}>
+                                    <TextField fullWidth variant="outlined" id={ "userinfo" + '*手机号码' } value={ info.PhoneNumber }
+                                             onChange={(data) => { this.user.PhoneNumber = data.target.value } }/> 
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Grid>
                 </form>
+                <Button type="submit" className={ this.props.classes.ConfirmPasswordButton }
+                            onClick={ this.changeInfo } style={{width:"20%"}} >
+                                    {"更新信息"}
+                </Button>
+
+                { this.renderAlert(this.ChangeInfoStatus.state, msg, "更新信息") }
+
             </div>
         )
     }
+
+    private onClickSideBarInfo = () => {
+        this.selectType = InfoTypes.Info
+        requestManager.user_getinfo(this.getUserCallBack)
+        
+    }
+
     private renderSideBar() {
         return(
             <div style={{marginLeft:"5%"}}>
@@ -186,7 +252,7 @@ class UserInfo extends React.Component<SignUpProps, {}> {
                         <Grid item>
                             <MenuList 
                              style={{width:"100%"}} >
-                                <MenuItem onClick={ () => { this.selectType = InfoTypes.Info }} className={ this.getButtonTextClass(InfoTypes.Info) }>
+                                <MenuItem onClick={ this.onClickSideBarInfo } className={ this.getButtonTextClass(InfoTypes.Info) }>
                                         {"个人信息"}
                                 </MenuItem>
                                 <MenuItem onClick={ () => { this.selectType = InfoTypes.ChangePassword }} className={ this.getButtonTextClass(InfoTypes.ChangePassword) }>
@@ -223,7 +289,23 @@ class UserInfo extends React.Component<SignUpProps, {}> {
         )
     }
 
+    
+    private changePassword = () => {
+        requestManager.user_changePassword(this.userChangePassword, this.ChangePassswordStatusManager)
+    }
+
+    renderAlert = (state: OperationStates, msg: string, msgBase: string) => {
+        return new Map([
+        [OperationStates.Successful, <Alert severity="success">{ msgBase }成功!</Alert> ],
+        [OperationStates.Failed, <Alert severity="error"> { msgBase }失败：{ msg }</Alert>],
+        [OperationStates.Triggered, <Alert severity="info"> 正在{ msgBase }....... </Alert>],
+        [OperationStates.NotTriggered, <div />],
+    ]).get(state);
+    }
+
     private renderChangePassword() {
+        const msg = this.ChangePassswordStatus.msg;
+        const confirmErrMsg = this.ConfirmPassswordStatus.msg
         return(
             <Grid style={ {justifyContent: 'center', backgroundColor: '#f6f6f6'} }>
                 <form onSubmit={(e) => e.preventDefault() }>
@@ -251,7 +333,9 @@ class UserInfo extends React.Component<SignUpProps, {}> {
                             onClick={ this.changePassword } style={{width:"20%"}} >
                                     {"修改"}
                                     
-                            </Button>
+                </Button>
+                { this.renderAlert(this.ConfirmPassswordStatus.state, confirmErrMsg, "输入密码") }
+                { this.renderAlert(this.ChangePassswordStatus.state, msg, "修改密码") }
             </Grid>
         )
     }
@@ -287,10 +371,10 @@ class UserInfo extends React.Component<SignUpProps, {}> {
                     </Grid>
                     <Grid item xs={9} style={{marginTop:"3%", height: "20%", width:"75%"}}>
                         <div className={ this.props.classes.header } >
-            
-                                <Typography variant={"h5"} className={ this.props.classes.innerTitle }>{"个人信息"}</Typography>
-                                
-                        
+                            <Grid container className={ this.props.classes.innerTitle } item xs={2}>
+                                <Typography variant={"h5"} className={ this.props.classes.innerTitle } style={{borderBottom: "4px solid RGB(70,167,12)",}}>{"用户详情"}</Typography>
+                            </Grid>
+                           
                         </div>
 
 

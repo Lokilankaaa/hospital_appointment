@@ -12,7 +12,7 @@ export function convertSignupFormToRequest(info: SignUpForm) : SignupRequest{
       }
 }
 
-export function convertFromSignupResponse(data: any) : SignupResponse{
+export function convertFromSimpleResponse(data: any) : SignupResponse{
     return {
         success: data["success"],
         err: data["err"],

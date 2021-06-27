@@ -26,34 +26,8 @@ import WelcomeHeader from "./welcomeHeader";
 import Avatar from '@material-ui/core/Avatar';
 
 import Rating from '@material-ui/lab/Rating';
+import { DoctorInfo, AppointmentInfo, Review, UserReview } from '../Models/ReviewHistory'
 
-interface DoctorInfo{
-    docName: string,
-    docImg: string,
-    docTitle: string,
-    docDepartment: string
-}
-
-interface AppointmentInfo {
-    Department: string,
-    time: string
-}
-
-interface Review {
-    rating: string,
-    commentNum: number,
-    star: number
-}
-
-interface UserReview {
-    rating: string,
-    content: string,
-    date: string,
-    disease: string,
-    delay: number,
-    userName: string,
-    userImg: string
-}
 
 @observer
 class DoctorReviewHistory extends React.Component<SignUpProps, {}> {
@@ -78,7 +52,8 @@ class DoctorReviewHistory extends React.Component<SignUpProps, {}> {
     @observable private DocReview: Review = {
         rating: "满意",
         star: 1.5,
-        commentNum: 2000
+        commentNum: 2000,
+        doctorID: "None"
     }
 
     @observable private userReview: Array<UserReview>;

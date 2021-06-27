@@ -280,10 +280,8 @@ export const UserInfoStyles = makeStyles((theme) => ({
     },
 
     innerTitle: {
-        width: '9%',
         justifyContent: 'left',
         color: '#0BDAA4',
-        borderBottom: "4px solid RGB(70,167,12)",
     },
     ConfirmPasswordButton: {
         backgroundColor: "#28A745",

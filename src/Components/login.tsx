@@ -91,11 +91,11 @@ class Login extends React.Component<LoginProps, {}> {
                             <Grid item style={{marginTop:"5%", marginRight:"15%", width:"80%"}}>
                                 <form className={this.props.classes.loginForm} onSubmit={(e) => e.preventDefault()}>
                                     <Grid item>
-                                        <TextField fullWidth id="username" label="用户名" defaultValue="用户名" style={{marginTop:20}}
+                                        <TextField fullWidth id="username" label="用户名" placeholder="用户名" style={{marginTop:20}}
                                                     onChange={(data) => { this.LoginInfo.username = data.target.value } }/>
                                     </Grid>
                                     <Grid item>
-                                        <TextField fullWidth id="pass" label="密码" type="password" defaultValue="密码" style={{marginTop:20}}
+                                        <TextField fullWidth id="pass" label="密码" type="password" placeholder="密码" style={{marginTop:20}}
                                                 onChange={(data) => { this.LoginInfo.password = data.target.value } }/>
                                     </Grid>
                                     <Grid item>
