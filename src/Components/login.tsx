@@ -18,6 +18,7 @@ import { OperationStates, OPerationStatus } from '../Models/OperationState'
 import Alert from '@material-ui/lab/Alert';
 import WelcomeHeader from "./welcomeHeader";
 
+
 @observer
 class Login extends React.Component<LoginProps, {}> {
 
@@ -50,6 +51,10 @@ class Login extends React.Component<LoginProps, {}> {
     private onClickLogin = () => {
         console.log(`login with: username: ${this.LoginInfo.username}, passward: ${this.LoginInfo.password}`);
         requestManager.user_login(this.LoginInfo, this.LoginStatusManager);
+    }
+
+    public loginCallBack = (result: LoginResponse) => {
+        console.log(`Sign Up is: ${result.success}, with msg: ${result.err}`);
     }
 
     private onClickSignUp = () => {

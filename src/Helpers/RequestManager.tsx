@@ -2,7 +2,6 @@ import axios from "axios";
 import {userStateInfoManager} from './UserStateInfoManager';
 import {appointment, search_doctor_response, timesForm} from "../Models/ResponseForm";
 import {detailProps} from "../Models/DocDetail";
-import {recordClasses} from "../Styles/madeStyles";
 import avatar_g from '../Assets/per_girl.png';
 import avatar_b from '../Assets/per_boy.png';
 import moment from "moment";
@@ -10,6 +9,7 @@ import history from '../Helpers/History';
 import {getLoginRoute} from "./Routers";
 import {ClassNameMap} from "@material-ui/styles/withStyles";
 import { SignUpForm, SignupResponse } from '../Models/SignUp'
+
 import { convertSignupFormToRequest, convertFromSimpleResponse } from './LoginConverter'
 import { LoginFrom, LoginResponse } from '../Models/Login'
 import { convertLoginFormToRequest, convertFromLoginResponse } from './LoginConverter'
@@ -20,6 +20,11 @@ import { convertUserinfoToRequest, convertToChangePasswordRequest, convertToUser
 
 import { convertToDoctorReviewHistoryRequest, convertToDoctorReviewHistoryResonse, convertToReviewRequest } from './ReviewConverter'
 import { DoctorReviewFilter, UserReview } from '../Models/ReviewHistory'
+
+import { convertSignupFormToRequest, convertFromSignupResponse } from './LoginConverter'
+import { LoginFrom, LoginResponse } from '../Models/Login'
+import { convertLoginFormToRequest, convertFromLoginResponse } from './LoginConverter'
+
 
 class RequestManager {
     private m_path: string = '/user/';
@@ -168,6 +173,34 @@ class RequestManager {
         })
     }
 
+    user_login(info: LoginFrom) {
+        const path = this.m_path + 'login';
+        axios.post(path, convertLoginFormToRequest(info)).then((response) => {
+            console.log(response.status);
+            if (response.status === 200) {
+                let result = convertFromLoginResponse(response.data)
+                if(result.success) {
+                    userStateInfoManager.UserLogin(result.login_token, info.username);
+                }
+            }
+        }).catch((e) => {
+            console.log(e);
+        })
+    }
+
+    user_signup(info: SignUpForm)  {
+        const path = this.m_path + 'register';
+        axios.post(path, convertSignupFormToRequest(info)).then((response) => {
+            console.log(response.status);
+            if (response.status === 200) {
+                let result = convertFromSignupResponse(response.data)
+            }
+        }).catch((e) => {
+            console.log(e);
+        })
+    }
+
+
     search_depart(value: string, types: Array<string>) {
         const path = this.m_path + 'search_depart';
         axios.post(path, {
@@ -226,8 +259,8 @@ class RequestManager {
                             docImg: doctor['gender'] === '男' ? avatar_b : avatar_g,
                             gender: doctor['gender'] === '男',
                             isam: true,
-                            capacity: 0,
-                            rest: 0,
+                            capacity: 1,
+                            rest: 1,
                         })
                 })
             }
@@ -303,6 +336,7 @@ class RequestManager {
     appoint(tid: number) {
         if (userStateInfoManager.isLogin()) {
             const path = this.m_path + 'appoint';
+            console.log(userStateInfoManager.getLoginToken())
             axios.post(path, {
                 "login_token": userStateInfoManager.getLoginToken(),
                 "tid": tid
