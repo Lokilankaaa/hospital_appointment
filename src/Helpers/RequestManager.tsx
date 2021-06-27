@@ -9,28 +9,56 @@ import history from '../Helpers/History';
 import {getLoginRoute} from "./Routers";
 import {ClassNameMap} from "@material-ui/styles/withStyles";
 import { SignUpForm, SignupResponse } from '../Models/SignUp'
-import { convertSignupFormToRequest, convertFromSignupResponse } from './LoginConverter'
+
+import { convertSignupFormToRequest, convertFromSimpleResponse } from './LoginConverter'
 import { LoginFrom, LoginResponse } from '../Models/Login'
 import { convertLoginFormToRequest, convertFromLoginResponse } from './LoginConverter'
+import  OperationStateManager  from "../Helpers/OperationStateManager"
+
+import { UserPasswordProps, UserInfoProps } from '../Models/UserInfo'
+import { convertUserinfoToRequest, convertToChangePasswordRequest, convertToUserInfoRequest } from './InfoConverter'
+
+import { convertToDoctorReviewHistoryRequest, convertToDoctorReviewHistoryResonse, convertToReviewRequest } from './ReviewConverter'
+import { DoctorReviewFilter, UserReview } from '../Models/ReviewHistory'
+
 
 class RequestManager {
     private m_path: string = '/user/';
 
     constructor() {
-        // A workaround for CORS ,
-        // see https://stackoverflow.com/questions/43871637/no-access-control-allow-origin-header-is-present-on-the-requested-resource-whe
         axios.defaults.baseURL = "http://60.205.206.96";
-        axios.defaults.headers.post['Content-Type'] = "application/json";
+        axios.defaults.headers.post['Content-Type'] = "text/plain";
     }
 
-    user_login(info: LoginFrom) {
+    user_login(info: LoginFrom, status: OperationStateManager) {
         const path = this.m_path + 'login';
+        status.Trigged();
         axios.post(path, convertLoginFormToRequest(info)).then((response) => {
             console.log(response.status);
             if (response.status === 200) {
                 let result = convertFromLoginResponse(response.data)
                 if(result.success) {
                     userStateInfoManager.UserLogin(result.login_token, info.username);
+                    status.Successful();
+                } else{
+                    status.Failed(result.err);
+                }
+                
+            }
+        }).catch((e) => {
+            console.log(e);
+        })
+    }
+
+    user_logout(callBack: any) {
+        const path = this.m_path + 'logout';
+        axios.post(path, {login_token: userStateInfoManager.getLoginToken()}).then((response) => {
+            console.log(response.status);
+            if (response.status === 200) {
+                let result = convertFromLoginResponse(response.data)
+                if(result.success) {
+                    userStateInfoManager.UserLogout();
+                    callBack();
                 }
             }
         }).catch((e) => {
@@ -38,18 +66,108 @@ class RequestManager {
         })
     }
 
-    user_signup(info: SignUpForm)  {
+    user_signup(info: SignUpForm, status: OperationStateManager)  {
         const path = this.m_path + 'register';
+        status.Trigged();
         axios.post(path, convertSignupFormToRequest(info)).then((response) => {
             console.log(response.status);
+            let result = convertFromSimpleResponse(response.data)
             if (response.status === 200) {
-                let result = convertFromSignupResponse(response.data)
+                if(result.success) {
+                    status.Successful();
+                } else{
+                status.Failed(result.err);
+                }
             }
         }).catch((e) => {
             console.log(e);
         })
     }
 
+    user_getinfo(callback: any)  {
+        const path = this.m_path + 'view_info';
+        axios.post(path, convertUserinfoToRequest()).then((response) => {
+            console.log(response.status);
+            callback(response.data)
+
+        }).catch((e) => {
+            console.log(e);
+        })
+    }
+
+    user_changePassword(pass: UserPasswordProps, status: OperationStateManager)  {
+        const path = this.m_path + 'modify_password';
+        status.Trigged();
+        axios.post(path, convertToChangePasswordRequest(pass)).then((response) => {
+            console.log(response.status);
+            let result = convertFromSimpleResponse(response.data)
+            if (response.status === 200) {
+                if(result.success) {
+                    status.Successful();
+                } else{
+                status.Failed(result.err);
+                }
+            }
+        }).catch((e) => {
+            console.log(e);
+        })
+    }
+
+    user_changeUserInfo(info: UserInfoProps, status: OperationStateManager)  {
+        const path = this.m_path + 'modify_info';
+        status.Trigged();
+        axios.post(path, convertToUserInfoRequest(info)).then((response) => {
+            console.log(response.status);
+            let result = convertFromSimpleResponse(response.data)
+            if (response.status === 200) {
+                if(result.success) {
+                    status.Successful();
+                } else{
+                status.Failed(result.err);
+                }
+            }
+        }).catch((e) => {
+            console.log(e);
+        })
+    }
+
+    search_reviews(filter: DoctorReviewFilter, status: OperationStateManager, callBack: any)  {
+        const path = this.m_path + 'search_comment';
+        status.Trigged();
+        axios.post(path, convertToDoctorReviewHistoryRequest(filter)).then((response) => {
+            console.log(response.status);
+            let result = convertFromSimpleResponse(response.data)
+            if (response.status === 200) {
+                if(result.success) {
+                    let comments = convertToDoctorReviewHistoryResonse(response.data['comments'])
+                    callBack(comments)
+                    status.Successful();
+                } else{
+                status.Failed(result.err);
+                }
+            }
+        }).catch((e) => {
+            console.log(e);
+        })
+    }
+
+    post_review(review: UserReview, status: OperationStateManager)  {
+        const path = this.m_path + 'comment';
+        status.Trigged();
+        axios.post(path, convertToReviewRequest(review)).then((response) => {
+            console.log(response.status);
+            let result = convertFromSimpleResponse(response.data)
+            if (response.status === 200) {
+                if(result.success) {
+                    status.Successful();
+                } else{
+                    status.Failed(result.err);
+                }
+            }
+        }).catch((e) => {
+            console.log(e);
+        })
+    }
 
     search_depart(value: string, types: Array<string>) {
         const path = this.m_path + 'search_depart';

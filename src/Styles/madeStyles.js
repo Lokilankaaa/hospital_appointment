@@ -37,12 +37,11 @@ export const recordsClasses = makeStyles({
 
 export const headerClasses = makeStyles({
     root: {
-        position: "fixed",
         // padding: "0",
         height: "30px",
         // marginTop: "-9%",
         width: "100%",
-        margin: "0",
+        marginRight: "1",
         top: "0%",
         // backgroundColor: "#edf1ec",
         zIndex: 100,
@@ -57,23 +56,15 @@ export const headerClasses = makeStyles({
         width: "30px",
     },
     title1: {
-        display: "inline-block",
         fontSize: 20,
-        float: "left",
         color: "#077921"
     },
     button: {
-        float: "right",
         height: "30px",
-        marginLeft: "3%",
-        marginRight: "3%",
         backgroundColor: '#e05353'
     },
     title2: {
         fontSize: 20,
-        display: "inline-block",
-        float: "right",
-        alignItems: "center"
     },
 
 })
@@ -129,6 +120,7 @@ export const detailPageClasses = makeStyles({
 export const loginClasses = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
+        backgroundColor: '#f6f6f6',
     },
     loginForm: {
         '& .MuiTextField-root': {
@@ -154,30 +146,24 @@ export const loginClasses = makeStyles((theme) => ({
         color: theme.palette.text.secondary,
         width: "100%",
         height: '80%',
-        boxShadow: "none"
+        boxShadow: "none",
+        backgroundColor: '#f6f6f6',
     },
 }));
 
 export const FrontStyles = makeStyles((theme) => ({
     root: {
-        display: 'flex',
-        flexWrap: 'wrap',
-        minWidth: 100,
-        height: "100%",
-        width: "100%",
-        alignItems: 'center',
-
-        backgroundColor: 'transparent', //transparent #0BDAA4
+        flexGrow: 1,
+        backgroundColor: '#f6f6f6', //transparent #0BDAA4
     },
 
     footTextBox: {
-        display: 'flex',
+
         flexWrap: 'wrap',
-        minWidth: 100,
+        minWidth: 200,
         height: "100%",
         width: "80%",
         alignItems: 'center',
-        marginTop: theme.spacing(2),
         marginLeft: "14%",
         marginRight: "14%",
     },
@@ -193,14 +179,11 @@ export const FrontStyles = makeStyles((theme) => ({
     backgroundImg: {
         display: 'flex',
         flexWrap: 'wrap',
-        minWidth: 100,
         height: "100%",
         width: "100%",
         alignItems: 'center',
-        marginTop: theme.spacing(2),
-        marginBottom: "1%",
-        marginLeft: "10%",
-        marginRight: "10%",
+        marginTop: theme.spacing(10),
+        marginBottom: "5%",
     },
 
     tabsRoot: {
@@ -289,10 +272,8 @@ export const UserInfoStyles = makeStyles((theme) => ({
     },
 
     innerTitle: {
-        width: '9%',
         justifyContent: 'left',
         color: '#0BDAA4',
-        borderBottom: "4px solid RGB(70,167,12)",
     },
     ConfirmPasswordButton: {
         backgroundColor: "#28A745",

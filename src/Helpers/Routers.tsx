@@ -27,6 +27,6 @@ export function getAppointmentReviewRoute() {
     return `/review`;
 }
 
-export function getDoctorReviewHistoryRoute() {
-    return `/review/history`;
+export function getDoctorReviewHistoryRoute(docID: string) {
+    return `/review/history/${docID}`;
 }

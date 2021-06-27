@@ -2,10 +2,12 @@ import { ClassNameMap, Styles, WithStylesOptions } from '@material-ui/styles/wit
 export interface LoginProps {
     classes: ClassNameMap;
     identity: string;
+    headerClasses: ClassNameMap;
 }
 
 export interface SignUpProps {
     classes: ClassNameMap;
+    headerClasses: ClassNameMap;
 }
 
 export interface LoginFrom {

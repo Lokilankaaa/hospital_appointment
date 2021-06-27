@@ -4,16 +4,41 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import loginBg from '../Assets/loginBg.png'
-import { Lambda, observable, reaction, makeObservable } from "mobx";
+import { Lambda, observable, reaction, makeObservable, action } from "mobx";
 import { inject, observer } from "mobx-react";
 import { SignUpProps } from '../Models/Login';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { requestManager } from '../Helpers/RequestManager'
 import { SignUpForm, SignupResponse, SignupRequest } from '../Models/SignUp'
+import  OperationStateManager  from "../Helpers/OperationStateManager"
+import { OperationStates, OPerationStatus } from '../Models/OperationState'
+import Alert from '@material-ui/lab/Alert';
+import history from '../Helpers/History';
+import WelcomeHeader from "./welcomeHeader";
 
 @observer
 class SignUp extends React.Component<SignUpProps, {}> {
+
+    public SignUpStateCallBack = (state: OperationStates, msg: string) => {
+        action (() => {
+            this.SignUpStatus.msg = msg;
+            this.SignUpStatus.state = state;
+        })()
+        console.log(msg, this.SignUpStatus.msg)
+        
+        // jump to previous page
+        if(this.SignUpStatus.state == OperationStates.Successful) {
+            history.goBack()
+            
+        }
+    }
+
+    private SignUpStatusManager = new OperationStateManager(this.SignUpStateCallBack);
+    @observable SignUpStatus: OPerationStatus = {
+        state: OperationStates.NotTriggered,
+        msg: ""
+    };
 
     @observable private SignUpInfo: SignUpForm;
     constructor(props: SignUpProps) {
@@ -29,7 +54,7 @@ class SignUp extends React.Component<SignUpProps, {}> {
 
     private onClickSignUp = () => {
         console.log(`Sign Up with: username: ${this.SignUpInfo.UserName}, passward: ${this.SignUpInfo.PasswardConfirm}`);
-        requestManager.user_signup(this.SignUpInfo);
+        requestManager.user_signup(this.SignUpInfo, this.SignUpStatusManager);
     }
 
     private SignUpCallBack = (result: SignupResponse) => {
@@ -48,12 +73,28 @@ class SignUp extends React.Component<SignUpProps, {}> {
         return  this.passwordValid()
     }
 
+    renderAlert = (state: OperationStates, msg: string) => {
+        return new Map([
+        [OperationStates.Successful, <Alert severity="success">注册成功!</Alert> ],
+        [OperationStates.Failed, <Alert severity="error"> 注册失败：{ msg }</Alert>],
+        [OperationStates.Triggered, <Alert severity="info"> 正在注册....... </Alert>],
+        [OperationStates.NotTriggered, <div />],
+    ]).get(state);
+}
+
     render() {
+        const SignUperrMsg = this.SignUpStatus.msg
+        const SignUpstate = this.SignUpStatus.state
         return (
             <div className={this.props.classes.root}>
                  <Paper className={this.props.classes.paper} elevation={3} >
                     <Grid container spacing={0}>
-                            <img src={loginBg} className="hos-logo" alt="logo" style={{width:"50%"}}/>
+                        <Grid xs={12} item>
+                            <WelcomeHeader classes={this.props.headerClasses}/>
+                        </Grid>
+                        <Grid xs={6} item>
+                            <img src={loginBg} className="hos-logo" alt="logo" style={{width:"100%"}}/>
+                        </Grid>
                         <Grid item style={{marginLeft:"5%", width:"45%"}}>
                             <Grid item style={{marginTop:"5%", width:"80%"}}>
                                 <Typography
@@ -74,13 +115,10 @@ class SignUp extends React.Component<SignUpProps, {}> {
                                         <TextField fullWidth  id="username" label="电话号码" defaultValue="电话号码"
                                             onChange={(data) => { this.SignUpInfo.PhoneNumber = data.target.value } }/>
                                     </Grid>
-                                    <Box display="flex" p={0} style={{marginTop:"5%"}}>
-                                        <TextField fullWidth  id="username" label="手机验证码" defaultValue="手机验证码" style={{width:"70%"}}
+                                    <Grid item style={{marginTop:"5%"}}>
+                                        <TextField fullWidth  id="username" label="身份证号码" defaultValue="身份证号码"
                                             onChange={(data) => { this.SignUpInfo.PhoneNumber = data.target.value } }/>
-                                        <Button type="submit" className={this.props.classes.GetValidationButton} onClick={ this.onClickSendValidation } style={{width:"30%"}} >
-                                            获取验证码
-                                        </Button>
-                                    </Box>
+                                    </Grid>
                                     <Grid item style={{marginTop:"5%"}}>
                                         <TextField fullWidth  id="pass" label="密码" defaultValue="XXOO" type="password"
                                             onChange={(data) => { this.SignUpInfo.Passward = data.target.value } }/>
@@ -94,6 +132,9 @@ class SignUp extends React.Component<SignUpProps, {}> {
                                     </Grid>
                                 </form>
                             </Grid>    
+                            <Grid item style={{marginTop:"5%", marginRight:"15%", height:1}}>
+                                { this.renderAlert(SignUpstate, SignUperrMsg) }
+                            </Grid>
                         </Grid>
                     </Grid>
                 </Paper>
