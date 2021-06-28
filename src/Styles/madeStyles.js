@@ -299,7 +299,6 @@ export const AppointmentReviewStyles = makeStyles((theme) => ({
     PublishReviewButton: {
         backgroundColor: "#28A745",
         color: "white",
-        width: "20%",
         border: "transparent",
     },
 }))

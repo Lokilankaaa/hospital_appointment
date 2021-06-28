@@ -87,11 +87,9 @@ class SignUp extends React.Component<SignUpProps, {}> {
         const SignUpstate = this.SignUpStatus.state
         return (
             <div className={this.props.classes.root}>
+                <WelcomeHeader classes={this.props.headerClasses}/>
                  <Paper className={this.props.classes.paper} elevation={3} >
                     <Grid container spacing={0}>
-                        <Grid xs={12} item>
-                            <WelcomeHeader classes={this.props.headerClasses}/>
-                        </Grid>
                         <Grid xs={6} item>
                             <img src={loginBg} className="hos-logo" alt="logo" style={{width:"100%"}}/>
                         </Grid>

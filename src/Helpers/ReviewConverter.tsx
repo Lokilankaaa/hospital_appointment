@@ -1,7 +1,7 @@
 import { DoctorInfo, AppointmentInfo, Review, UserReview, ReviewRequest, DoctorReviewHistoryRequest, DoctorReviewFilter} from '../Models/ReviewHistory'
 import { userStateInfoManager } from './UserStateInfoManager'
 export function convertToReviewRequest(review: UserReview): ReviewRequest {
-  let did = "D0000"//localStorage.getItem('did')
+  let did = localStorage.getItem('docID')
     return {
         login_token: userStateInfoManager.getLoginToken(),
         did: did ? did:  "",

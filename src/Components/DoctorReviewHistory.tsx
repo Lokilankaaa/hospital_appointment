@@ -116,6 +116,19 @@ class DoctorReviewHistory extends React.Component<SignUpProps, {}> {
         )
     }
 
+    private renderReviewCurrrent() {
+        return ( 
+        <Grid container spacing={0} justify="center" item xs={12}>
+            <Grid item  xs={12}>
+                <Button fullWidth type="submit" className={ this.props.classes.PublishReviewButton } 
+                            onClick={ () => { history.push( getAppointmentReviewRoute()) }} style={{width:"100%"}} >
+                    {"评价打分"}
+                </Button>
+            </Grid>
+          </Grid>
+        )
+    }
+
     private renderOneComment(comment: UserReview) {
         return (
             <Grid item xs={12} style={{borderBottom: '4px solid #D9D9D9', display: "flex", justifyContent: "center"}}>
@@ -202,10 +215,13 @@ class DoctorReviewHistory extends React.Component<SignUpProps, {}> {
                     </Grid>
 
                     <Grid item xs={2}>
-                        { this.renderDoctorInfo() }
                         <Grid item>
+                            { this.renderDoctorInfo() }
                         </Grid>
-                        <Grid item></Grid>
+                        <Grid item xs={12}>
+                            { this.renderReviewCurrrent() }
+                        </Grid>
+            
                     </Grid>
 
                 </Grid>

@@ -33,6 +33,13 @@ import { DoctorInfo, AppointmentInfo, Review, UserReview } from '../Models/Revie
 import { requestManager } from "../Helpers/RequestManager";
 
 import Alert from '@material-ui/lab/Alert';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import {userStateInfoManager} from "../Helpers/UserStateInfoManager";
 
 @observer
 class AppointmentReview extends React.Component<SignUpProps, {}> {
@@ -120,7 +127,12 @@ class AppointmentReview extends React.Component<SignUpProps, {}> {
 }
 
     private publishReview() {
-        requestManager.post_review(this.review, this.postReviewManager)
+        if (userStateInfoManager.isLogin()) {
+            requestManager.post_review(this.review, this.postReviewManager)
+        } else {
+            alert("请先登陆")
+            history.push(getLoginRoute());
+        }
     }
 
     private renderWriteComments() {
@@ -136,8 +148,6 @@ class AppointmentReview extends React.Component<SignUpProps, {}> {
         const postReviewstate = this.postReviewStatus.state
         return (
             <div style={{backgroundColor: '#f6f6f6', marginBottom:"10%"}}>
-                <WelcomeHeader classes={this.props.headerClasses}/>
-            
                 <Grid container style={{marginTop:"6%", marginLeft:"20%", width:"60%", backgroundColor: 'white', display: "flex", justifyContent: "center"}}>
                     <Grid item  xs={8}>
                         <Grid container spacing={5}>
