@@ -30,3 +30,19 @@ export function getAppointmentReviewRoute() {
 export function getDoctorReviewHistoryRoute() {
     return `/review/history`;
 }
+
+export function getManageOrderRoute() {
+    return `/admin/manageOrder`
+}
+
+export function getAdminUserInfoFrontRoute() {
+    return `/admin/userInfoFront`
+}
+
+export function getAdminDoctorInfoRoute() {
+    return `/admin/doctorInfo`
+}
+
+export function getAdminUserInfoRoute() {
+    return `/admin/userInfo`
+}

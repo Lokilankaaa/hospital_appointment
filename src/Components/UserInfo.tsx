@@ -20,8 +20,10 @@ import moment from "moment";
 import Typography from '@material-ui/core/Typography';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
+import {ClassNameMap} from "@material-ui/styles/withStyles";
 
-interface UserInfoProps {
+export interface UserInfoProps {
+    classes: ClassNameMap,
     Name: string;
     Gender: string;
     ID: string;
@@ -30,6 +32,12 @@ interface UserInfoProps {
     Nationality: string;
     PhoneNumber: string;
     Passsword: string
+}
+
+export interface UserInfoPageProps {
+    classes: ClassNameMap,
+    cardClasses: ClassNameMap,
+    headerClasses: ClassNameMap
 }
 
 interface UserPasswordProps {
@@ -50,6 +58,7 @@ enum InfoTypes {
 class UserInfo extends React.Component<SignUpProps, {}> {
 
     @observable private user: UserInfoProps = {
+        classes : {},
         Name : " ",
         Gender : "男/女",
         ID : " ",
