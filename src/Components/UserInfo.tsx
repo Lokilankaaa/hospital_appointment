@@ -20,6 +20,7 @@ import moment from "moment";
 import Typography from '@material-ui/core/Typography';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
+
 import WelcomeHeader from "./welcomeHeader";
 import { requestManager } from "../Helpers/RequestManager";
 import { UserInfoProps, UserPasswordProps, InfoTypes } from "../Models/UserInfo"
@@ -31,6 +32,7 @@ import Alert from '@material-ui/lab/Alert';
 class UserInfo extends React.Component<SignUpProps, {}> {
 
     @observable private user: UserInfoProps = {
+        classes : {},
         Name : " ",
         Gender : "",
         ID_Number : " ",
