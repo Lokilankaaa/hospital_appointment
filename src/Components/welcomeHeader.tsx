@@ -27,7 +27,7 @@ class WelcomeHeader extends React.Component<headerProps, {}> {
         this.login.bind(this);
         this.logout.bind(this);
     }
-    
+
 
     login() {
         history.push(getLoginRoute());
@@ -42,7 +42,6 @@ class WelcomeHeader extends React.Component<headerProps, {}> {
     }
 
     render() {
-        const loginState = this.loginState;
         return (
             <Paper className={this.props.classes.root} elevation={0}>
                 <Grid container style={{display: "flex"}}>
@@ -54,19 +53,19 @@ class WelcomeHeader extends React.Component<headerProps, {}> {
                     <Grid item xs={8} style={{display: "flex", justifyContent: "flex-end"}}>
                         <Grid container spacing={1} style={{display: "flex", justifyContent: "flex-end"}}>
                             <Grid item style={{display: "flex", alignItems: "flex-end"}}>
-                                    {
-                                        (() => {
-                                            if (loginState)
-                                                return <Typography>欢迎您，{userStateInfoManager.getUserName()}</Typography>
-                                        })()
-                                    }
+                                {
+                                    (() => {
+                                        if (this.loginState)
+                                            return <Typography>欢迎您，{userStateInfoManager.getUserName()}</Typography>
+                                    })()
+                                }
                             </Grid>
                             <Grid item>
                                 <Button variant={"contained"} className={this.props.classes.button}
-                                        onClick={() => loginState ? this.logout() : this.login()} >
+                                        onClick={() => this.loginState ? this.logout() : this.login()} >
                                     {
                                         (() => {
-                                            if (loginState) {
+                                            if (this.loginState) {
                                                 return "登出";
                                             } else {
                                                 return "登录"
@@ -75,7 +74,7 @@ class WelcomeHeader extends React.Component<headerProps, {}> {
                                     }
                                 </Button>
                             </Grid>
-                        
+
                             <Grid item  style={{display: "flex", justifyContent: "flex-end", marginRight: "2%"}}>
                                 <Typography className={this.props.classes.title2} style={{display: "flex", justifyContent: "flex-end"}}>{moment().format('YYYY-MM-DD hh:mm:ss dddd')}</Typography>
                             </Grid>
