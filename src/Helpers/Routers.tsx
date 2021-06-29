@@ -27,6 +27,7 @@ export function getAppointmentReviewRoute() {
     return `/review`;
 }
 
+
 export function getDoctorReviewHistoryRoute() {
     return `/review/history`;
 }
@@ -45,4 +46,7 @@ export function getAdminDoctorInfoRoute() {
 
 export function getAdminUserInfoRoute() {
     return `/admin/userInfo`
+}
+export function getDoctorReviewHistoryRoute(docID: string) {
+    return `/review/history/${docID}`;
 }

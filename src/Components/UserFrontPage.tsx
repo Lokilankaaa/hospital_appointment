@@ -21,6 +21,8 @@ import Box from '@material-ui/core/Box';
 import history from '../Helpers/History';
 import {getLoginRoute, getSignUpRoute, getDocDetail, getLookup, getUserInfoRoute} from "../Helpers/Routers";
 import moment from "moment";
+import WelcomeHeader from "./welcomeHeader";
+import {userStateInfoManager} from '../Helpers/UserStateInfoManager';
 
 class UserFrontPage extends React.Component<SignUpProps, {}> {
 
@@ -86,15 +88,8 @@ class UserFrontPage extends React.Component<SignUpProps, {}> {
                                 variant="subtitle1"
                                 color="inherit"
                                 className={this.props.classes.FrontText}>
-                                {"欢迎, XXX!"}
+                                {`欢迎, ${userStateInfoManager.isLogin() ? userStateInfoManager.getUserName() : "请登录"}!`}
                             </Typography>
-                        </Box>
-
-                        <Box p={1} flexShrink={0}>
-                            <Button className={this.props.classes.FrontText}
-                                    style={{backgroundColor: "#F67665", color: "white", width: 80, height: "100%"}}>
-                                {"退出"}
-                            </Button>
                         </Box>
                     </Box>
 
@@ -134,41 +129,18 @@ class UserFrontPage extends React.Component<SignUpProps, {}> {
     }
 
     render() {
-        let date = moment().format('YYYY-MM-DD hh:mm:ss dddd');
-
         return (
             <div className={this.props.classes.root}>
-                <div className={this.props.classes.footTextBox}>
-                    <Container maxWidth="xl" component="main">
-                        <Box display="flex" p={1}>
-
-                            <Box p={1} width="100%">
-                                <Typography
-                                    component="span"
-                                    variant="subtitle1"
-                                    color='inherit'
-                                    className={this.props.classes.footText}
-                                    style={{color: "#0BDAA4"}}>
-                                    {"XXX 大学 XX 医院"}
-                                </Typography>
-                            </Box>
-                            <Box p={0} flexShrink={0}>
-                                <Typography
-                                    component="span"
-                                    variant="subtitle1"
-                                    color="inherit"
-                                    className={this.props.classes.footText}>
-                                    {date}
-                                </Typography>
-                            </Box>
-
-                        </Box>
-                    </Container>
-                </div>
-
-                <span className={this.props.classes.backgroundImg} style={{backgroundImage: `url(${frontPage})`}}>
-              {this.renderTabs()}
-            </span>
+                    <Grid container>
+                        <Grid xs={12} item>
+                            <WelcomeHeader classes={this.props.headerClasses}/>
+                        </Grid>
+                        <Grid xs={12} item className={this.props.classes.footTextBox}>
+                            <span className={this.props.classes.backgroundImg} style={{backgroundImage: `url(${frontPage})`}}>
+                                {this.renderTabs()}
+                            </span>
+                        </Grid>
+                </Grid>
             </div>
         );
     }
