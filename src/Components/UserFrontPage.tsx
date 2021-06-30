@@ -70,28 +70,6 @@ class UserFrontPage extends React.Component<SignUpProps, {}> {
             <div className={this.props.classes.tabsRoot}>
                 <Container maxWidth="xl" component="main">
 
-                    <Box display="flex" p={1}>
-
-                        <Box p={1} width="100%">
-                            <Typography
-                                component="span"
-                                variant="h6"
-                                color="inherit"
-                                className={this.props.classes.FrontText}>
-                                {"首页"}
-                            </Typography>
-                        </Box>
-
-                        <Box p={1} flexShrink={1}>
-                            <Typography
-                                component="span"
-                                variant="subtitle1"
-                                color="inherit"
-                                className={this.props.classes.FrontText}>
-                                {`欢迎, ${userStateInfoManager.isLogin() ? userStateInfoManager.getUserName() : "请登录"}!`}
-                            </Typography>
-                        </Box>
-                    </Box>
 
                     <Grid container>
 

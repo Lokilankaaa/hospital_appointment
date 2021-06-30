@@ -190,7 +190,7 @@ class DoctorReviewHistory extends React.Component<SignUpProps, {}> {
         return (
             <div style={{backgroundColor: '#f6f6f6'}}>
                 <WelcomeHeader classes={this.props.headerClasses}/>
-                <Grid container style={{marginTop:"6%", display: "flex", justifyContent: "center"}} spacing={1}>
+                <Grid container style={{paddingTop:"6%", display: "flex", justifyContent: "center"}} spacing={1}>
                     <Grid item xs={8}>
                         <Grid container>
                             <Grid item xs={12}>

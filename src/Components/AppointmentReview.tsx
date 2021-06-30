@@ -148,7 +148,7 @@ class AppointmentReview extends React.Component<SignUpProps, {}> {
         const postReviewstate = this.postReviewStatus.state
         return (
             <div style={{backgroundColor: '#f6f6f6', marginBottom:"10%"}}>
-                <Grid container style={{marginTop:"6%", marginLeft:"20%", width:"60%", backgroundColor: 'white', display: "flex", justifyContent: "center"}}>
+                <Grid container style={{paddingTop:"6%", marginLeft:"20%", width:"60%", backgroundColor: 'white', display: "flex", justifyContent: "center"}}>
                     <Grid item  xs={8}>
                         <Grid container spacing={5}>
                             <Grid item xs={12}>

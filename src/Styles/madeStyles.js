@@ -37,11 +37,12 @@ export const recordsClasses = makeStyles({
 
 export const headerClasses = makeStyles({
     root: {
+        position: "fixed",
         // padding: "0",
         height: "30px",
         // marginTop: "-9%",
         width: "100%",
-        marginRight: "1",
+        margin: "0",
         top: "0%",
         // backgroundColor: "#edf1ec",
         zIndex: 100,
@@ -56,19 +57,26 @@ export const headerClasses = makeStyles({
         width: "30px",
     },
     title1: {
+        display: "inline-block",
         fontSize: 20,
+        float: "left",
         color: "#077921"
     },
     button: {
+        float: "right",
         height: "30px",
+        marginLeft: "3%",
+        marginRight: "3%",
         backgroundColor: '#e05353'
     },
     title2: {
         fontSize: 20,
+        display: "inline-block",
+        // float: "right",
+        alignItems: "center"
     },
 
 })
-
 export const cardClasses = makeStyles({
     root: {
         // minWidth: 275,
@@ -121,6 +129,7 @@ export const loginClasses = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
         backgroundColor: '#f6f6f6',
+        paddingTop: '5%',
     },
     loginForm: {
         '& .MuiTextField-root': {
@@ -269,6 +278,7 @@ export const UserInfoStyles = makeStyles((theme) => ({
     header: {
         color: '#0BDAA4',
         borderBottom: "2px solid RGB(70,167,12)",
+        paddingTop: '5%',
     },
 
     innerTitle: {
