@@ -20,6 +20,7 @@ interface headerProps {
 @observer
 class WelcomeHeader extends React.Component<headerProps, {}> {
     @observable private loginState: boolean = userStateInfoManager.isLogin();
+    @observable private currentTime: string = moment().format('YYYY-MM-DD hh:mm:ss dddd');
 
     constructor(props: headerProps) {
         super(props);
@@ -39,6 +40,10 @@ class WelcomeHeader extends React.Component<headerProps, {}> {
 
     logout() {
         requestManager.user_logout(this.logoutCallBack)
+    }
+
+    componentDidMount() {
+        setInterval(()=> this.currentTime = moment().format('YYYY-MM-DD hh:mm:ss dddd'), 1000);
     }
 
     render() {
@@ -76,7 +81,7 @@ class WelcomeHeader extends React.Component<headerProps, {}> {
                             </Grid>
 
                             <Grid item  style={{display: "flex", justifyContent: "flex-end", marginRight: "2%"}}>
-                                <Typography className={this.props.classes.title2} style={{display: "flex", justifyContent: "flex-end"}}>{moment().format('YYYY-MM-DD hh:mm:ss dddd')}</Typography>
+                                <Typography className={this.props.classes.title2} style={{display: "flex", justifyContent: "flex-end"}}>{this.currentTime}</Typography>
                             </Grid>
                         </Grid>
                     </Grid>
