@@ -39,6 +39,7 @@ class UserInfo extends React.Component<SignUpProps, {}> {
         Birthday: " ",
         PhoneNumber : " ",
     }
+
     @observable private userChangePassword: UserPasswordProps = {
         OldPassword: "",
         NewPassword : "",
@@ -87,6 +88,7 @@ class UserInfo extends React.Component<SignUpProps, {}> {
 
     private getUserCallBack = (data: any) => {
         this.user = {
+            classes: {},
             Name : data['name'],
             Gender : data['gender'],
             ID_Number : data['id_number'],

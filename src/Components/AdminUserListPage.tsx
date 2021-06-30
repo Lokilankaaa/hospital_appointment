@@ -14,7 +14,8 @@ import WelcomeHeader from "./welcomeHeader";
 import {requestManager} from "../Helpers/RequestManager";
 import DocInfoCard from "./DocInfoCard";
 import {Info} from "@material-ui/icons";
-import UserInfo, {UserInfoPageProps, UserInfoProps} from "./UserInfo";
+import UserInfo from './UserInfo'
+import {UserInfoPageProps, UserInfoProps} from "../Models/UserInfo";
 import UserInfoCard from "./UserInfoCard";
 
 @observer
@@ -100,18 +101,16 @@ class AdminUserListPage extends React.Component<UserInfoPageProps, {}> {
         if (this.details.length > 0) {
             let morningDoc = this.details.map((detail) => (
                     <Grid item xs={9} sm={3}>
-                        <UserInfoCard classes={detail.classes} Name={detail.Name} Gender={detail.Gender} ID={detail.ID}
-                                     IDValidDateFrom={detail.IDValidDateFrom} IDValidDateTo={detail.IDValidDateTo} Nationality={detail.Nationality}
-                                     PhoneNumber={detail.PhoneNumber} Passsword={detail.Passsword}/>
+                        <UserInfoCard classes={detail.classes} Name={detail.Name} Gender={detail.Gender} ID_Number={detail.ID_Number}
+                                     Birthday={detail.Birthday} PhoneNumber={detail.PhoneNumber}/>
                     </Grid>
                 )
             );
 
             let afternoonDoc = this.details.map((detail) => (
                     <Grid item xs={9} sm={3}>
-                        <UserInfoCard classes={detail.classes} Name={detail.Name} Gender={detail.Gender} ID={detail.ID}
-                                      IDValidDateFrom={detail.IDValidDateFrom} IDValidDateTo={detail.IDValidDateTo} Nationality={detail.Nationality}
-                                      PhoneNumber={detail.PhoneNumber} Passsword={detail.Passsword}/>
+                        <UserInfoCard classes={detail.classes} Name={detail.Name} Gender={detail.Gender} ID_Number={detail.ID_Number}
+                                      Birthday={detail.Birthday} PhoneNumber={detail.PhoneNumber}/>
                     </Grid>
                 )
             );

@@ -45,7 +45,7 @@ class DocInfoCard extends React.Component<detailProps, {}> {
                         // TODO: There should be a method that can modify other user's information
                         history.push(getUserInfoRoute());
                     }} >修改信息</Button>
-                    <Button size="small" onClick={() => history.push(getDoctorReviewHistoryRoute())}>相关评价</Button>
+                    <Button size="small" onClick={() => history.push(getDoctorReviewHistoryRoute(this.props.did))}>相关评价</Button>
                 </CardActions>
             </Card>
         )

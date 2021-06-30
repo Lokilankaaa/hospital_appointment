@@ -22,8 +22,6 @@ import history from '../Helpers/History';
 import {
     getAdminDoctorInfoRoute,
     getAdminUserInfoRoute,
-    getLoginRoute,
-    getSignUpRoute,
     getUserInfoRoute
 } from "../Helpers/Routers";
 import moment from "moment";

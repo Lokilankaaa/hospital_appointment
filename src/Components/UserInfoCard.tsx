@@ -6,7 +6,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import {UserInfoProps} from "./UserInfo";
+import {UserInfoProps} from "../Models/UserInfo";
 import {getDoctorReviewHistoryRoute, getLoginRoute, getLookup, getUserInfoRoute} from "../Helpers/Routers";
 import history from '../Helpers/History';
 import {userStateInfoManager} from "../Helpers/UserStateInfoManager";
@@ -31,7 +31,7 @@ class UserInfoCard extends React.Component<UserInfoProps, {}> {
                 />
                 <CardContent>
                     <Typography className={this.props.classes.title} color="textSecondary" gutterBottom>
-                        ID: {this.props.ID}
+                        ID: {this.props.ID_Number}
                     </Typography>
                     <Typography className={this.props.classes.title} color="textSecondary" gutterBottom>
                         Phone Number: {this.props.PhoneNumber}
@@ -42,7 +42,7 @@ class UserInfoCard extends React.Component<UserInfoProps, {}> {
                         // TODO: There should be a method that can modify other user's information
                         history.push(getUserInfoRoute());
                     }} >修改信息</Button>
-                    <Button size="small" onClick={() => history.push(getDoctorReviewHistoryRoute())}>相关评价</Button>
+                    <Button size="small" onClick={() => history.push(getDoctorReviewHistoryRoute(this.props.ID_Number))}>相关评价</Button>
                 </CardActions>
             </Card>
         )
