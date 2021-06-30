@@ -19,9 +19,13 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import history from '../Helpers/History';
-import {getAdminUserInfoFrontRoute, getLoginRoute, getSignUpRoute} from "../Helpers/Routers";
+import {
+    getAdminDoctorInfoRoute,
+    getAdminUserInfoRoute,
+    getUserInfoRoute
+} from "../Helpers/Routers";
 import moment from "moment";
-class AdminFrontPage extends React.Component<SignUpProps, {}> {
+class AdminUserInfoFrontPage extends React.Component<SignUpProps, {}> {
 
     constructor(props: SignUpProps) {
         super(props);
@@ -30,28 +34,22 @@ class AdminFrontPage extends React.Component<SignUpProps, {}> {
     images = [
         {
             url: Register,
-            title: '信息管理',
-            width: '23%',
-            Onclick: () => { history.push(getAdminUserInfoFrontRoute()) }
+            title: '个人信息管理',
+            width: '33%',
+            Onclick: () => { history.push(getUserInfoRoute()) }
         },
         {
             url: login,
-            title: '预约管理',
-            width: '23%',
-            Onclick: () => { history.push(getLoginRoute()) }
+            title: '医生信息管理',
+            width: '33%',
+            Onclick: () => { history.push(getAdminDoctorInfoRoute()) }
         },
         {
             url: lookup,
-            title: '反馈管理',
-            width: '23%',
-            Onclick: () => { console.log(`Click LookUp}`); }
-        },
-        {
-            url: more,
-            title: '更多',
-            width: '23%',
-            Onclick: () => { console.log(`Click More}`); }
-        },
+            title: '用户信息管理',
+            width: '33%',
+            Onclick: () => { history.push(getAdminUserInfoRoute())}
+        }
     ];
 
     private renderTabs() {
@@ -165,4 +163,4 @@ class AdminFrontPage extends React.Component<SignUpProps, {}> {
     }
 }
 
-export default AdminFrontPage
+export default AdminUserInfoFrontPage

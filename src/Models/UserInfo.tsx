@@ -1,9 +1,17 @@
+import {ClassNameMap} from "@material-ui/styles/withStyles";
 export interface UserInfoProps {
+    classes : ClassNameMap,
     Name: string;
     Gender: string;
     ID_Number: string;
     Birthday: string;
     PhoneNumber: string;
+}
+
+export interface UserInfoPageProps {
+    classes: ClassNameMap,
+    cardClasses: ClassNameMap,
+    headerClasses: ClassNameMap
 }
 
 export interface getinfo {
