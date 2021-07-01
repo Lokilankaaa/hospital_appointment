@@ -27,10 +27,6 @@ export function getAppointmentReviewRoute() {
     return `/review`;
 }
 
-export function getManageOrderRoute() {
-    return `/admin/manageOrder`
-}
-
 export function getAdminUserInfoFrontRoute() {
     return `/admin/userInfoFront`
 }
@@ -42,6 +38,15 @@ export function getAdminDoctorInfoRoute() {
 export function getAdminUserInfoRoute() {
     return `/admin/userInfo`
 }
+
+export function getAdminRecordsRoute() {
+    return '/admin/records'
+}
+
+export function getAdminFeedbacksRoute() {
+    return '/admin/feedbacks'
+}
+
 export function getDoctorReviewHistoryRoute(docID: string) {
     return `/review/history/${docID}`;
 }

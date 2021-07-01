@@ -19,7 +19,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import history from '../Helpers/History';
-import {getAdminUserInfoFrontRoute, getLoginRoute, getSignUpRoute} from "../Helpers/Routers";
+import {getAdminFeedbacksRoute, getAdminRecordsRoute, getAdminUserInfoFrontRoute} from "../Helpers/Routers";
 import moment from "moment";
 class AdminFrontPage extends React.Component<SignUpProps, {}> {
 
@@ -38,19 +38,19 @@ class AdminFrontPage extends React.Component<SignUpProps, {}> {
             url: login,
             title: '预约管理',
             width: '23%',
-            Onclick: () => { history.push(getLoginRoute()) }
+            Onclick: () => { history.push(getAdminRecordsRoute()) }
         },
         {
             url: lookup,
             title: '反馈管理',
             width: '23%',
-            Onclick: () => { console.log(`Click LookUp}`); }
+            Onclick: () => { history.push(getAdminFeedbacksRoute()); }
         },
         {
             url: more,
             title: '更多',
             width: '23%',
-            Onclick: () => { console.log(`Click More}`); }
+            Onclick: () => { alert('暂无更多') }
         },
     ];
 

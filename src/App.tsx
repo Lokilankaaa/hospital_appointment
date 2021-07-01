@@ -13,11 +13,27 @@ import DoctorReviewHistory from './Components/DoctorReviewHistory'
 
 import {loginClasses, FrontStyles, detailPageClasses, cardClasses, headerClasses, recordClasses, recordsClasses, UserInfoStyles, AppointmentReviewStyles, DoctorReviewHistoryStyles} from "./Styles/madeStyles";
 import {Route, RouteComponentProps, Switch, withRouter, Router} from 'react-router-dom';
-import {getLoginRoute, getSignUpRoute, getDocDetail, getLookup, getUserInfoRoute, getAdminRoute, getAppointmentReviewRoute, getDoctorReviewHistoryRoute, getManageOrderRoute, getAdminUserInfoFrontRoute, getAdminDoctorInfoRoute, getAdminUserInfoRoute} from "./Helpers/Routers";
+import {
+    getLoginRoute,
+    getSignUpRoute,
+    getDocDetail,
+    getLookup,
+    getUserInfoRoute,
+    getAdminRoute,
+    getAppointmentReviewRoute,
+    getDoctorReviewHistoryRoute,
+    getAdminUserInfoFrontRoute,
+    getAdminDoctorInfoRoute,
+    getAdminUserInfoRoute,
+    getAdminRecordsRoute,
+    getAdminFeedbacksRoute
+} from "./Helpers/Routers";
 import {Provider, observer} from "mobx-react";
 
 import history from './Helpers/History';
 import RecordPage from "./Components/registeryRecords";
+import AdminRecordsPage from "./Components/AdminRecordsPage";
+import AdminFeedbacksPage from "./Components/AdminFeedbacksPage";
 
 // page navigation https://rookiecoder.medium.com/react-button-click-navigate-to-new-page-6af7397ea220
 function App() {
@@ -35,6 +51,8 @@ function App() {
                 <Route exact path={getAdminUserInfoFrontRoute()} component={fnAdminUserInfoFrontPage} />
                 <Route exact path={getAdminDoctorInfoRoute()} component={fnAdminDoctorInfo}/>
                 <Route exact path={getAdminUserInfoRoute()} component={fnAdminUserInfo}/>
+                <Route exact path={getAdminRecordsRoute()} component={fnAdminRecords}/>
+                <Route exact path={getAdminFeedbacksRoute()} component={fnAdminFeedback}/>
                 <Route exact path={getAppointmentReviewRoute()} component={fnAdminAppointmentReview} />
                 <Route exact path={getDoctorReviewHistoryRoute(`:docID`)} component={fnDoctorReviewHistory} />
             </Switch>
@@ -100,6 +118,18 @@ function fnAdminDoctorInfo() {
 function fnAdminUserInfo() {
     return (
         <AdminUserListPage classes={detailPageClasses()} cardClasses={cardClasses()} headerClasses={headerClasses()}/>
+    )
+}
+
+function fnAdminRecords() {
+    return (
+        <AdminRecordsPage classes={recordsClasses()} recordClasses={recordClasses()} headerClasses={headerClasses()}/>
+    )
+}
+
+function fnAdminFeedback() {
+    return (
+        <AdminFeedbacksPage classes={recordsClasses()} recordClasses={recordClasses()} headerClasses={headerClasses()}/>
     )
 }
 
