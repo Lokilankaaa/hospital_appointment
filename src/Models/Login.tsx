@@ -41,3 +41,7 @@ export interface DoctorLoginResponse {
     err: string,
     login_token: string
 }
+
+export interface DoctorHomePageProps{
+    classes: ClassNameMap;
+}

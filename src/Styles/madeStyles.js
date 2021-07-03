@@ -1,4 +1,4 @@
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 
 export const recordClasses = makeStyles({
     root: {
@@ -14,25 +14,25 @@ export const recordClasses = makeStyles({
 })
 
 export const recordsClasses = makeStyles({
-        root: {
-            width: '90%',
-            // marginTop: '3%',
-            padding: '5%',
-            backgroundColor: '#f6f6f6'
-        },
-        container: {
-            // padding: "0 2%"
-        },
-        title: {
-            margin: "2%"
-        },
-        warning: {
-            padding: "40%",
-            height: "500px",
-            width: "100%",
-            margin: "0 490%"
-        }
+    root: {
+        width: '90%',
+        // marginTop: '3%',
+        padding: '5%',
+        backgroundColor: '#f6f6f6'
+    },
+    container: {
+        // padding: "0 2%"
+    },
+    title: {
+        margin: "2%"
+    },
+    warning: {
+        padding: "40%",
+        height: "500px",
+        width: "100%",
+        margin: "0 490%"
     }
+}
 )
 
 export const headerClasses = makeStyles({
@@ -94,7 +94,7 @@ export const detailPageClasses = makeStyles({
         marginTop: "3%",
         padding: "3%",
         backgroundColor: "#f6f6f6",
-        minHeight:"500px"
+        minHeight: "500px"
     },
     title: {
         margin: "1%",
@@ -262,6 +262,15 @@ export const FrontStyles = makeStyles((theme) => ({
     imageTitle: {
         position: 'relative',
         padding: `${theme.spacing(2)}px ${theme.spacing(4)}px ${theme.spacing(1) + 6}px`,
+    },
+}));
+
+export const DoctorHomePageStyles = makeStyles((theme) => ({
+    siderbar: {
+        overflow: 'auto',
+        height: '100vh',
+        position: 'fixed',
+        left: 0,
     },
 }));
 
