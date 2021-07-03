@@ -7,11 +7,11 @@ import loginBg from '../Assets/loginBg.png'
 import { Lambda, observable, reaction, makeObservable } from "mobx";
 import { inject, observer } from "mobx-react";
 import { LoginProps } from '../Models/Login';
-import { getLoginRoute, getSignUpRoute } from "../Helpers/Routers";
+import { getDoctorLoginRoute, getSignUpRoute } from "../Helpers/Routers";
 import { Link } from "react-router-dom";
 import history from '../Helpers/History';
 import Typography from '@material-ui/core/Typography';
-import { LoginFrom, LoginResponse } from '../Models/Login'
+import { DoctorLoginFrom, DoctorLoginResponse } from '../Models/Login'
 import { requestManager } from "../Helpers/RequestManager";
 import  OperationStateManager  from "../Helpers/OperationStateManager"
 import { OperationStates, OPerationStatus } from '../Models/OperationState'
@@ -20,7 +20,7 @@ import WelcomeHeader from "./welcomeHeader";
 
 
 @observer
-class Login extends React.Component<LoginProps, {}> {
+class DoctorLogin extends React.Component<LoginProps, {}> {
 
     public loginStateCallBack = (state: OperationStates, msg: string) => {
         this.loginStatus.state = state;
@@ -33,7 +33,7 @@ class Login extends React.Component<LoginProps, {}> {
         }
     }
 
-    @observable private LoginInfo: LoginFrom;
+    @observable private LoginInfo: DoctorLoginFrom;
     private LoginStatusManager = new OperationStateManager(this.loginStateCallBack);
     @observable loginStatus: OPerationStatus = {
         state: OperationStates.NotTriggered,
@@ -43,23 +43,20 @@ class Login extends React.Component<LoginProps, {}> {
         super(props);
         makeObservable(this);
         this.LoginInfo = {
-            username: "",
+            did: "",
             password: "",
         };
     }
 
+    // TODO: add requestManager at RequestManager.tsx
     private onClickLogin = () => {
-        console.log(`login with: username: ${this.LoginInfo.username}, passward: ${this.LoginInfo.password}`);
-        requestManager.user_login(this.LoginInfo, this.LoginStatusManager);
-    }
-    // TODO: Sign up and login with reverse?
-    public loginCallBack = (result: LoginResponse) => {
-        console.log(`Sign Up is: ${result.success}, with msg: ${result.err}`);
+        console.log(`login with: did: ${this.LoginInfo.did}, passward: ${this.LoginInfo.password}`);
+        requestManager.doctor_login(this.LoginInfo, this.LoginStatusManager);
     }
 
-    private onClickSignUp = () => {
-        console.log(`login with: username: ${this.LoginInfo.username}, passward: ${this.LoginInfo.password}`);
-        history.push(getSignUpRoute())
+    // TODO: Sign up and login with reverse?
+    public loginCallBack = (result: DoctorLoginResponse) => {
+        console.log(`login with: did: ${this.LoginInfo.did}, passward: ${this.LoginInfo.password}`);
     }
 
     renderAlert = (state: OperationStates, msg: string) => {
@@ -94,8 +91,8 @@ class Login extends React.Component<LoginProps, {}> {
                             <Grid item style={{marginTop:"5%", marginRight:"15%", width:"80%"}}>
                                 <form className={this.props.classes.loginForm} onSubmit={(e) => e.preventDefault()}>
                                     <Grid item>
-                                        <TextField fullWidth id="username" label="用户名" placeholder="用户名" style={{marginTop:20}}
-                                                    onChange={(data) => { this.LoginInfo.username = data.target.value } }/>
+                                        <TextField fullWidth id="did" label="医生工号" placeholder="医生工号" style={{marginTop:20}}
+                                                    onChange={(data) => { this.LoginInfo.did = data.target.value } }/>
                                     </Grid>
                                     <Grid item>
                                         <TextField fullWidth id="pass" label="密码" type="password" placeholder="密码" style={{marginTop:20}}
@@ -103,9 +100,6 @@ class Login extends React.Component<LoginProps, {}> {
                                     </Grid>
                                     <Grid item>
                                             <Button type="submit" className={this.props.classes.loginButton} onClick={ this.onClickLogin }>登录</Button>
-                                    </Grid>
-                                    <Grid item>
-                                        <Button type="submit" className={this.props.classes.loginButton} onClick={ this.onClickSignUp }>注册</Button>
                                     </Grid>
                                 </form>
                             </Grid>
@@ -120,4 +114,4 @@ class Login extends React.Component<LoginProps, {}> {
     }
 }
 
-export default Login
+export default DoctorLogin

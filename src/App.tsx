@@ -10,6 +10,7 @@ import AdminUserListPage from "./Components/AdminUserListPage";
 import DocDetails from './Components/DoctorDetails'
 import AppointmentReview from './Components/AppointmentReview'
 import DoctorReviewHistory from './Components/DoctorReviewHistory'
+import DoctorLogin from './Components/DoctorLogin'
 
 import {loginClasses, FrontStyles, detailPageClasses, cardClasses, headerClasses, recordClasses, recordsClasses, UserInfoStyles, AppointmentReviewStyles, DoctorReviewHistoryStyles} from "./Styles/madeStyles";
 import {Route, RouteComponentProps, Switch, withRouter, Router} from 'react-router-dom';
@@ -26,7 +27,8 @@ import {
     getAdminDoctorInfoRoute,
     getAdminUserInfoRoute,
     getAdminRecordsRoute,
-    getAdminFeedbacksRoute
+    getAdminFeedbacksRoute,
+    getDoctorLoginRoute
 } from "./Helpers/Routers";
 import {Provider, observer} from "mobx-react";
 
@@ -55,6 +57,7 @@ function App() {
                 <Route exact path={getAdminFeedbacksRoute()} component={fnAdminFeedback}/>
                 <Route exact path={getAppointmentReviewRoute()} component={fnAdminAppointmentReview} />
                 <Route exact path={getDoctorReviewHistoryRoute(`:docID`)} component={fnDoctorReviewHistory} />
+                <Route exact path={getDoctorLoginRoute()} component={fnDoctorLogin} />
             </Switch>
         </Router>
     );
@@ -145,6 +148,13 @@ function fnDoctorReviewHistory(){
         <DoctorReviewHistory classes={DoctorReviewHistoryStyles()} headerClasses={headerClasses()}></DoctorReviewHistory>
     )
 }
+
+function fnDoctorLogin() {
+    return (
+        <DoctorLogin classes={loginClasses()} identity={"Doctor"} headerClasses={headerClasses()}></DoctorLogin>
+    )
+}
+
 
 // todo: this should be fixed
 const wrapper = withRouter(App);

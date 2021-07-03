@@ -1,5 +1,6 @@
 import axios from "axios";
 import {userStateInfoManager} from './UserStateInfoManager';
+import {doctorStateInfoManager} from './DoctorStateInfoManager';
 import {appointment, search_doctor_response, timesForm} from "../Models/ResponseForm";
 import {detailProps} from "../Models/DocDetail";
 import avatar_g from '../Assets/per_girl.png';
@@ -11,8 +12,8 @@ import {ClassNameMap} from "@material-ui/styles/withStyles";
 import { SignUpForm, SignupResponse } from '../Models/SignUp'
 
 import { convertSignupFormToRequest, convertFromSimpleResponse } from './LoginConverter'
-import { LoginFrom, LoginResponse } from '../Models/Login'
-import { convertLoginFormToRequest, convertFromLoginResponse } from './LoginConverter'
+import { LoginFrom, LoginResponse, DoctorLoginFrom, DoctorLoginResponse } from '../Models/Login'
+import { convertLoginFormToRequest, convertFromLoginResponse, convertDoctorLoginFormToRequest, convertFromDoctorLoginResponse } from './LoginConverter'
 import  OperationStateManager  from "../Helpers/OperationStateManager"
 
 import { UserPasswordProps, UserInfoProps } from '../Models/UserInfo'
@@ -39,6 +40,27 @@ class RequestManager {
                 let result = convertFromLoginResponse(response.data)
                 if(result.success) {
                     userStateInfoManager.UserLogin(result.login_token, info.username);
+                    status.Successful();
+                } else{
+                    status.Failed(result.err);
+                }
+                
+            }
+        }).catch((e) => {
+            console.log(e);
+        })
+    }
+
+    // TODO: add doctorStateInfoManager
+    doctor_login(info: DoctorLoginFrom, status: OperationStateManager) {
+        const path = this.m_path + 'login';
+        status.Trigged();
+        axios.post(path, convertDoctorLoginFormToRequest(info)).then((response) => {
+            console.log(response.status);
+            if (response.status === 200) {
+                let result = convertFromDoctorLoginResponse(response.data)
+                if(result.success) {
+                    doctorStateInfoManager.DoctorLogin(result.login_token, info.did);
                     status.Successful();
                 } else{
                     status.Failed(result.err);
