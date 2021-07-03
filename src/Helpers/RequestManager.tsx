@@ -25,6 +25,7 @@ import { DoctorReviewFilter, UserReview } from '../Models/ReviewHistory'
 
 class RequestManager {
     private m_path: string = '/user/';
+    private d_path: string = '/doctor/';
 
     constructor() {
         axios.defaults.baseURL = "http://60.205.206.96";
@@ -53,7 +54,7 @@ class RequestManager {
 
     // TODO: add doctorStateInfoManager
     doctor_login(info: DoctorLoginFrom, status: OperationStateManager) {
-        const path = this.m_path + 'login';
+        const path = this.d_path + 'login';
         status.Trigged();
         axios.post(path, convertDoctorLoginFormToRequest(info)).then((response) => {
             console.log(response.status);
@@ -80,6 +81,22 @@ class RequestManager {
                 let result = convertFromLoginResponse(response.data)
                 if(result.success) {
                     userStateInfoManager.UserLogout();
+                    callBack();
+                }
+            }
+        }).catch((e) => {
+            console.log(e);
+        })
+    }
+
+    doctor_logout(callBack: any) {
+        const path = this.d_path + 'logout';
+        axios.post(path, {login_token: doctorStateInfoManager.getLoginToken()}).then((response) => {
+            console.log(response.status);
+            if (response.status === 200) {
+                let result = convertFromDoctorLoginResponse(response.data)
+                if(result.success) {
+                    doctorStateInfoManager.DoctorLogout();
                     callBack();
                 }
             }
