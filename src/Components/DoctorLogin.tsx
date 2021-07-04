@@ -7,7 +7,7 @@ import loginBg from '../Assets/loginBg.png'
 import { Lambda, observable, reaction, makeObservable } from "mobx";
 import { inject, observer } from "mobx-react";
 import { LoginProps } from '../Models/Login';
-import { getDoctorLoginRoute, getSignUpRoute } from "../Helpers/Routers";
+import { getDoctorLoginRoute, getDoctorHomePageRoute } from "../Helpers/Routers";
 import { Link } from "react-router-dom";
 import history from '../Helpers/History';
 import Typography from '@material-ui/core/Typography';
@@ -28,9 +28,9 @@ class DoctorLogin extends React.Component<LoginProps, {}> {
         console.log(msg, this.loginStatus.msg)
         
         // jump to previous page
-        if(this.loginStatus.state === OperationStates.Successful) {
-            history.goBack()
-        }
+//        if(this.loginStatus.state === OperationStates.Successful) {
+//            history.goBack()
+//        }
     }
 
     @observable private LoginInfo: DoctorLoginFrom;
@@ -52,6 +52,7 @@ class DoctorLogin extends React.Component<LoginProps, {}> {
     private onClickLogin = () => {
         console.log(`login with: did: ${this.LoginInfo.did}, passward: ${this.LoginInfo.password}`);
         requestManager.doctor_login(this.LoginInfo, this.LoginStatusManager);
+        history.push(getDoctorHomePageRoute())
     }
 
     // TODO: Sign up and login with reverse?
