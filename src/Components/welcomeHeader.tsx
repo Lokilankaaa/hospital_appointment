@@ -66,7 +66,7 @@ class WelcomeHeader extends React.Component<headerProps, {}> {
                                         onClick={() => this.doctorLogin()} >
                                     {
                                         (() => {
-                                            return "我是医生"
+                                            return "医生通道"
                                         })()
                                     }
                                 </Button>

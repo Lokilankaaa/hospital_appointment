@@ -1,13 +1,13 @@
 import axios from "axios";
 import {userStateInfoManager} from './UserStateInfoManager';
 import {doctorStateInfoManager} from './DoctorStateInfoManager';
-import {appointment, search_doctor_response, timesForm} from "../Models/ResponseForm";
+import {appointment, search_doctor_response, timesForm, appointmentForDoctor} from "../Models/ResponseForm";
 import {detailProps} from "../Models/DocDetail";
 import avatar_g from '../Assets/per_girl.png';
 import avatar_b from '../Assets/per_boy.png';
 import moment from "moment";
 import history from '../Helpers/History';
-import {getLoginRoute} from "./Routers";
+import {getLoginRoute, getDoctorLoginRoute} from "./Routers";
 import {ClassNameMap} from "@material-ui/styles/withStyles";
 import { SignUpForm, SignupResponse } from '../Models/SignUp'
 
@@ -20,8 +20,8 @@ import { UserPasswordProps, UserInfoProps } from '../Models/UserInfo'
 import { DoctorPasswordProps, DoctorInfoProps } from '../Models/DoctorInfo'
 import { convertUserinfoToRequest, convertToChangePasswordRequest, convertToUserInfoRequest, convertDoctorinfoToRequest, convertToDoctorChangePasswordRequest, convertToDoctorInfoRequest } from './InfoConverter'
 
-import { convertToDoctorReviewHistoryRequest, convertToDoctorReviewHistoryResonse, convertToReviewRequest } from './ReviewConverter'
-import { DoctorReviewFilter, UserReview } from '../Models/ReviewHistory'
+import { convertToDoctorReviewHistoryRequest, convertToDoctorReviewHistoryResonse, convertToReviewRequest, convertToDoctorSearchCommentRequest } from './ReviewConverter'
+import { DoctorReviewFilter, UserReview, DoctorSearchCommentRequest } from '../Models/ReviewHistory'
 
 
 class RequestManager {
@@ -53,7 +53,6 @@ class RequestManager {
         })
     }
 
-    // TODO: add doctorStateInfoManager
     doctor_login(info: DoctorLoginFrom, status: OperationStateManager) {
         const path = this.d_path + 'login';
         status.Trigged();
@@ -218,6 +217,86 @@ class RequestManager {
         })
     }
 
+    // TODO: doctor add, modify, delete, search time
+    // TODO: discuss date and response
+    doctor_addTime(time: string, status: OperationStateManager) {
+        const path = this.d_path + 'add_time';
+        axios.post(path, {
+            'login_token': doctorStateInfoManager.getLoginToken(),
+            'date': moment().format('YYYY-MM-DD'),
+            'time': time,
+            'capacity': 1,
+        }).then((response) => {
+            let result = convertFromSimpleResponse(response.data)
+            if (response.status === 200) {
+                if(result.success) {
+                    status.Successful();
+                } else{
+                status.Failed(result.err);
+                }
+            }
+        }).catch(e => {
+            console.log(e);
+        })
+    }
+
+    doctor_modifyTime(tid: number, capacity: number, status: OperationStateManager) {
+        const path = this.d_path + 'modify_time';
+        axios.post(path, {
+            'login_token': doctorStateInfoManager.getLoginToken(),
+            'tid': tid,
+            'capacity': capacity,
+        }).then((response) => {
+            let result = convertFromSimpleResponse(response.data)
+            if (response.status === 200) {
+                if(result.success) {
+                    status.Successful();
+                } else{
+                status.Failed(result.err);
+                }
+            }
+        }).catch(e => {
+            console.log(e);
+        })
+    }
+
+    doctor_deleteTime(tid: number, status: OperationStateManager) {
+        const path = this.d_path + 'delete_time';
+        axios.post(path, {
+            'login_token': doctorStateInfoManager.getLoginToken(),
+            'tid': tid
+        }).then((response) => {
+            let result = convertFromSimpleResponse(response.data)
+            if (response.status === 200) {
+                if(result.success) {
+                    status.Successful();
+                } else{
+                status.Failed(result.err);
+                }
+            }
+        }).catch(e => {
+            console.log(e);
+        })
+    }
+
+    doctor_searchTime(times: Array<timesForm>) {
+        const path = this.d_path + 'search_time';
+        axios.post(path, {
+            'login_token': doctorStateInfoManager.getLoginToken(),
+            'date': moment().format('YYYY-MM-DD'),
+            'first_index': 0,
+            'limit': 20,
+        }).then((response) => {
+            if (response.status === 200) {
+                response.data['times'].map((time: timesForm) =>
+                    times.push(time)
+                )
+            }
+        }).catch(e => {
+            console.log(e);
+        })
+    }
+
     search_reviews(filter: DoctorReviewFilter, status: OperationStateManager, callBack: any)  {
         const path = this.m_path + 'search_comment';
         status.Trigged();
@@ -231,6 +310,28 @@ class RequestManager {
                     status.Successful();
                 } else{
                 status.Failed(result.err);
+                }
+            }
+        }).catch((e) => {
+            console.log(e);
+        })
+    }
+
+    // TODO: may build independent convertToDoctorReviewHistoryResonse
+    doctor_searchComment(status: OperationStateManager, callBack: any)  {
+        const path = this.d_path + 'search_comment';
+        status.Trigged();
+        axios.post(path, convertToDoctorSearchCommentRequest()).then((response) => {
+            console.log(response.status);
+            let result = convertFromSimpleResponse(response.data)
+            if (response.status === 200) {
+                if(result.success) {
+                    let comments = convertToDoctorReviewHistoryResonse(response.data['comments'])
+                    callBack(comments)
+                    status.Successful();
+                } 
+                else{
+                    status.Failed(result.err);
                 }
             }
         }).catch((e) => {
@@ -322,6 +423,7 @@ class RequestManager {
         })
     }
 
+    // TODO: did or docName
     search_time(did: string, times: Array<timesForm>) {
         const path = this.m_path + 'search_time';
         axios.post(path, {
@@ -370,6 +472,40 @@ class RequestManager {
         }
     }
 
+    // TODO: discuss date and time
+    doctor_searchAppointment(status: string, appointments: Array<Dictionary>) {
+        if (doctorStateInfoManager.isLogin()) {
+            const path = this.m_path + 'search_appoint';
+            axios.post(path, {
+                "login_token": doctorStateInfoManager.getLoginToken(),
+                "start_time": "1970-01-01T12:13:00.000+08:00",
+                "end_time": new Date().toISOString(),
+                "status": status,
+                "first_index": 0,
+                "limit": 20
+            }).then((response) => {
+                let i = 0;
+                response.data['appointments'].map((appointment: appointmentForDoctor) =>
+                    appointments.push({
+                        userName: appointment['username'],
+                        name: appointment['name'],
+                        gender: appointment['gender'],
+                        age: appointment['age'],
+                        tid: appointment['tid'],
+                        date: appointment['date'],
+                        time: appointment['time'],
+                        status: appointment['status'],
+                        appoTime: appointment['appo_time']
+                    })
+                )
+            })
+        } 
+        else {
+            alert("请先登陆！");
+            history.replace(getDoctorLoginRoute());
+        }
+    }
+
     cancel_appointment(tid: number) {
         if (userStateInfoManager.isLogin()) {
             const path = this.m_path + 'cancel_appoint';
@@ -379,6 +515,26 @@ class RequestManager {
             }).then((response) => {
                 if (response.data['success'] === true) {
                     alert('cancellation done!');
+                } else {
+                    alert(response.data['err']);
+                }
+            }).catch((err) => {
+                console.log(err);
+            })
+        }
+    }
+
+    // TODO: username needed?
+    doctor_finishAppointment(tid: number, username: string) {
+        if (doctorStateInfoManager.isLogin()) {
+            const path = this.d_path + 'finish_appoint';
+            axios.post(path, {
+                "login_token": doctorStateInfoManager.getLoginToken(),
+                "username": username,
+                "tid": tid
+            }).then((response) => {
+                if (response.data['success'] === true) {
+                    alert('finished!');
                 } else {
                     alert(response.data['err']);
                 }

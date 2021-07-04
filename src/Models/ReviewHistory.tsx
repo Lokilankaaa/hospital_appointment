@@ -43,3 +43,11 @@ export interface DoctorReviewHistoryRequest {
     first_index: number,
     limit: number
   }
+
+export interface DoctorSearchCommentRequest {
+    login_token: string,
+    start_time: string,
+    end_time: string,
+    first_index: number,
+    limit: number
+}
