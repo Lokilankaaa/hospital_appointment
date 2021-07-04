@@ -18,7 +18,7 @@ import  OperationStateManager  from "../Helpers/OperationStateManager"
 
 import { UserPasswordProps, UserInfoProps } from '../Models/UserInfo'
 import { DoctorPasswordProps, DoctorInfoProps } from '../Models/DoctorInfo'
-import { convertUserinfoToRequest, convertToChangePasswordRequest, convertToUserInfoRequest, convertDoctorinfoToRequest, convertToDoctorInfoRequest } from './InfoConverter'
+import { convertUserinfoToRequest, convertToChangePasswordRequest, convertToUserInfoRequest, convertDoctorinfoToRequest, convertToDoctorChangePasswordRequest, convertToDoctorInfoRequest } from './InfoConverter'
 
 import { convertToDoctorReviewHistoryRequest, convertToDoctorReviewHistoryResonse, convertToReviewRequest } from './ReviewConverter'
 import { DoctorReviewFilter, UserReview } from '../Models/ReviewHistory'
@@ -167,7 +167,7 @@ class RequestManager {
     doctor_changePassword(pass: DoctorPasswordProps, status: OperationStateManager)  {
         const path = this.d_path + 'modify_password';
         status.Trigged();
-        axios.post(path, convertToChangePasswordRequest(pass)).then((response) => {
+        axios.post(path, convertToDoctorChangePasswordRequest(pass)).then((response) => {
             console.log(response.status);
             let result = convertFromSimpleResponse(response.data)
             if (response.status === 200) {
