@@ -17,7 +17,8 @@ import { convertLoginFormToRequest, convertFromLoginResponse, convertDoctorLogin
 import  OperationStateManager  from "../Helpers/OperationStateManager"
 
 import { UserPasswordProps, UserInfoProps } from '../Models/UserInfo'
-import { convertUserinfoToRequest, convertToChangePasswordRequest, convertToUserInfoRequest } from './InfoConverter'
+import { DoctorPasswordProps, DoctorInfoProps } from '../Models/DoctorInfo'
+import { convertUserinfoToRequest, convertToChangePasswordRequest, convertToUserInfoRequest, convertDoctorinfoToRequest, convertToDoctorInfoRequest } from './InfoConverter'
 
 import { convertToDoctorReviewHistoryRequest, convertToDoctorReviewHistoryResonse, convertToReviewRequest } from './ReviewConverter'
 import { DoctorReviewFilter, UserReview } from '../Models/ReviewHistory'
@@ -134,8 +135,37 @@ class RequestManager {
         })
     }
 
+    doctor_getinfo(callback: any)  {
+        const path = this.d_path + 'view_info';
+        axios.post(path, convertDoctorinfoToRequest()).then((response) => {
+            console.log(response.status);
+            callback(response.data)
+
+        }).catch((e) => {
+            console.log(e);
+        })
+    }
+
     user_changePassword(pass: UserPasswordProps, status: OperationStateManager)  {
         const path = this.m_path + 'modify_password';
+        status.Trigged();
+        axios.post(path, convertToChangePasswordRequest(pass)).then((response) => {
+            console.log(response.status);
+            let result = convertFromSimpleResponse(response.data)
+            if (response.status === 200) {
+                if(result.success) {
+                    status.Successful();
+                } else{
+                status.Failed(result.err);
+                }
+            }
+        }).catch((e) => {
+            console.log(e);
+        })
+    }
+
+    doctor_changePassword(pass: DoctorPasswordProps, status: OperationStateManager)  {
+        const path = this.d_path + 'modify_password';
         status.Trigged();
         axios.post(path, convertToChangePasswordRequest(pass)).then((response) => {
             console.log(response.status);
@@ -156,6 +186,24 @@ class RequestManager {
         const path = this.m_path + 'modify_info';
         status.Trigged();
         axios.post(path, convertToUserInfoRequest(info)).then((response) => {
+            console.log(response.status);
+            let result = convertFromSimpleResponse(response.data)
+            if (response.status === 200) {
+                if(result.success) {
+                    status.Successful();
+                } else{
+                status.Failed(result.err);
+                }
+            }
+        }).catch((e) => {
+            console.log(e);
+        })
+    }
+
+    doctor_changeDoctorInfo(info: DoctorInfoProps, status: OperationStateManager)  {
+        const path = this.d_path + 'modify_info';
+        status.Trigged();
+        axios.post(path, convertToDoctorInfoRequest(info)).then((response) => {
             console.log(response.status);
             let result = convertFromSimpleResponse(response.data)
             if (response.status === 200) {
