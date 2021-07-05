@@ -10,9 +10,12 @@ import AdminUserListPage from "./Components/AdminUserListPage";
 import DocDetails from './Components/DoctorDetails'
 import AppointmentReview from './Components/AppointmentReview'
 import DoctorReviewHistory from './Components/DoctorReviewHistory'
+import DoctorLogin from './Components/DoctorLogin'
+import DoctorHomePage from './Components/DoctorHomePage';
+import DoctorAppointmentList from './Components/DoctorAppointmentList';
 
-import {loginClasses, FrontStyles, detailPageClasses, cardClasses, headerClasses, recordClasses, recordsClasses, UserInfoStyles, AppointmentReviewStyles, DoctorReviewHistoryStyles} from "./Styles/madeStyles";
-import {Route, RouteComponentProps, Switch, withRouter, Router} from 'react-router-dom';
+import { loginClasses, FrontStyles, detailPageClasses, cardClasses, headerClasses, recordClasses, recordsClasses, UserInfoStyles, AppointmentReviewStyles, DoctorReviewHistoryStyles, DoctorHomePageStyles } from "./Styles/madeStyles";
+import { Route, RouteComponentProps, Switch, withRouter, Router } from 'react-router-dom';
 import {
     getLoginRoute,
     getSignUpRoute,
@@ -26,9 +29,12 @@ import {
     getAdminDoctorInfoRoute,
     getAdminUserInfoRoute,
     getAdminRecordsRoute,
-    getAdminFeedbacksRoute
+    getAdminFeedbacksRoute,
+    getDoctorLoginRoute,
+    getDoctorHomePageRoute,
+    getDoctorAppointmentListRoute
 } from "./Helpers/Routers";
-import {Provider, observer} from "mobx-react";
+import { Provider, observer } from "mobx-react";
 
 import history from './Helpers/History';
 import RecordPage from "./Components/registeryRecords";
@@ -41,20 +47,23 @@ function App() {
         <Router history={history}>
             <Switch>
                 // add your component and URl in here
-                <Route exact path={getLoginRoute()} component={fnLogin}/>
-                <Route exact path={"/"} component={fnUserFrontPage}/>
-                <Route exact path={getSignUpRoute()} component={fnSignUp}/>
-                <Route exact path={getDocDetail()} component={fnDocDetail}/>
-                <Route exact path={getLookup()} component={fnLookup}/>
+                <Route exact path={getLoginRoute()} component={fnLogin} />
+                <Route exact path={"/"} component={fnUserFrontPage} />
+                <Route exact path={getSignUpRoute()} component={fnSignUp} />
+                <Route exact path={getDocDetail()} component={fnDocDetail} />
+                <Route exact path={getLookup()} component={fnLookup} />
                 <Route exact path={getUserInfoRoute()} component={fnUserInfoPage} />
                 <Route exact path={getAdminRoute()} component={fnAdminFrontPage} />
                 <Route exact path={getAdminUserInfoFrontRoute()} component={fnAdminUserInfoFrontPage} />
-                <Route exact path={getAdminDoctorInfoRoute()} component={fnAdminDoctorInfo}/>
-                <Route exact path={getAdminUserInfoRoute()} component={fnAdminUserInfo}/>
-                <Route exact path={getAdminRecordsRoute()} component={fnAdminRecords}/>
-                <Route exact path={getAdminFeedbacksRoute()} component={fnAdminFeedback}/>
+                <Route exact path={getAdminDoctorInfoRoute()} component={fnAdminDoctorInfo} />
+                <Route exact path={getAdminUserInfoRoute()} component={fnAdminUserInfo} />
+                <Route exact path={getAdminRecordsRoute()} component={fnAdminRecords} />
+                <Route exact path={getAdminFeedbacksRoute()} component={fnAdminFeedback} />
                 <Route exact path={getAppointmentReviewRoute()} component={fnAdminAppointmentReview} />
                 <Route exact path={getDoctorReviewHistoryRoute(`:docID`)} component={fnDoctorReviewHistory} />
+                <Route exact path={getDoctorLoginRoute()} component={fnDoctorLogin} />
+                <Route exact path={getDoctorHomePageRoute()} component={fnDoctorHomePage} />
+                <Route exact path={getDoctorAppointmentListRoute()} component={fnDoctorAppointmentList} />
             </Switch>
         </Router>
     );
@@ -81,23 +90,23 @@ function fnUserFrontPage() {
 
 function fnDocDetail() {
     return (
-        <DocDetails classes={detailPageClasses()} cardClasses={cardClasses()} headerClasses={headerClasses()}/>
+        <DocDetails classes={detailPageClasses()} cardClasses={cardClasses()} headerClasses={headerClasses()} />
     )
 }
 
 function fnLookup() {
     return (
-        <RecordPage classes={recordsClasses()} recordClasses={recordClasses()} headerClasses={headerClasses()}/>
+        <RecordPage classes={recordsClasses()} recordClasses={recordClasses()} headerClasses={headerClasses()} />
     )
 }
 
 function fnUserInfoPage() {
-  return  (
-    <UserInfo classes={UserInfoStyles()} headerClasses={headerClasses()}></UserInfo>
-  )
+    return (
+        <UserInfo classes={UserInfoStyles()} headerClasses={headerClasses()}></UserInfo>
+    )
 }
 
-function fnAdminFrontPage(){
+function fnAdminFrontPage() {
     return (
         <AdminFrontPage classes={FrontStyles()} headerClasses={headerClasses()}></AdminFrontPage>
     )
@@ -111,42 +120,60 @@ function fnAdminUserInfoFrontPage() {
 
 function fnAdminDoctorInfo() {
     return (
-        <AdminDoctorListPage classes={detailPageClasses()} cardClasses={cardClasses()} headerClasses={headerClasses()}/>
+        <AdminDoctorListPage classes={detailPageClasses()} cardClasses={cardClasses()} headerClasses={headerClasses()} />
     )
 }
 
 function fnAdminUserInfo() {
     return (
-        <AdminUserListPage classes={detailPageClasses()} cardClasses={cardClasses()} headerClasses={headerClasses()}/>
+        <AdminUserListPage classes={detailPageClasses()} cardClasses={cardClasses()} headerClasses={headerClasses()} />
     )
 }
 
 function fnAdminRecords() {
     return (
-        <AdminRecordsPage classes={recordsClasses()} recordClasses={recordClasses()} headerClasses={headerClasses()}/>
+        <AdminRecordsPage classes={recordsClasses()} recordClasses={recordClasses()} headerClasses={headerClasses()} />
     )
 }
 
 function fnAdminFeedback() {
     return (
-        <AdminFeedbacksPage classes={recordsClasses()} recordClasses={recordClasses()} headerClasses={headerClasses()}/>
+        <AdminFeedbacksPage classes={recordsClasses()} recordClasses={recordClasses()} headerClasses={headerClasses()} />
     )
 }
 
 
-function fnAdminAppointmentReview(){
+function fnAdminAppointmentReview() {
     return (
         <AppointmentReview classes={AppointmentReviewStyles()} headerClasses={headerClasses()}></AppointmentReview>
     )
 }
 
-function fnDoctorReviewHistory(){
+function fnDoctorReviewHistory() {
     return (
         <DoctorReviewHistory classes={DoctorReviewHistoryStyles()} headerClasses={headerClasses()}></DoctorReviewHistory>
+    )
+}
+
+function fnDoctorLogin() {
+    return (
+        <DoctorLogin classes={loginClasses()} identity={"Doctor"} headerClasses={headerClasses()}></DoctorLogin>
+    )
+}
+
+function fnDoctorHomePage() {
+    return (
+        <DoctorHomePage classes={DoctorHomePageStyles()}></DoctorHomePage>
+    )
+}
+
+function fnDoctorAppointmentList() {
+    return (
+        <DoctorAppointmentList ></DoctorAppointmentList>
     )
 }
 
 // todo: this should be fixed
 const wrapper = withRouter(App);
 export default App;
-export {wrapper as App};
+export { wrapper as App };

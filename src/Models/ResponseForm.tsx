@@ -28,3 +28,15 @@ export interface appointment {
     "status": string,
     "time": string
 }
+
+export interface appointmentForDoctor {
+    "username": string,
+    "name": string,
+    "gender": string,
+    "age": number,
+    "tid": number,
+    "date": string,
+    "time": string,
+    "status": string,
+    "appo_time": string
+}

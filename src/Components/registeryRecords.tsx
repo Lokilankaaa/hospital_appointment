@@ -35,6 +35,12 @@ interface recordForm extends Dictionary {
     time: Date,
     fee: number,
     status: string,
+    userName: string,
+    name: string,
+    gender: string,
+    age: number,
+    date: string,
+    appoTime: string,
 }
 
 interface recordProps {

@@ -50,3 +50,15 @@ export function getAdminFeedbacksRoute() {
 export function getDoctorReviewHistoryRoute(docID: string) {
     return `/review/history/${docID}`;
 }
+
+export function getDoctorLoginRoute() {
+    return `/doctor/login`;
+}
+
+export function getDoctorHomePageRoute(){
+    return `/doctor/homepage`;
+}
+
+export function getDoctorAppointmentListRoute(){
+    return `/doctor/appointmentlist`;
+}

@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button';
 import moment from "moment";
 import {userStateInfoManager} from "../Helpers/UserStateInfoManager";
 import history from '../Helpers/History';
-import {getLoginRoute} from "../Helpers/Routers";
+import {getLoginRoute, getDoctorLoginRoute} from "../Helpers/Routers";
 import {requestManager} from "../Helpers/RequestManager";
 import { Lambda, observable, reaction, makeObservable, ObservableMap } from "mobx";
 import { inject, observer } from "mobx-react";
@@ -42,6 +42,10 @@ class WelcomeHeader extends React.Component<headerProps, {}> {
         requestManager.user_logout(this.logoutCallBack)
     }
 
+    doctorLogin() {
+        history.push(getDoctorLoginRoute())
+    }
+
     componentDidMount() {
         setInterval(()=> this.currentTime = moment().format('YYYY-MM-DD hh:mm:ss dddd'), 1000);
     }
@@ -57,6 +61,16 @@ class WelcomeHeader extends React.Component<headerProps, {}> {
 
                     <Grid item xs={8} style={{display: "flex", justifyContent: "flex-end"}}>
                         <Grid container spacing={1} style={{display: "flex", justifyContent: "flex-end"}}>
+                            <Grid item>
+                                <Button variant={"contained"} className={this.props.classes.button}
+                                        onClick={() => this.doctorLogin()} >
+                                    {
+                                        (() => {
+                                            return "医生通道"
+                                        })()
+                                    }
+                                </Button>
+                            </Grid>
                             <Grid item style={{display: "flex", alignItems: "flex-end"}}>
                                 {
                                     (() => {

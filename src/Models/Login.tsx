@@ -15,8 +15,18 @@ export interface LoginFrom {
     password: string;
 }
 
+export interface DoctorLoginFrom {
+    did: string;
+    password: string;
+}
+
 export interface LoginRequest {
     username: string,
+    password: string,
+}
+
+export interface DoctorLoginRequest {
+    did: string,
     password: string,
 }
 
@@ -24,4 +34,14 @@ export interface LoginResponse {
     success: boolean,
     err: string,
     login_token: string
+}
+
+export interface DoctorLoginResponse {
+    success: boolean,
+    err: string,
+    login_token: string
+}
+
+export interface DoctorHomePageProps{
+    classes: ClassNameMap;
 }
