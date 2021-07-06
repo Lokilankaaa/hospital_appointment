@@ -7,7 +7,13 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import {detailProps} from '../Models/DocDetail';
-import {getDoctorReviewHistoryRoute, getLoginRoute, getLookup, getUserInfoRoute} from "../Helpers/Routers";
+import {
+    getAdminToModifyTheDoctorInfo,
+    getDoctorReviewHistoryRoute,
+    getLoginRoute,
+    getLookup,
+    getUserInfoRoute
+} from "../Helpers/Routers";
 import history from '../Helpers/History';
 import {userStateInfoManager} from "../Helpers/UserStateInfoManager";
 import {requestManager} from "../Helpers/RequestManager";
@@ -42,8 +48,7 @@ class DocInfoCard extends React.Component<detailProps, {}> {
                 </CardContent>
                 <CardActions>
                     <Button size="small" onClick={() => {
-                        // TODO: There should be a method that can modify other user's information
-                        history.push(getUserInfoRoute());
+                        history.push(getAdminToModifyTheDoctorInfo(this.props.did));
                     }} >修改信息</Button>
                     <Button size="small" onClick={() => history.push(getDoctorReviewHistoryRoute(this.props.did))}>相关评价</Button>
                 </CardActions>

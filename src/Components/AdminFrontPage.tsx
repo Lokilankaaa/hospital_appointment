@@ -20,10 +20,11 @@ import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import history from '../Helpers/History';
 import {
+    getAdminDoctorInfoRoute,
     getAdminFeedbacksRoute,
     getAdminLoginRoute,
     getAdminRecordsRoute,
-    getAdminUserInfoFrontRoute
+    getAdminUserInfoFrontRoute, getAdminUserInfoRoute
 } from "../Helpers/Routers";
 import moment from "moment";
 import {requestManager} from "../Helpers/RequestManager";
@@ -40,22 +41,22 @@ class AdminFrontPage extends React.Component<SignUpProps, {}> {
 
     images = [
         {
-            url: Register,
-            title: '信息管理',
-            width: '23%',
-            Onclick: () => { history.push(getAdminUserInfoFrontRoute()) }
-        },
-        {
             url: login,
-            title: '预约管理',
+            title: '医生信息管理',
             width: '23%',
-            Onclick: () => { history.push(getAdminRecordsRoute()) }
+            Onclick: () => { history.push(getAdminDoctorInfoRoute()) }
         },
         {
             url: lookup,
-            title: '反馈管理',
+            title: '用户信息管理',
+            width: '523',
+            Onclick: () => { history.push(getAdminUserInfoRoute())}
+        },
+        {
+            url: Register,
+            title: '预约管理',
             width: '23%',
-            Onclick: () => { history.push(getAdminFeedbacksRoute()); }
+            Onclick: () => { history.push(getAdminRecordsRoute()) }
         },
         {
             url: more,

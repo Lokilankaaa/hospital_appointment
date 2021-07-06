@@ -34,7 +34,7 @@ import {
     getAdminFeedbacksRoute,
     getDoctorLoginRoute,
     getDoctorHomePageRoute,
-    getDoctorAppointmentListRoute
+    getDoctorAppointmentListRoute, getAdminToModifyTheDoctorInfo
 } from "./Helpers/Routers";
 import { Provider, observer } from "mobx-react";
 
@@ -42,6 +42,7 @@ import history from './Helpers/History';
 import RecordPage from "./Components/registeryRecords";
 import AdminRecordsPage from "./Components/AdminRecordsPage";
 import AdminFeedbacksPage from "./Components/AdminFeedbacksPage";
+import DoctorInfoForAdminToModify from "./Components/AdminToModifyTheDoctorInfo";
 
 // page navigation https://rookiecoder.medium.com/react-button-click-navigate-to-new-page-6af7397ea220
 function App() {
@@ -63,6 +64,7 @@ function App() {
                 <Route exact path={getAdminRecordsRoute()} component={fnAdminRecords} />
                 <Route exact path={getAdminFeedbacksRoute()} component={fnAdminFeedback} />
                 <Route exact path={getAppointmentReviewRoute()} component={fnAdminAppointmentReview} />
+                <Route exact path={getAdminToModifyTheDoctorInfo(`:docID`)} component={fnAdminToModifyTheDoctorInfo}/>
                 <Route exact path={getDoctorReviewHistoryRoute(`:docID`)} component={fnDoctorReviewHistory} />
                 <Route exact path={getDoctorLoginRoute()} component={fnDoctorLogin} />
                 <Route exact path={getDoctorHomePageRoute()} component={fnDoctorHomePage} />
@@ -180,6 +182,12 @@ function fnDoctorHomePage() {
 function fnDoctorAppointmentList() {
     return (
         <DoctorAppointmentList ></DoctorAppointmentList>
+    )
+}
+
+function fnAdminToModifyTheDoctorInfo() {
+    return (
+        <DoctorInfoForAdminToModify classes={UserInfoStyles()} headerClasses={headerClasses()}></DoctorInfoForAdminToModify>
     )
 }
 

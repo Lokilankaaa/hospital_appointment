@@ -21,6 +21,7 @@ export interface Review {
 }
 
 export interface UserReview {
+    cid: number,
     rating: string,
     content: string,
     date: string,

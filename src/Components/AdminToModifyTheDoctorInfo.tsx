@@ -29,7 +29,7 @@ import { OperationStates, OPerationStatus } from '../Models/OperationState'
 import Alert from '@material-ui/lab/Alert';
 
 @observer
-class UserInfo extends React.Component<SignUpProps, {}> {
+class DoctorInfoForAdminToModify extends React.Component<SignUpProps, {}> {
 
     @observable private user: UserInfoProps = {
         classes : {},
@@ -141,7 +141,7 @@ class UserInfo extends React.Component<SignUpProps, {}> {
     }
 
     private changeInfo = () => {
-        // requestManager.user_changeUserInfo(this.user, this.ChangeInfoStatusManager)
+        requestManager.user_changeUserInfo(this.user, this.ChangeInfoStatusManager)
     }
 
 
@@ -184,11 +184,11 @@ class UserInfo extends React.Component<SignUpProps, {}> {
                         <Grid item xs={12}>
                             <Grid container style={{display:"flex", justifyContent:"center"}}>
                                 <Grid item xs={2} style={{height: "20%", width:"20%", display:"flex", justifyContent:"flex-end"}}>
-                                        <h3 style={{width:"100%", display:"flex", justifyContent:"flex-end"}}> {'*身份证号码'}: </h3>
+                                        <h3 style={{width:"100%", display:"flex", justifyContent:"flex-end"}}> {'*科室'}: </h3>
                                 </Grid>
                                 <Grid item xs={8} style={{marginTop:"1.5%", marginLeft:"3%", height: "20%", width:"75%"}}>
-                                    <TextField fullWidth variant="outlined" id={ "userinfo" + '*身份证号码' } value={ info.ID_Number }
-                                             onChange={(data) => { this.user.ID_Number = data.target.value } }/> 
+                                    <TextField fullWidth variant="outlined" id={ "userinfo" + '*科室' } value={ info.ID_Number }
+                                             onChange={(data) => { this.user.ID_Number = data.target.value } }/>
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -207,18 +207,11 @@ class UserInfo extends React.Component<SignUpProps, {}> {
                         <Grid item xs={12}>
                             <Grid container style={{display:"flex", justifyContent:"center"}}>
                                 <Grid item xs={2} style={{height: "20%", width:"20%", display:"flex", justifyContent:"flex-end"}}>
-                                        <h3 style={{width:"100%", display:"flex", justifyContent:"flex-end"}}> {'联系方式'} </h3>
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Grid container style={{display:"flex", justifyContent:"center"}}>
-                                <Grid item xs={2} style={{height: "20%", width:"20%", display:"flex", justifyContent:"flex-end"}}>
-                                        <h3 style={{width:"100%", display:"flex", justifyContent:"flex-end"}}> {'*手机号码'} </h3>
+                                        <h3 style={{width:"100%", display:"flex", justifyContent:"flex-end"}}> {'*职称'} </h3>
                                 </Grid>
                                 <Grid item xs={8} style={{marginTop:"1.5%", marginLeft:"3%", height: "20%", width:"75%", color:"black"}}>
-                                    <TextField fullWidth variant="outlined" id={ "userinfo" + '*手机号码' } value={ info.PhoneNumber }
-                                             onChange={(data) => { this.user.PhoneNumber = data.target.value } }/> 
+                                    <TextField fullWidth variant="outlined" id={ "userinfo" + '*职称' } value={ info.PhoneNumber }
+                                             onChange={(data) => { this.user.PhoneNumber = data.target.value } }/>
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -253,34 +246,8 @@ class UserInfo extends React.Component<SignUpProps, {}> {
                                 <MenuItem onClick={ this.onClickSideBarInfo } className={ this.getButtonTextClass(InfoTypes.Info) }>
                                         {"个人信息"}
                                 </MenuItem>
-                                <MenuItem onClick={ () => { this.selectType = InfoTypes.ChangePassword }} className={ this.getButtonTextClass(InfoTypes.ChangePassword) }>
-                                        {"修改密码"}
-                                </MenuItem> 
                             </MenuList>
                         </Grid>
-
-                        <Grid item> 
-                            <Button type="submit" className={ this.getButtonTextClass(InfoTypes.Patients) }
-                            onClick={ () => { this.selectType = InfoTypes.Patients } } style={{ width:"100%" }} >
-                                {"常用就诊人"}
-                            </Button>
-                        </Grid>
-
-                        <Grid item> 
-                            <Button type="submit" className={ this.getButtonTextClass(InfoTypes.Appointments) } 
-                            onClick={ () => { this.selectType = InfoTypes.Appointments } } style={{width:"100%"}} >
-                                    {"我的预约"}
-                            </Button>
-                        </Grid>
-
-                        <Grid item>
-                            <Button type="submit" className={ this.getButtonTextClass(InfoTypes.Focus) } 
-                            onClick={ () => { this.selectType = InfoTypes.Focus } } style={{width:"100%"}} >
-                                    {"我的关注"}
-                                    
-                            </Button>
-                        </Grid>
-
                     </Grid>
                 </Grid>
             </div>
@@ -384,4 +351,4 @@ class UserInfo extends React.Component<SignUpProps, {}> {
         )
     }
 }
-export default UserInfo
+export default DoctorInfoForAdminToModify

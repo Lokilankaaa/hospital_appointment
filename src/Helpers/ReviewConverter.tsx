@@ -41,6 +41,7 @@ export function convertToDoctorReviewHistoryResonse(data: Array<any>): Array<Use
 	let res = new Array<UserReview>()
 	data.map((review: reviewResponse) => {
 		res.push({
+			cid: review.cid,
 			rating: "",
 			content: review.comment,
 			date: review.time,

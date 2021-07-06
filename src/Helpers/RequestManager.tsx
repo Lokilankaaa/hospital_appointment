@@ -14,7 +14,13 @@ import avatar_g from '../Assets/per_girl.png';
 import avatar_b from '../Assets/per_boy.png';
 import moment from "moment";
 import history from '../Helpers/History';
-import {getLoginRoute, getDoctorLoginRoute, getAdminRoute, getAdminLoginRoute} from "./Routers";
+import {
+    getLoginRoute,
+    getDoctorLoginRoute,
+    getAdminRoute,
+    getAdminLoginRoute,
+    getDoctorReviewHistoryRoute
+} from "./Routers";
 import {ClassNameMap} from "@material-ui/styles/withStyles";
 import { SignUpForm, SignupResponse } from '../Models/SignUp'
 
@@ -697,6 +703,28 @@ class RequestManager {
             }).catch((err) => {
                 console.log(err);
             })
+        }
+    }
+
+    admin_remove_comments(cid: number) {
+        if (adminStateInfoManager.isLogin()) {
+            const path = this.a_path + 'delete_comment';
+            axios.post(path, {
+                "login_token": adminStateInfoManager.getLoginToken(),
+                "cid": cid,
+            }).then((response) => {
+                if(response.status === 200) {
+                    if(response.data['success'] === true) {
+                        alert('Successfully deleted');
+                    } else {
+                        alert(response.data['err']);
+                    }
+
+                }
+            }).catch((err) => {
+                console.log(err);
+            })
+
         }
     }
 

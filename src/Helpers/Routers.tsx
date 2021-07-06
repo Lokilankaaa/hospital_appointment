@@ -51,6 +51,10 @@ export function getAdminFeedbacksRoute() {
     return '/admin/feedbacks'
 }
 
+export function getAdminToModifyTheDoctorInfo(docID: string) {
+    return `/admin/doctor/${docID}/info/modify;`
+}
+
 export function getDoctorReviewHistoryRoute(docID: string) {
     return `/review/history/${docID}`;
 }
@@ -65,4 +69,8 @@ export function getDoctorHomePageRoute(){
 
 export function getDoctorAppointmentListRoute(){
     return `/doctor/appointmentlist`;
+}
+
+export function getDoctorAdminModifyDocInfoRoute(){
+    return `/admin/doctor/info`
 }

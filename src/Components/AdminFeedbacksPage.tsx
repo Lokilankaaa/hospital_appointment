@@ -151,7 +151,7 @@ class AdminFeedbacksPage extends React.Component<recordProps, {}> {
         return (
             <div>
                 <div className={this.props.classes.root}>
-                    <Typography variant={"h4"} className={this.props.classes.title}>请确认您的预约信息</Typography>
+                    <Typography variant={"h4"} className={this.props.classes.title}>反馈管理</Typography>
                     <Paper>
                         <TableContainer className={this.props.classes.container}>
                             <Table stickyHeader aria-label="sticky table">

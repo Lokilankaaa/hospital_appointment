@@ -11,7 +11,12 @@ import {Lambda, observable, reaction, makeObservable, action} from "mobx";
 import DateFnsUtils from '@date-io/date-fns';
 import {inject, observer} from "mobx-react";
 import {SignUpProps} from '../Models/Login';
-import {getLoginRoute, getSignUpRoute, getAppointmentReviewRoute} from "../Helpers/Routers";
+import {
+    getLoginRoute,
+    getSignUpRoute,
+    getAppointmentReviewRoute,
+    getDoctorReviewHistoryRoute, getAdminRoute
+} from "../Helpers/Routers";
 import {Link} from "react-router-dom";
 import history from '../Helpers/History';
 import Card from '@material-ui/core/Card';
@@ -33,6 +38,7 @@ import { DoctorInfo, AppointmentInfo, Review, UserReview } from '../Models/Revie
 import { requestManager } from "../Helpers/RequestManager";
 
 import {RouteComponentProps} from 'react-router';
+import {adminStateInfoManager} from "../Helpers/AdminStateInfoManager";
 
 @observer
 class DoctorReviewHistory extends React.Component<SignUpProps, {}> {
@@ -117,16 +123,28 @@ class DoctorReviewHistory extends React.Component<SignUpProps, {}> {
     }
 
     private renderReviewCurrrent() {
-        return ( 
-        <Grid container spacing={0} justify="center" item xs={12}>
-            <Grid item  xs={12}>
-                <Button fullWidth type="submit" className={ this.props.classes.PublishReviewButton } 
-                            onClick={ () => { history.push( getAppointmentReviewRoute()) }} style={{width:"100%"}} >
-                    {"评价打分"}
-                </Button>
-            </Grid>
-          </Grid>
-        )
+        if (adminStateInfoManager.isLogin()) {
+            return (
+                <Grid container spacing={0} justify="center" item xs={12}>
+                    <Grid item  xs={12}>
+
+                    </Grid>
+                </Grid>
+            )
+        } else {
+            return (
+                <Grid container spacing={0} justify="center" item xs={12}>
+                    <Grid item xs={12}>
+                        <Button fullWidth type="submit" className={this.props.classes.PublishReviewButton}
+                                onClick={() => {
+                                    history.push(getAppointmentReviewRoute())
+                                }} style={{width: "100%"}}>
+                            {"评价打分"}
+                        </Button>
+                    </Grid>
+                </Grid>
+            )
+        }
     }
 
     private renderOneComment(comment: UserReview) {
@@ -173,7 +191,11 @@ class DoctorReviewHistory extends React.Component<SignUpProps, {}> {
                                     <Grid item xs={12} style={{marginBottom: "2%"}}>
                                         <Typography variant="subtitle2" color="textSecondary" >
                                             { `${comment.date}(就诊后${comment.delay}天)` }
+                                            <Button size="small" onClick={() => {
+                                                requestManager.admin_remove_comments(comment.cid)
+                                            }} style={{color:"red"}}>删除</Button>
                                         </Typography>
+
                                     </Grid>
                                 </Grid>
                             </Grid>
