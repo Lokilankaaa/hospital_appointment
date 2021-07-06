@@ -83,11 +83,11 @@ class AdminFeedbacksPage extends React.Component<recordProps, {}> {
     }
 
     requestRecords() {
-        requestManager.search_appointment("", this.records);
+        requestManager.admin_search_appointment("", this.records);
     }
 
     cancel_appointment(order: number) {
-        requestManager.cancel_appointment(this.records[order - 1].tid)
+        requestManager.admin_cancel_appointment(this.records[order - 1].tid)
         this.records = this.records.filter((record) => record.order !== order);
     }
 

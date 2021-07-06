@@ -13,6 +13,9 @@ import {detailPageProps, detailProps} from "../Models/DocDetail";
 import {requestManager} from "../Helpers/RequestManager";
 import DocInfoCard from "./DocInfoCard";
 import {Info} from "@material-ui/icons";
+import {adminStateInfoManager} from "../Helpers/AdminStateInfoManager";
+import history from "../Helpers/History";
+import {getAdminLoginRoute} from "../Helpers/Routers";
 
 @observer
 class AdminDoctorListPage extends React.Component<detailPageProps, {}> {
@@ -24,6 +27,10 @@ class AdminDoctorListPage extends React.Component<detailPageProps, {}> {
 
     constructor(props: detailPageProps) {
         super(props);
+        if(!adminStateInfoManager.isLogin()){
+            alert("请先登录")
+            history.push(getAdminLoginRoute())
+        }
         makeObservable(this);
         this.handleDepartChange.bind(this);
         this.handleDateChange.bind(this);

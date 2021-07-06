@@ -19,12 +19,23 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import history from '../Helpers/History';
-import {getAdminFeedbacksRoute, getAdminRecordsRoute, getAdminUserInfoFrontRoute} from "../Helpers/Routers";
+import {
+    getAdminFeedbacksRoute,
+    getAdminLoginRoute,
+    getAdminRecordsRoute,
+    getAdminUserInfoFrontRoute
+} from "../Helpers/Routers";
 import moment from "moment";
+import {requestManager} from "../Helpers/RequestManager";
+import {adminStateInfoManager} from "../Helpers/AdminStateInfoManager";
 class AdminFrontPage extends React.Component<SignUpProps, {}> {
 
     constructor(props: SignUpProps) {
         super(props);
+        if(!adminStateInfoManager.isLogin()){
+            alert("请先登录")
+            history.push(getAdminLoginRoute())
+        }
     }
 
     images = [

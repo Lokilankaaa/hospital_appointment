@@ -16,6 +16,9 @@ import {Info} from "@material-ui/icons";
 import UserInfo from './UserInfo'
 import {UserInfoPageProps, UserInfoProps} from "../Models/UserInfo";
 import UserInfoCard from "./UserInfoCard";
+import {adminStateInfoManager} from "../Helpers/AdminStateInfoManager";
+import history from "../Helpers/History";
+import {getAdminLoginRoute} from "../Helpers/Routers";
 
 @observer
 class AdminUserListPage extends React.Component<UserInfoPageProps, {}> {
@@ -27,6 +30,10 @@ class AdminUserListPage extends React.Component<UserInfoPageProps, {}> {
 
     constructor(props: UserInfoPageProps) {
         super(props);
+        if(!adminStateInfoManager.isLogin()){
+            alert("请先登录")
+            history.push(getAdminLoginRoute())
+        }
         makeObservable(this);
         // TODO: This should be replace by user API
         this.handleDepartChange.bind(this);

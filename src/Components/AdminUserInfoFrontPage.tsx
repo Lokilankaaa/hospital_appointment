@@ -20,15 +20,20 @@ import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import history from '../Helpers/History';
 import {
-    getAdminDoctorInfoRoute,
+    getAdminDoctorInfoRoute, getAdminLoginRoute,
     getAdminUserInfoRoute,
     getUserInfoRoute
 } from "../Helpers/Routers";
 import moment from "moment";
+import {adminStateInfoManager} from "../Helpers/AdminStateInfoManager";
 class AdminUserInfoFrontPage extends React.Component<SignUpProps, {}> {
 
     constructor(props: SignUpProps) {
         super(props);
+        if(!adminStateInfoManager.isLogin()){
+            alert("请先登录")
+            history.push(getAdminLoginRoute())
+        }
     }
 
     images = [

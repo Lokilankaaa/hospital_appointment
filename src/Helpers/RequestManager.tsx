@@ -8,7 +8,7 @@ import avatar_g from '../Assets/per_girl.png';
 import avatar_b from '../Assets/per_boy.png';
 import moment from "moment";
 import history from '../Helpers/History';
-import {getLoginRoute, getDoctorLoginRoute, getAdminRoute} from "./Routers";
+import {getLoginRoute, getDoctorLoginRoute, getAdminRoute, getAdminLoginRoute} from "./Routers";
 import {ClassNameMap} from "@material-ui/styles/withStyles";
 import { SignUpForm, SignupResponse } from '../Models/SignUp'
 
@@ -550,11 +550,60 @@ class RequestManager {
         }
     }
 
+    admin_search_appointment(status: string, appointments: Array<Dictionary>) {
+        console.log("adminlogin???????",adminStateInfoManager.isLogin())
+        if (adminStateInfoManager.isLogin()) {
+            const path = this.a_path + 'search_appoint';
+            axios.post(path, {
+                "login_token": adminStateInfoManager.getLoginToken(),
+                "start_time": "1970-01-01T12:13:00.000+08:00",
+                "end_time": new Date().toISOString(),
+                "status": status,
+                "first_index": 0,
+                "limit": 20
+            }).then((response) => {
+                let i = 0;
+                response.data['appointments'].map((appointment: appointment) =>
+                    appointments.push({
+                        aid: appointment['did'],
+                        order: i++,
+                        type: appointment['doctor_depart'],
+                        docName: appointment['doctor_name'],
+                        time: appointment['time'],
+                        fee: 10,
+                        status: appointment['status']
+                    })
+                )
+            })
+        } else {
+            alert("请先登陆！");
+            history.replace(getAdminLoginRoute());
+        }
+    }
+
     cancel_appointment(tid: number) {
         if (userStateInfoManager.isLogin()) {
             const path = this.m_path + 'cancel_appoint';
             axios.post(path, {
                 "login_token": userStateInfoManager.getLoginToken(),
+                "tid": tid
+            }).then((response) => {
+                if (response.data['success'] === true) {
+                    alert('cancellation done!');
+                } else {
+                    alert(response.data['err']);
+                }
+            }).catch((err) => {
+                console.log(err);
+            })
+        }
+    }
+
+    admin_cancel_appointment(tid: number) {
+        if (adminStateInfoManager.isLogin()) {
+            const path = this.a_path + 'cancel_appoint';
+            axios.post(path, {
+                "login_token": adminStateInfoManager.getLoginToken(),
                 "tid": tid
             }).then((response) => {
                 if (response.data['success'] === true) {
