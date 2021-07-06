@@ -20,6 +20,11 @@ export interface DoctorLoginFrom {
     password: string;
 }
 
+export interface AdminLoginFrom {
+    aid: string;
+    password: string;
+}
+
 export interface LoginRequest {
     username: string,
     password: string,
@@ -30,6 +35,11 @@ export interface DoctorLoginRequest {
     password: string,
 }
 
+export interface  AdminLoginRequest {
+    aid: string,
+    password: string,
+}
+
 export interface LoginResponse {
     success: boolean,
     err: string,
@@ -37,6 +47,12 @@ export interface LoginResponse {
 }
 
 export interface DoctorLoginResponse {
+    success: boolean,
+    err: string,
+    login_token: string
+}
+
+export interface AdminLoginResponse {
     success: boolean,
     err: string,
     login_token: string

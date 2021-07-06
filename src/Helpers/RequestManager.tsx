@@ -1,6 +1,7 @@
 import axios from "axios";
 import {userStateInfoManager} from './UserStateInfoManager';
 import {doctorStateInfoManager} from './DoctorStateInfoManager';
+import {adminStateInfoManager} from "./AdminStateInfoManager";
 import {appointment, search_doctor_response, timesForm, appointmentForDoctor} from "../Models/ResponseForm";
 import {detailProps} from "../Models/DocDetail";
 import avatar_g from '../Assets/per_girl.png';
@@ -11,8 +12,13 @@ import {getLoginRoute, getDoctorLoginRoute} from "./Routers";
 import {ClassNameMap} from "@material-ui/styles/withStyles";
 import { SignUpForm, SignupResponse } from '../Models/SignUp'
 
-import { convertSignupFormToRequest, convertFromSimpleResponse } from './LoginConverter'
-import { LoginFrom, LoginResponse, DoctorLoginFrom, DoctorLoginResponse } from '../Models/Login'
+import {
+    convertSignupFormToRequest,
+    convertFromSimpleResponse,
+    convertAdminLoginFromToRequest,
+    convertFromAdminLoginResponse
+} from './LoginConverter'
+import { LoginFrom, LoginResponse, DoctorLoginFrom, DoctorLoginResponse ,AdminLoginFrom, AdminLoginResponse} from '../Models/Login'
 import { convertLoginFormToRequest, convertFromLoginResponse, convertDoctorLoginFormToRequest, convertFromDoctorLoginResponse } from './LoginConverter'
 import  OperationStateManager  from "../Helpers/OperationStateManager"
 
@@ -27,6 +33,7 @@ import { DoctorReviewFilter, UserReview, DoctorSearchCommentRequest } from '../M
 class RequestManager {
     private m_path: string = '/user/';
     private d_path: string = '/doctor/';
+    private a_path: string = '/admin/'
 
     constructor() {
         axios.defaults.baseURL = "http://60.205.206.96";
@@ -73,6 +80,27 @@ class RequestManager {
         })
     }
 
+    admin_login(info: AdminLoginFrom, status: OperationStateManager) {
+        const path = this.a_path + 'login';
+        status.Trigged();
+        axios.post(path, convertAdminLoginFromToRequest(info)).then((response) => {
+            console.log(response.status);
+            if (response.status === 200) {
+                let result = convertFromAdminLoginResponse(response.data)
+                if(result.success) {
+                    adminStateInfoManager.AdminLogin(result.login_token, info.aid);
+                    status.Successful();
+                } else{
+                    status.Failed(result.err);
+                }
+
+            }
+        }).catch((e) => {
+            console.log(e);
+        })
+    }
+
+
     user_logout(callBack: any) {
         const path = this.m_path + 'logout';
         axios.post(path, {login_token: userStateInfoManager.getLoginToken()}).then((response) => {
@@ -97,6 +125,22 @@ class RequestManager {
                 let result = convertFromDoctorLoginResponse(response.data)
                 if(result.success) {
                     doctorStateInfoManager.DoctorLogout();
+                    callBack();
+                }
+            }
+        }).catch((e) => {
+            console.log(e);
+        })
+    }
+
+    admin_logout(callBack: any) {
+        const path = this.a_path + 'logout';
+        axios.post(path, {login_token: adminStateInfoManager.getLoginToken()}).then((response) => {
+            console.log(response.status);
+            if (response.status === 200) {
+                let result = convertFromAdminLoginResponse(response.data)
+                if(result.success) {
+                    adminStateInfoManager.AdminLogout();
                     callBack();
                 }
             }

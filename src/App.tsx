@@ -4,6 +4,7 @@ import SignUp from './Components/SignUp'
 import UserInfo from './Components/UserInfo'
 import UserFrontPage from './Components/UserFrontPage'
 import AdminFrontPage from './Components/AdminFrontPage'
+import AdminLogin from './Components/AdminLogin'
 import AdminUserInfoFrontPage from './Components/AdminUserInfoFrontPage';
 import AdminDoctorListPage from './Components/AdminDoctorListPage';
 import AdminUserListPage from "./Components/AdminUserListPage";
@@ -25,6 +26,7 @@ import {
     getAdminRoute,
     getAppointmentReviewRoute,
     getDoctorReviewHistoryRoute,
+    getAdminLoginRoute,
     getAdminUserInfoFrontRoute,
     getAdminDoctorInfoRoute,
     getAdminUserInfoRoute,
@@ -54,6 +56,7 @@ function App() {
                 <Route exact path={getLookup()} component={fnLookup} />
                 <Route exact path={getUserInfoRoute()} component={fnUserInfoPage} />
                 <Route exact path={getAdminRoute()} component={fnAdminFrontPage} />
+                <Route exact path={getAdminLoginRoute()} component={fnAdminLogin} />
                 <Route exact path={getAdminUserInfoFrontRoute()} component={fnAdminUserInfoFrontPage} />
                 <Route exact path={getAdminDoctorInfoRoute()} component={fnAdminDoctorInfo} />
                 <Route exact path={getAdminUserInfoRoute()} component={fnAdminUserInfo} />
@@ -103,6 +106,13 @@ function fnLookup() {
 function fnUserInfoPage() {
     return (
         <UserInfo classes={UserInfoStyles()} headerClasses={headerClasses()}></UserInfo>
+    )
+}
+
+
+function fnAdminLogin(){
+    return(
+        <AdminLogin classes={loginClasses()} identity={"Admin"} headerClasses = {headerClasses()}></AdminLogin>
     )
 }
 

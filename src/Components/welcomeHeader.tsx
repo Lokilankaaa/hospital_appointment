@@ -6,8 +6,9 @@ import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import moment from "moment";
 import {userStateInfoManager} from "../Helpers/UserStateInfoManager";
+import {adminStateInfoManager} from "../Helpers/AdminStateInfoManager";
 import history from '../Helpers/History';
-import {getLoginRoute, getDoctorLoginRoute} from "../Helpers/Routers";
+import {getLoginRoute, getDoctorLoginRoute, getAdminLoginRoute} from "../Helpers/Routers";
 import {requestManager} from "../Helpers/RequestManager";
 import { Lambda, observable, reaction, makeObservable, ObservableMap } from "mobx";
 import { inject, observer } from "mobx-react";
@@ -46,6 +47,10 @@ class WelcomeHeader extends React.Component<headerProps, {}> {
         history.push(getDoctorLoginRoute())
     }
 
+    adminLogin() {
+        history.push(getAdminLoginRoute())
+    }
+
     componentDidMount() {
         setInterval(()=> this.currentTime = moment().format('YYYY-MM-DD hh:mm:ss dddd'), 1000);
     }
@@ -61,6 +66,24 @@ class WelcomeHeader extends React.Component<headerProps, {}> {
 
                     <Grid item xs={8} style={{display: "flex", justifyContent: "flex-end"}}>
                         <Grid container spacing={1} style={{display: "flex", justifyContent: "flex-end"}}>
+                            <Grid item>
+                                <Button variant={"contained"} className={this.props.classes.button}
+                                        onClick={() => this.adminLogin()} >
+                                    {
+                                        (() => {
+                                            return "管理员通道"
+                                        })()
+                                    }
+                                </Button>
+                            </Grid>
+                            <Grid item style={{display: "flex", alignItems: "flex-end"}}>
+                                {
+                                    (() => {
+                                        if (this.loginState)
+                                            return <Typography>欢迎您，{adminStateInfoManager.getaID()}</Typography>
+                                    })()
+                                }
+                            </Grid>
                             <Grid item>
                                 <Button variant={"contained"} className={this.props.classes.button}
                                         onClick={() => this.doctorLogin()} >
