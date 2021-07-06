@@ -62,3 +62,19 @@ export function getDoctorHomePageRoute(){
 export function getDoctorAppointmentListRoute(){
     return `/doctor/appointmentlist`;
 }
+
+export function getDoctorFrontPageRoute(){
+    return `/doctor`;
+}
+
+export function getDoctorTimeRoute(){
+    return `/doctor/time`;
+}
+
+export function getDoctorAppointmentRoute(){
+    return `/doctor/appo`;
+}
+
+export function getDoctorInfoRoute(){
+    return `/doctor/info`;
+}
