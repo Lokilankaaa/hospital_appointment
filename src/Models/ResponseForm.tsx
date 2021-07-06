@@ -19,6 +19,15 @@ export interface search_doctor_response {
     "info": string
 }
 
+export interface search_user_response {
+    "username": string,
+    "name": string,
+    "age": number,
+    "gender": string,
+    "telephone": string,
+    "is_banned": boolean,
+}
+
 export interface appointment {
     "did": string,
     "doctor_name": string,

@@ -2,6 +2,7 @@ class AdminStateInfoManager {
     private _isLogin: boolean = false;
     private aID: string = "";
     private loginToken: string = "";
+    private toModify: string = "";
 
     // setters
     AdminLogin(token: string, aid: string) {
@@ -17,6 +18,10 @@ class AdminStateInfoManager {
         this.loginToken = "";
     }
 
+    AdminModifyUser(userName: string) {
+        this.toModify = userName;
+    }
+
     // getters
     isLogin() {
         return this._isLogin;
@@ -28,6 +33,10 @@ class AdminStateInfoManager {
 
     getaID() {
         return this.aID;
+    }
+
+    getToModify() {
+        return this.toModify;
     }
 }
 

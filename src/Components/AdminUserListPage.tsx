@@ -59,11 +59,13 @@ class AdminUserListPage extends React.Component<UserInfoPageProps, {}> {
 
     requestDocs(date: Date) {
         this.details = new Array<UserInfoProps>();
+        requestManager.search_users(this.searchDocName, this.details, this.props.cardClasses);
         // requestManager.search_docs(this.currentType === null ? this.types[0] : this.currentType, "", this.details, this.props.cardClasses);
     }
 
     requestSearch() {
         this.details = new Array<UserInfoProps>();
+        requestManager.search_users(this.searchDocName, this.details, this.props.cardClasses);
         // requestManager.search_docs(this.currentType === null ? this.types[0] : this.currentType, this.searchDocName, this.details, this.props.cardClasses);
     }
 
@@ -78,31 +80,6 @@ class AdminUserListPage extends React.Component<UserInfoPageProps, {}> {
         this.requestDocs(this.date);
     }
 
-    renderButtonList() {
-        if (this.types.length > 0) {
-            return this.types.map((type) => (
-                <Button
-                    className={`${this.props.classes.buttonG} ${type === this.currentType ? this.props.classes.buttonActive : ''}`}
-                    id={type} onClick={(e) => {
-                    const el = e.target as HTMLInputElement;
-                    this.currentType = el.getAttribute('id')
-                }}>
-                    <Typography id={type} onClick={(e) => {
-                        const el = e.target as HTMLInputElement;
-                        if (this.currentType !== el.getAttribute('id')) {
-                            this.currentType = el.getAttribute('id')
-                            this.requestDocTypes(this.currentType);
-                        }
-
-                    }}>{type}
-                    </Typography>
-                </Button>
-            ))
-        } else {
-            return (<h2>No user found</h2>)
-        }
-    }
-
     renderDocList() {
         if (this.details.length > 0) {
             let morningDoc = this.details.map((detail) => (
@@ -113,16 +90,8 @@ class AdminUserListPage extends React.Component<UserInfoPageProps, {}> {
                 )
             );
 
-            let afternoonDoc = this.details.map((detail) => (
-                    <Grid item xs={9} sm={3}>
-                        <UserInfoCard classes={detail.classes} Name={detail.Name} Gender={detail.Gender} ID_Number={detail.ID_Number}
-                                      Birthday={detail.Birthday} PhoneNumber={detail.PhoneNumber}/>
-                    </Grid>
-                )
-            );
             morningDoc = morningDoc.length > 0 ? morningDoc : [(<Grid item xs={9} sm={9}><h2>No user found</h2></Grid>)];
-            afternoonDoc = afternoonDoc.length > 0 ? afternoonDoc : [(<Grid item xs={9} sm={9}><h2>No user found</h2></Grid>)];
-            return [morningDoc, afternoonDoc];
+            return [morningDoc];
         } else
             return [(<Grid item xs={9} sm={9}><h2>No user found</h2></Grid>), (<Grid item xs={9} sm={9}><h2>No user found</h2></Grid>)];
     }
@@ -158,28 +127,7 @@ class AdminUserListPage extends React.Component<UserInfoPageProps, {}> {
                                     </svg>
                                 </div>
                             </Grid>
-                            <Grid item xs={9}>
-                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                    <KeyboardDatePicker
-                                        disableToolbar
-                                        variant="inline"
-                                        format="MM/dd/yyyy"
-                                        margin="normal"
-                                        id="date-picker-inline"
-                                        label="选择就诊日期"
-                                        value={this.date}
-                                        onChange={(d) => {
-                                            if (d) {
-                                                this.date = d
-                                                this.handleDateChange();
-                                            }
-                                        }}
-                                        KeyboardButtonProps={{
-                                            'aria-label': 'change date',
-                                        }}
-                                    />
-                                </MuiPickersUtilsProvider>
-                            </Grid>
+
                         </Grid>
                         <Grid container item xs={12}>
                             <Grid item xs={2}>
@@ -190,17 +138,14 @@ class AdminUserListPage extends React.Component<UserInfoPageProps, {}> {
                                     variant="text"
                                     className={this.props.classes.buttonGroup}
                                 >
-                                    {this.renderButtonList()}
 
                                 </ButtonGroup>
                             </Grid>
                             <Grid container item xs={10}>
                                 <Grid item xs={10} sm={10}><Typography variant={"h4"}
-                                                                       className={this.props.classes.innerTitle}>上午</Typography></Grid>
+                                                                       className={this.props.classes.innerTitle}>匹配用户</Typography></Grid>
                                 {this.renderDocList()[0]}
-                                <Grid item xs={10} sm={10}><Typography variant={"h4"}
-                                                                      className={this.props.classes.innerTitle}>下午</Typography></Grid>
-                                {this.renderDocList()[1]}
+
                             </Grid>
                         </Grid>
                     </Grid>

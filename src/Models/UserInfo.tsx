@@ -33,6 +33,16 @@ export interface changeUserInfoRequest {
     telephone: string
 }
 
+export interface adminChangeUserInfoRequest {
+    login_token: string,
+    username: string,
+    name: string,
+    gender: string,
+    birthday: string,
+    id_number: string,
+    telephone: string
+}
+
 export interface UserPasswordProps {
     OldPassword: string;
     NewPassword: string;
