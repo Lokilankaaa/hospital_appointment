@@ -151,7 +151,6 @@ class AdminRecordsPage extends React.Component<recordProps, {}> {
     render() {
         return (
             <div>
-                <WelcomeHeader classes={this.props.headerClasses}/>
                 <div className={this.props.classes.root}>
                     <Typography variant={"h4"} className={this.props.classes.title}>请确认您的预约信息</Typography>
                     <Paper>

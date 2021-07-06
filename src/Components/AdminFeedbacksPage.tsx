@@ -4,7 +4,6 @@ import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import {observer} from "mobx-react";
 import {makeObservable, observable} from "mobx";
-import WelcomeHeader from './welcomeHeader';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -151,7 +150,6 @@ class AdminFeedbacksPage extends React.Component<recordProps, {}> {
     render() {
         return (
             <div>
-                <WelcomeHeader classes={this.props.headerClasses}/>
                 <div className={this.props.classes.root}>
                     <Typography variant={"h4"} className={this.props.classes.title}>请确认您的预约信息</Typography>
                     <Paper>

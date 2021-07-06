@@ -10,7 +10,6 @@ import {inject, observer} from "mobx-react";
 import Typography from '@material-ui/core/Typography';
 import DetailCard from "./detailCard";
 import {detailPageProps, detailProps} from "../Models/DocDetail";
-import WelcomeHeader from "./welcomeHeader";
 import {requestManager} from "../Helpers/RequestManager";
 import DocInfoCard from "./DocInfoCard";
 import {Info} from "@material-ui/icons";
@@ -131,7 +130,6 @@ class AdminUserListPage extends React.Component<UserInfoPageProps, {}> {
     render() {
         return (
             <div>
-                <WelcomeHeader classes={this.props.headerClasses}/>
                 <div className={this.props.classes.root}>
                     <Typography variant="h4" color="inherit" className={this.props.classes.title}>用户信息</Typography>
                     <Grid container spacing={3}>
