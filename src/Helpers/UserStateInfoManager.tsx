@@ -16,7 +16,6 @@ class UserStateInfoManager {
         this.loginToken = "";
         this.userName = "";
     }
-
     // getters
     isLogin() {
         return this._isLogin;
