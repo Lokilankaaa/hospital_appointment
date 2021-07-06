@@ -8,7 +8,7 @@ import avatar_g from '../Assets/per_girl.png';
 import avatar_b from '../Assets/per_boy.png';
 import moment from "moment";
 import history from '../Helpers/History';
-import {getLoginRoute, getDoctorLoginRoute} from "./Routers";
+import {getLoginRoute, getDoctorLoginRoute, getAdminRoute} from "./Routers";
 import {ClassNameMap} from "@material-ui/styles/withStyles";
 import { SignUpForm, SignupResponse } from '../Models/SignUp'
 
@@ -90,10 +90,10 @@ class RequestManager {
                 if(result.success) {
                     adminStateInfoManager.AdminLogin(result.login_token, info.aid);
                     status.Successful();
+                    history.push(getAdminRoute())
                 } else{
                     status.Failed(result.err);
                 }
-
             }
         }).catch((e) => {
             console.log(e);

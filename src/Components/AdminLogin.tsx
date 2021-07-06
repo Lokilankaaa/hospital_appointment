@@ -48,14 +48,12 @@ class AdminLogin extends React.Component<LoginProps, {}> {
         };
     }
 
-    // TODO: add requestManager at RequestManager.tsx
     private onClickLogin = () => {
-        console.log(`login with: did: ${this.LoginInfo.aid}, passward: ${this.LoginInfo.password}`);
+        console.log(`login with: aid: ${this.LoginInfo.aid}, passward: ${this.LoginInfo.password}`);
         requestManager.admin_login(this.LoginInfo, this.LoginStatusManager);
-        history.push(getAdminRoute())
     }
 
-    // TODO: Sign up and login with reverse?
+
     public loginCallBack = (result: AdminLoginResponse) => {
         console.log(`login with: did: ${this.LoginInfo.aid}, passward: ${this.LoginInfo.password}`);
     }
@@ -92,7 +90,7 @@ class AdminLogin extends React.Component<LoginProps, {}> {
                             <Grid item style={{marginTop:"5%", marginRight:"15%", width:"80%"}}>
                                 <form className={this.props.classes.loginForm} onSubmit={(e) => e.preventDefault()}>
                                     <Grid item>
-                                        <TextField fullWidth id="did" label="管理员账号" placeholder="管理员账号" style={{marginTop:20}}
+                                        <TextField fullWidth id="aid" label="管理员账号" placeholder="管理员账号" style={{marginTop:20}}
                                                    onChange={(data) => { this.LoginInfo.aid = data.target.value } }/>
                                     </Grid>
                                     <Grid item>

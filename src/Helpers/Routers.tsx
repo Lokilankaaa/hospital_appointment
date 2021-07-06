@@ -28,7 +28,7 @@ export function getAppointmentReviewRoute() {
 }
 
 export function getAdminLoginRoute(){
-    return `/aadmin/login`
+    return `/admin/login`
 }
 
 export function getAdminUserInfoFrontRoute() {
