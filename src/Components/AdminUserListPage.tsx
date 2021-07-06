@@ -19,6 +19,7 @@ import UserInfoCard from "./UserInfoCard";
 import {adminStateInfoManager} from "../Helpers/AdminStateInfoManager";
 import history from "../Helpers/History";
 import {getAdminLoginRoute} from "../Helpers/Routers";
+import WelcomeHeader from "./welcomeHeader";
 
 @observer
 class AdminUserListPage extends React.Component<UserInfoPageProps, {}> {
@@ -107,6 +108,7 @@ class AdminUserListPage extends React.Component<UserInfoPageProps, {}> {
         return (
             <div>
                 <div className={this.props.classes.root}>
+                    <WelcomeHeader classes={this.props.headerClasses}/>
                     <Typography variant="h4" color="inherit" className={this.props.classes.title}>用户信息</Typography>
                     <Grid container spacing={3}>
                         <Grid container item xs={12}>

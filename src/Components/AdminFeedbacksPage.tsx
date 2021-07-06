@@ -13,6 +13,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Typography from "@material-ui/core/Typography";
 import {userStateInfoManager} from "../Helpers/UserStateInfoManager";
 import {requestManager} from "../Helpers/RequestManager";
+import WelcomeHeader from "./welcomeHeader";
 
 interface Column {
     id: '序号' | '科室' | '医生姓名' | '预约日期' | '挂号费' | '状态' | '操作';
@@ -151,6 +152,7 @@ class AdminFeedbacksPage extends React.Component<recordProps, {}> {
         return (
             <div>
                 <div className={this.props.classes.root}>
+                    <WelcomeHeader classes={this.props.headerClasses}/>
                     <Typography variant={"h4"} className={this.props.classes.title}>请确认您的预约信息</Typography>
                     <Paper>
                         <TableContainer className={this.props.classes.container}>

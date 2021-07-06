@@ -634,7 +634,6 @@ class RequestManager {
     }
 
     admin_search_appointment(status: string, appointments: Array<Dictionary>) {
-        console.log("adminlogin???????",adminStateInfoManager.isLogin())
         if (adminStateInfoManager.isLogin()) {
             const path = this.a_path + 'search_appoint';
             axios.post(path, {
