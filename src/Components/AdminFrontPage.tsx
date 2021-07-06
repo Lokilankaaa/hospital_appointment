@@ -38,6 +38,11 @@ class AdminFrontPage extends React.Component<SignUpProps, {}> {
         }
     }
 
+    Logout(){
+        adminStateInfoManager.AdminLogout()
+        history.push("/")
+    }
+
     images = [
         {
             url: Register,
@@ -94,7 +99,8 @@ class AdminFrontPage extends React.Component<SignUpProps, {}> {
 
                         <Box p={1} flexShrink={0}>
                             <Button className={this.props.classes.FrontText}
-                                    style={{backgroundColor: "#F67665", color: "white", width: 80, height: "100%"}}  >
+                                    onClick={this.Logout}
+                                    style={{backgroundColor: "#F67665", color: "white", width: 80, height: "100%"}} >
                                 { "退出" }
                             </Button>
                         </Box>
