@@ -43,7 +43,6 @@ class UserInfoCard extends React.Component<UserInfoProps, {}> {
                         adminStateInfoManager.AdminModifyUser(this.props.Name)
                         history.push(getUserInfoRoute());
                     }} >修改信息</Button>
-                    <Button size="small" onClick={() => history.push(getDoctorReviewHistoryRoute(this.props.ID_Number))}>相关评价</Button>
                 </CardActions>
             </Card>
         )

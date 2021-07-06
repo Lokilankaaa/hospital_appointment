@@ -38,21 +38,15 @@ class AdminUserInfoFrontPage extends React.Component<SignUpProps, {}> {
 
     images = [
         {
-            url: Register,
-            title: '个人信息管理',
-            width: '33%',
-            Onclick: () => { history.push(getUserInfoRoute()) }
-        },
-        {
             url: login,
             title: '医生信息管理',
-            width: '33%',
+            width: '50%',
             Onclick: () => { history.push(getAdminDoctorInfoRoute()) }
         },
         {
             url: lookup,
             title: '用户信息管理',
-            width: '33%',
+            width: '50%',
             Onclick: () => { history.push(getAdminUserInfoRoute())}
         }
     ];
