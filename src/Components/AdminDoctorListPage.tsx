@@ -16,6 +16,7 @@ import {Info} from "@material-ui/icons";
 import {adminStateInfoManager} from "../Helpers/AdminStateInfoManager";
 import history from "../Helpers/History";
 import {getAdminLoginRoute} from "../Helpers/Routers";
+import WelcomeHeader from "./welcomeHeader";
 
 @observer
 class AdminDoctorListPage extends React.Component<detailPageProps, {}> {
@@ -136,6 +137,7 @@ class AdminDoctorListPage extends React.Component<detailPageProps, {}> {
         return (
             <div>
                 <div className={this.props.classes.root}>
+                    <WelcomeHeader classes={this.props.headerClasses}/>
                     <Typography variant="h4" color="inherit" className={this.props.classes.title}>医生信息</Typography>
                     <Grid container spacing={3}>
                         <Grid container item xs={12}>

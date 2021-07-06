@@ -51,11 +51,87 @@ class WelcomeHeader extends React.Component<headerProps, {}> {
         history.push(getAdminLoginRoute())
     }
 
+    adminLogout(){
+        adminStateInfoManager.AdminLogout()
+        history.push(getAdminLoginRoute())
+    }
+
     componentDidMount() {
         setInterval(()=> this.currentTime = moment().format('YYYY-MM-DD hh:mm:ss dddd'), 1000);
     }
 
     render() {
+        if (adminStateInfoManager.isLogin()){
+               return (
+                   <Paper className={this.props.classes.root} elevation={0}>
+                       <Grid container style={{display: "flex"}}>
+                           <Grid item xs={4}>
+                               <img className={this.props.classes.img} src={welcomelogo} alt={"浙江大学某某医院"}/>
+                               <Typography className={this.props.classes.title1}>浙江大学某某医院</Typography>
+                           </Grid>
+
+                           <Grid item xs={8} style={{display: "flex", justifyContent: "flex-end"}}>
+                               <Grid container spacing={1} style={{display: "flex", justifyContent: "flex-end"}}>
+                                   <Grid item style={{display: "flex", alignItems: "flex-end"}}>
+                                       {
+                                           (() => {
+                                                   return <Typography>欢迎您，{adminStateInfoManager.getaID()}</Typography>
+                                           })()
+                                       }
+                                   </Grid>
+                                   <Grid item>
+                                       <Button variant={"contained"} className={this.props.classes.button}
+                                               onClick={() => this.adminLogout()} >
+                                           {"登出"}
+                                       </Button>
+                                   </Grid>
+
+                                   <Grid item  style={{display: "flex", justifyContent: "flex-end", marginRight: "2%"}}>
+                                       <Typography className={this.props.classes.title2} style={{display: "flex", justifyContent: "flex-end"}}>{this.currentTime}</Typography>
+                                   </Grid>
+                               </Grid>
+                           </Grid>
+                       </Grid>
+                   </Paper>
+               )
+        }
+        //TODO doctor
+
+
+        if(userStateInfoManager.isLogin()){
+            return (
+                <Paper className={this.props.classes.root} elevation={0}>
+                    <Grid container style={{display: "flex"}}>
+                        <Grid item xs={4}>
+                            <img className={this.props.classes.img} src={welcomelogo} alt={"浙江大学某某医院"}/>
+                            <Typography className={this.props.classes.title1}>浙江大学某某医院</Typography>
+                        </Grid>
+
+                        <Grid item xs={8} style={{display: "flex", justifyContent: "flex-end"}}>
+                            <Grid container spacing={1} style={{display: "flex", justifyContent: "flex-end"}}>
+                                <Grid item style={{display: "flex", alignItems: "flex-end"}}>
+                                    {
+                                        (() => {
+                                            return <Typography>欢迎您，{userStateInfoManager.getUserName()}</Typography>
+                                        })()
+                                    }
+                                </Grid>
+                                <Grid item>
+                                    <Button variant={"contained"} className={this.props.classes.button}
+                                            onClick={() => this.logout()} >
+                                        {"登出"}
+                                    </Button>
+                                </Grid>
+
+                                <Grid item  style={{display: "flex", justifyContent: "flex-end", marginRight: "2%"}}>
+                                    <Typography className={this.props.classes.title2} style={{display: "flex", justifyContent: "flex-end"}}>{this.currentTime}</Typography>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Paper>
+            )
+        }
         return (
             <Paper className={this.props.classes.root} elevation={0}>
                 <Grid container style={{display: "flex"}}>
@@ -71,25 +147,17 @@ class WelcomeHeader extends React.Component<headerProps, {}> {
                                         onClick={() => this.adminLogin()} >
                                     {
                                         (() => {
-                                            return "管理员通道"
+                                            return "管理"
                                         })()
                                     }
                                 </Button>
-                            </Grid>
-                            <Grid item style={{display: "flex", alignItems: "flex-end"}}>
-                                {
-                                    (() => {
-                                        if (this.loginState)
-                                            return <Typography>欢迎您，{adminStateInfoManager.getaID()}</Typography>
-                                    })()
-                                }
                             </Grid>
                             <Grid item>
                                 <Button variant={"contained"} className={this.props.classes.button}
                                         onClick={() => this.doctorLogin()} >
                                     {
                                         (() => {
-                                            return "医生通道"
+                                            return "医生"
                                         })()
                                     }
                                 </Button>

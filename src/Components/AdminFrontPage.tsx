@@ -29,6 +29,7 @@ import {
 import moment from "moment";
 import {requestManager} from "../Helpers/RequestManager";
 import {adminStateInfoManager} from "../Helpers/AdminStateInfoManager";
+import WelcomeHeader from "./welcomeHeader";
 class AdminFrontPage extends React.Component<SignUpProps, {}> {
 
     constructor(props: SignUpProps) {
@@ -37,6 +38,11 @@ class AdminFrontPage extends React.Component<SignUpProps, {}> {
             alert("请先登录")
             history.push(getAdminLoginRoute())
         }
+    }
+
+    Logout(){
+        adminStateInfoManager.AdminLogout()
+        history.push("/")
     }
 
     images = [
@@ -83,22 +89,6 @@ class AdminFrontPage extends React.Component<SignUpProps, {}> {
                             </Typography>
                         </Box>
 
-                        <Box p={1} flexShrink={1}>
-                            <Typography
-                                component="span"
-                                variant="subtitle1"
-                                color="inherit"
-                                className={this.props.classes.FrontText}  >
-                                { "欢迎, XXX!" }
-                            </Typography>
-                        </Box>
-
-                        <Box p={1} flexShrink={0}>
-                            <Button className={this.props.classes.FrontText}
-                                    style={{backgroundColor: "#F67665", color: "white", width: 80, height: "100%"}}  >
-                                { "退出" }
-                            </Button>
-                        </Box>
                     </Box >
 
                     <Grid container>
@@ -140,7 +130,9 @@ class AdminFrontPage extends React.Component<SignUpProps, {}> {
         let date = moment().format('YYYY-MM-DD hh:mm:ss dddd');
 
         return (
+
             <div className={this.props.classes.root}>
+                <WelcomeHeader classes={this.props.headerClasses}/>
                 <div className={this.props.classes.footTextBox}>
                     <Container maxWidth="xl" component="main">
                         <Box display="flex" p={1} >
