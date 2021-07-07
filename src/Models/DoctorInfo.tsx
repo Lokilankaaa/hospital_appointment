@@ -10,14 +10,26 @@ export interface DoctorInfoProps {
     Rank: string;
 }
 
+export interface AppointmentProps {
+    name: string,
+    submitTime: string,
+    appointTime: string,
+    status: string,
+}
+
 export interface DoctorInfoPageProps {
     classes: ClassNameMap,
     cardClasses: ClassNameMap,
     headerClasses: ClassNameMap
 }
 
-export interface getinfo {
+export interface getappoinfo {
     login_token: string;
+    start_time: string;
+    end_time: string;
+    status: string;
+    first_index: 0;
+    limit: 0;
 }
 
 export interface changeDoctorPasswordRequest {
