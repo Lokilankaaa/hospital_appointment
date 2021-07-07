@@ -1,4 +1,4 @@
-import {ClassNameMap} from "@material-ui/styles/withStyles";
+import { ClassNameMap } from "@material-ui/styles/withStyles";
 export interface DoctorInfoProps {
     classes : ClassNameMap,
     Name: string;
@@ -10,7 +10,7 @@ export interface DoctorInfoProps {
     Rank: string;
 }
 
-export interface UserInfoPageProps {
+export interface DoctorInfoPageProps {
     classes: ClassNameMap,
     cardClasses: ClassNameMap,
     headerClasses: ClassNameMap
@@ -24,7 +24,7 @@ export interface changeDoctorPasswordRequest {
     login_token: string,
     password_old: string,
     password_new: string
-  }
+}
 
 export interface changeDoctorInfoRequest {
     login_token: string,
@@ -32,8 +32,9 @@ export interface changeDoctorInfoRequest {
     name: string,
     birthday: string,
     gender: string,
-    depart: string,
     rank: string,
+    depart: string,
+    info: string
 }
 
 export interface DoctorPasswordProps {

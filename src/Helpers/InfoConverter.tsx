@@ -20,13 +20,13 @@ export function convertAdminModifyToRequest() : { login_token: string; username:
     }
 }
 
-export function convertUserinfoToRequest() : getinfo{
+export function convertUserinfoToRequest(): getinfo {
     return {
         login_token: userStateInfoManager.getLoginToken()
-      }
+    }
 }
 
-export function convertDoctorinfoToRequest() : getinfo{
+export function convertDoctorinfoToRequest(): getinfo {
     return {
         login_token: doctorStateInfoManager.getLoginToken()
 
@@ -43,7 +43,7 @@ export function convertAdminViewDoctorRequest(): adminViewDoctor{
 export function convertUserinfoToResponse() : getinfo{
     return {
         login_token: userStateInfoManager.getLoginToken()
-      }
+    }
 }
 
 export function convertToChangePasswordRequest(pass: UserPasswordProps): changePasswordRequest {
@@ -93,6 +93,7 @@ export function convertToDoctorInfoRequest(info: DoctorInfoProps): changeDoctorI
         birthday: info.Birthday,
         gender: info.Gender,
         rank: info.Rank,
-        depart: info.Depart
+        depart: info.Depart,
+        info: info.Info
     }
 }
