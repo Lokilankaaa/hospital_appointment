@@ -189,7 +189,7 @@ function fnDoctorFrontPage() {
 
 function fnDoctorTime() {
     return (
-        <DoctorTime classes={FrontStyles()} headerClasses={headerClasses()}></DoctorTime>
+        <DoctorTime classes={recordsClasses()} timeClasses={recordClasses()} headerClasses={headerClasses()} />
     )
 }
 

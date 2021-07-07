@@ -344,21 +344,21 @@ class RequestManager {
 
     // TODO: doctor add, modify, delete, search time
     // TODO: discuss date and response
-    doctor_addTime(time: string, status: OperationStateManager) {
+    doctor_addTime(date: string, time: string, callBack: any) {
         const path = this.d_path + 'add_time';
         axios.post(path, {
             'login_token': doctorStateInfoManager.getLoginToken(),
-            'date': moment().format('YYYY-MM-DD'),
+            'date': date,
             'time': time,
             'capacity': 1,
         }).then((response) => {
-            let result = convertFromSimpleResponse(response.data)
-            if (response.status === 200) {
-                if(result.success) {
-                    status.Successful();
-                } else{
-                status.Failed(result.err);
-                }
+            if (response.data['success'] === true) {
+                alert('新增时间成功!');
+                let tid = response.data['tid'];
+                console.log("ttttid: ", tid)
+                callBack(tid);
+            } else {
+                alert(response.data['err']);
             }
         }).catch(e => {
             console.log(e);
@@ -385,23 +385,22 @@ class RequestManager {
         })
     }
 
-    doctor_deleteTime(tid: number, status: OperationStateManager) {
-        const path = this.d_path + 'delete_time';
-        axios.post(path, {
-            'login_token': doctorStateInfoManager.getLoginToken(),
-            'tid': tid
-        }).then((response) => {
-            let result = convertFromSimpleResponse(response.data)
-            if (response.status === 200) {
-                if(result.success) {
-                    status.Successful();
-                } else{
-                status.Failed(result.err);
+    doctor_deleteTime(tid: number) {
+        if (doctorStateInfoManager.isLogin()) {
+            const path = this.d_path + 'delete_time';
+            axios.post(path, {
+                "login_token": doctorStateInfoManager.getLoginToken(),
+                "tid": tid
+            }).then((response) => {
+                if (response.data['success'] === true) {
+                    alert('deletion done!');
+                } else {
+                    alert(response.data['err']);
                 }
-            }
-        }).catch(e => {
-            console.log(e);
-        })
+            }).catch((err) => {
+                console.log(err);
+            })
+        }
     }
 
     doctor_searchTime(times: Array<timesForm>) {
