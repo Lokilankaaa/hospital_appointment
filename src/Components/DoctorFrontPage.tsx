@@ -8,21 +8,21 @@ import more from '../Assets/more.png'
 import Register from '../Assets/Register.png'
 import frontPage from '../Assets/frontPage.png'
 
-import {Lambda, observable, reaction, makeObservable} from "mobx";
-import {inject, observer} from "mobx-react";
-import {SignUpProps} from '../Models/Login';
+import { Lambda, observable, reaction, makeObservable } from "mobx";
+import { inject, observer } from "mobx-react";
+import { SignUpProps } from '../Models/Login';
 
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
-import {makeStyles} from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import history from '../Helpers/History';
-import {getLoginRoute, getSignUpRoute, getDocDetail, getLookup, getUserInfoRoute} from "../Helpers/Routers";
+import { getLoginRoute, getDoctorTimeRoute, getDoctorAppointmentRoute, getDoctorInfoRoute } from "../Helpers/Routers";
 import moment from "moment";
 import WelcomeHeader from "./welcomeHeader";
-import {userStateInfoManager} from '../Helpers/UserStateInfoManager';
+import { userStateInfoManager } from '../Helpers/UserStateInfoManager';
 
 class DoctorFrontPage extends React.Component<SignUpProps, {}> {
 
@@ -36,7 +36,7 @@ class DoctorFrontPage extends React.Component<SignUpProps, {}> {
             title: '时间设置',
             width: '23%',
             Onclick: () => {
-                history.push(getDocDetail());
+                history.push(getDoctorTimeRoute());
             }
         },
         {
@@ -52,7 +52,7 @@ class DoctorFrontPage extends React.Component<SignUpProps, {}> {
             title: '预约查询',
             width: '23%',
             Onclick: () => {
-                history.push(getLookup());
+                history.push(getDoctorAppointmentRoute());
             }
         },
         {
@@ -60,7 +60,7 @@ class DoctorFrontPage extends React.Component<SignUpProps, {}> {
             title: '个人信息',
             width: '23%',
             Onclick: () => {
-                history.push(getUserInfoRoute());
+                history.push(getDoctorInfoRoute());
             }
         },
     ];
@@ -82,19 +82,19 @@ class DoctorFrontPage extends React.Component<SignUpProps, {}> {
                                 onClick={image.Onclick}
                             >
 
-                                <span className={this.props.classes.imageBackdrop}/>
+                                <span className={this.props.classes.imageBackdrop} />
                                 <span className={this.props.classes.imageButton}>
-                            <Typography
-                                component="span"
-                                variant="h6"
-                                color="inherit"
-                                className={this.props.classes.imageTitle}
-                            >
-                              {image.title}
-                            </Typography>
-                          </span>
+                                    <Typography
+                                        component="span"
+                                        variant="h6"
+                                        color="inherit"
+                                        className={this.props.classes.imageTitle}
+                                    >
+                                        {image.title}
+                                    </Typography>
+                                </span>
                                 <div className="container">
-                                    <img className={this.props.classes.imageSrc} src={image.url} alt="fireSpot"/>
+                                    <img className={this.props.classes.imageSrc} src={image.url} alt="fireSpot" />
                                 </div>
                             </ButtonBase>
                         ))}
@@ -109,15 +109,15 @@ class DoctorFrontPage extends React.Component<SignUpProps, {}> {
     render() {
         return (
             <div className={this.props.classes.root}>
-                    <Grid container>
-                        <Grid xs={12} item>
-                            <WelcomeHeader classes={this.props.headerClasses}/>
-                        </Grid>
-                        <Grid xs={12} item className={this.props.classes.footTextBox}>
-                            <span className={this.props.classes.backgroundImg} style={{backgroundImage: `url(${frontPage})`}}>
-                                {this.renderTabs()}
-                            </span>
-                        </Grid>
+                <Grid container>
+                    <Grid xs={12} item>
+                        <WelcomeHeader classes={this.props.headerClasses} />
+                    </Grid>
+                    <Grid xs={12} item className={this.props.classes.footTextBox}>
+                        <span className={this.props.classes.backgroundImg} style={{ backgroundImage: `url(${frontPage})` }}>
+                            {this.renderTabs()}
+                        </span>
+                    </Grid>
                 </Grid>
             </div>
         );

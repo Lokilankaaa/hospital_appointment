@@ -265,15 +265,6 @@ export const FrontStyles = makeStyles((theme) => ({
     },
 }));
 
-export const DoctorHomePageStyles = makeStyles((theme) => ({
-    siderbar: {
-        overflow: 'auto',
-        height: '100vh',
-        position: 'fixed',
-        left: 0,
-    },
-}));
-
 export const UserInfoStyles = makeStyles((theme) => ({
     sideBarButton: {
         fontSize: 17,
@@ -344,5 +335,34 @@ export const DoctorReviewHistoryStyles = makeStyles((theme) => ({
     large: {
         width: theme.spacing(9),
         height: theme.spacing(9),
+    },
+}))
+
+export const DoctorInfoStyles = makeStyles((theme) => ({
+    sideBarButton: {
+        fontSize: 17,
+        color: "RGB(0,0,0)",
+        borderBottom: "1px solid RGB(70,167,12) !important",
+    },
+    buttonActive: {
+        color: "#0BDAA4",
+    },
+
+    header: {
+        color: '#0BDAA4',
+        borderBottom: "2px solid RGB(70,167,12)",
+        paddingTop: '5%',
+    },
+
+    innerTitle: {
+        justifyContent: 'left',
+        color: '#0BDAA4',
+    },
+    ConfirmPasswordButton: {
+        backgroundColor: "#28A745",
+        color: "white",
+        width: "20%",
+        marginTop: "5%",
+        marginLeft: "45%",
     },
 }))

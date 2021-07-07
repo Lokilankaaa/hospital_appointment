@@ -11,15 +11,13 @@ import DocDetails from './Components/DoctorDetails'
 import AppointmentReview from './Components/AppointmentReview'
 import DoctorReviewHistory from './Components/DoctorReviewHistory'
 import DoctorLogin from './Components/DoctorLogin'
-import DoctorHomePage from './Components/DoctorHomePage';
-import DoctorAppointmentList from './Components/DoctorAppointmentList';
 import DoctorFrontPage from './Components/DoctorFrontPage'
 import DoctorTime from './Components/DoctorTime'
 import DoctorAppointment from './Components/DoctorAppointment'
 import DoctorInfo from './Components/DoctorInfo'
 
 
-import { loginClasses, FrontStyles, detailPageClasses, cardClasses, headerClasses, recordClasses, recordsClasses, UserInfoStyles, AppointmentReviewStyles, DoctorReviewHistoryStyles, DoctorHomePageStyles } from "./Styles/madeStyles";
+import { loginClasses, FrontStyles, detailPageClasses, cardClasses, headerClasses, recordClasses, recordsClasses, UserInfoStyles, AppointmentReviewStyles, DoctorReviewHistoryStyles, DoctorInfoStyles } from "./Styles/madeStyles";
 import { Route, RouteComponentProps, Switch, withRouter, Router } from 'react-router-dom';
 import {
     getLoginRoute,
@@ -36,8 +34,6 @@ import {
     getAdminRecordsRoute,
     getAdminFeedbacksRoute,
     getDoctorLoginRoute,
-    getDoctorHomePageRoute,
-    getDoctorAppointmentListRoute,
     getDoctorFrontPageRoute,
     getDoctorTimeRoute,
     getDoctorAppointmentRoute,
@@ -71,8 +67,6 @@ function App() {
                 <Route exact path={getAppointmentReviewRoute()} component={fnAdminAppointmentReview} />
                 <Route exact path={getDoctorReviewHistoryRoute(`:docID`)} component={fnDoctorReviewHistory} />
                 <Route exact path={getDoctorLoginRoute()} component={fnDoctorLogin} />
-                <Route exact path={getDoctorHomePageRoute()} component={fnDoctorHomePage} />
-                <Route exact path={getDoctorAppointmentListRoute()} component={fnDoctorAppointmentList} />
                 <Route exact path={getDoctorFrontPageRoute()} component={fnDoctorFrontPage} />
                 <Route exact path={getDoctorTimeRoute()} component={fnDoctorTime} />
                 <Route exact path={getDoctorAppointmentRoute()} component={fnDoctorAppointment} />
@@ -174,18 +168,6 @@ function fnDoctorLogin() {
     )
 }
 
-function fnDoctorHomePage() {
-    return (
-        <DoctorHomePage classes={DoctorHomePageStyles()}></DoctorHomePage>
-    )
-}
-
-function fnDoctorAppointmentList() {
-    return (
-        <DoctorAppointmentList ></DoctorAppointmentList>
-    )
-}
-
 function fnDoctorFrontPage() {
     return (
         <DoctorFrontPage classes={FrontStyles()} headerClasses={headerClasses()}></DoctorFrontPage>
@@ -206,7 +188,7 @@ function fnDoctorAppointment() {
 
 function fnDoctorInfo() {
     return (
-        <DoctorInfo classes={FrontStyles()} headerClasses={headerClasses()}></DoctorInfo>
+        <DoctorInfo classes={DoctorInfoStyles()} headerClasses={headerClasses()}></DoctorInfo>
     )
 }
 

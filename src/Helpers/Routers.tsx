@@ -55,14 +55,6 @@ export function getDoctorLoginRoute() {
     return `/doctor/login`;
 }
 
-export function getDoctorHomePageRoute(){
-    return `/doctor/homepage`;
-}
-
-export function getDoctorAppointmentListRoute(){
-    return `/doctor/appointmentlist`;
-}
-
 export function getDoctorFrontPageRoute(){
     return `/doctor`;
 }

@@ -1,26 +1,26 @@
 import { UserInfoProps, InfoTypes, getinfo, changeUserInfoRequest } from '../Models/UserInfo'
 import { DoctorInfoProps, changeDoctorInfoRequest } from '../Models/DoctorInfo'
-import { changePasswordRequest, UserPasswordProps } from '../Models/UserInfo' 
-import { changeDoctorPasswordRequest, DoctorPasswordProps } from '../Models/DoctorInfo' 
-import {userStateInfoManager} from './UserStateInfoManager'; 
-import {doctorStateInfoManager} from './DoctorStateInfoManager'; 
+import { changePasswordRequest, UserPasswordProps } from '../Models/UserInfo'
+import { changeDoctorPasswordRequest, DoctorPasswordProps } from '../Models/DoctorInfo'
+import { userStateInfoManager } from './UserStateInfoManager';
+import { doctorStateInfoManager } from './DoctorStateInfoManager';
 
-export function convertUserinfoToRequest() : getinfo{
+export function convertUserinfoToRequest(): getinfo {
     return {
         login_token: userStateInfoManager.getLoginToken()
-      }
+    }
 }
 
-export function convertDoctorinfoToRequest() : getinfo{
+export function convertDoctorinfoToRequest(): getinfo {
     return {
         login_token: doctorStateInfoManager.getLoginToken()
-      }
+    }
 }
 
-export function convertUserinfoToResponse() : getinfo{
+export function convertUserinfoToResponse(): getinfo {
     return {
         login_token: userStateInfoManager.getLoginToken()
-      }
+    }
 }
 
 export function convertToChangePasswordRequest(pass: UserPasswordProps): changePasswordRequest {
@@ -53,9 +53,11 @@ export function convertToUserInfoRequest(info: UserInfoProps): changeUserInfoReq
 export function convertToDoctorInfoRequest(info: DoctorInfoProps): changeDoctorInfoRequest {
     return {
         login_token: doctorStateInfoManager.getLoginToken(),
-        name: info.Name,
-        birthday: info.Birthday,
-        gender: info.Gender,
-        info: info.Info
+        name: info.name,
+        birthday: info.birthday,
+        gender: info.gender,
+        rankk: info.rankk,
+        depart: info.depart,
+        info: info.info,
     }
 }
