@@ -28,8 +28,8 @@ export interface getappoinfo {
     start_time: string;
     end_time: string;
     status: string;
-    first_index: 0;
-    limit: 0;
+    first_index: number;
+    limit: number;
 }
 
 export interface changeDoctorPasswordRequest {

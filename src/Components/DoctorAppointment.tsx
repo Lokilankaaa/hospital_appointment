@@ -240,18 +240,6 @@ function EnhancedTable(props: ETProps) {
     const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-    // let rows = [
-    //     createData('Cupcake', '305', '3.7', '67'),
-    //     // createData('Donut', '452', '25.0', '51'),
-    //     // createData('Eclair', '262', '16.0', '24'),
-    //     // createData('Frozen yoghurt', '159', '6.0', '24'),
-    //     // createData('Gingerbread', '356', '16.0', '49'),
-    //     // createData('Honeycomb', '408', '3.2', '87'),
-    //     // createData('Ice cream sandwich', '237', '9.0', '37'),
-    // ];
-
-    // requestManager.appointment_getinfo(getAppointmentCallBack);
-
     const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof Data) => {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
@@ -391,12 +379,12 @@ class DoctorAppointment extends React.Component<SignUpProps, {}> {
     }
 
     @observable private rows = [
-        createData('Donut', '452', '25.0', '51'),
-        createData('Eclair', '262', '16.0', '24'),
-        createData('Frozen yoghurt', '159', '6.0', '24'),
-        createData('Gingerbread', '356', '16.0', '49'),
-        createData('Honeycomb', '408', '3.2', '87'),
-        createData('Ice cream sandwich', '237', '9.0', '37'),
+        createData('Donut', '0000-01-01T00:00:00.000Z', '2021-07-07T00:00:00.000Z', '未完成'),
+        createData('Eclair', '0000-01-01T00:00:00.001Z', '2021-07-07T00:00:00.001Z', '未完成'),
+        createData('Frozen yoghurt', '0000-01-01T00:00:00.002Z', '2021-07-07T00:00:00.002Z', '未完成'),
+        createData('Gingerbread', '0000-01-01T00:00:00.003Z', '2021-07-07T00:00:00.003Z', '未完成'),
+        createData('Honeycomb', '0000-01-01T00:00:00.004Z', '2021-07-07T00:00:00.004Z', '已完成'),
+        createData('Ice cream sandwich', '0000-01-01T00:00:00.005Z', '2021-07-07T00:00:00.005Z', '已完成'),
     ]
 
     private getAppointmentCallBack = (data: any) => {
