@@ -165,7 +165,7 @@ class UserInfo extends React.Component<SignUpProps, {}> {
                                         <h3 style={{width:"100%", display:"flex", justifyContent:"flex-end"}}> {'*姓名'}: </h3>
                                 </Grid>
                                 <Grid color="primary" item xs={8} style={{marginTop:"1.5%", marginLeft:"3%", height: "20%", width:"75%", color:"black"}}>
-                                    <TextField disabled fullWidth variant="outlined" id={ "userinfo" + '*姓名' } value={ info.Name }
+                                    <TextField fullWidth variant="outlined" id={ "userinfo" + '*姓名' } value={ info.Name }
                                              onChange={(data) => { this.user.Name = data.target.value } }/> 
                                 </Grid>
                             </Grid>
