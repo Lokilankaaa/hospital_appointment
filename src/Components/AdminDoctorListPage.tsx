@@ -10,10 +10,13 @@ import {inject, observer} from "mobx-react";
 import Typography from '@material-ui/core/Typography';
 import DetailCard from "./detailCard";
 import {detailPageProps, detailProps} from "../Models/DocDetail";
-import WelcomeHeader from "./welcomeHeader";
 import {requestManager} from "../Helpers/RequestManager";
 import DocInfoCard from "./DocInfoCard";
 import {Info} from "@material-ui/icons";
+import {adminStateInfoManager} from "../Helpers/AdminStateInfoManager";
+import history from "../Helpers/History";
+import {getAdminLoginRoute} from "../Helpers/Routers";
+import WelcomeHeader from "./welcomeHeader";
 
 @observer
 class AdminDoctorListPage extends React.Component<detailPageProps, {}> {
@@ -25,6 +28,10 @@ class AdminDoctorListPage extends React.Component<detailPageProps, {}> {
 
     constructor(props: detailPageProps) {
         super(props);
+        if(!adminStateInfoManager.isLogin()){
+            alert("请先登录")
+            history.push(getAdminLoginRoute())
+        }
         makeObservable(this);
         this.handleDepartChange.bind(this);
         this.handleDateChange.bind(this);
@@ -129,8 +136,8 @@ class AdminDoctorListPage extends React.Component<detailPageProps, {}> {
     render() {
         return (
             <div>
-                <WelcomeHeader classes={this.props.headerClasses}/>
                 <div className={this.props.classes.root}>
+                    <WelcomeHeader classes={this.props.headerClasses}/>
                     <Typography variant="h4" color="inherit" className={this.props.classes.title}>医生信息</Typography>
                     <Grid container spacing={3}>
                         <Grid container item xs={12}>

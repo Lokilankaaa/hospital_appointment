@@ -4,7 +4,6 @@ import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import {observer} from "mobx-react";
 import {makeObservable, observable} from "mobx";
-import WelcomeHeader from './welcomeHeader';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -14,6 +13,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Typography from "@material-ui/core/Typography";
 import {userStateInfoManager} from "../Helpers/UserStateInfoManager";
 import {requestManager} from "../Helpers/RequestManager";
+import WelcomeHeader from "./welcomeHeader";
 
 interface Column {
     id: '序号' | '科室' | '医生姓名' | '预约日期' | '挂号费' | '状态' | '操作';
@@ -84,11 +84,11 @@ class AdminFeedbacksPage extends React.Component<recordProps, {}> {
     }
 
     requestRecords() {
-        requestManager.search_appointment("", this.records);
+        requestManager.admin_search_appointment("", this.records);
     }
 
     cancel_appointment(order: number) {
-        requestManager.cancel_appointment(this.records[order - 1].tid)
+        requestManager.admin_cancel_appointment(this.records[order - 1].tid)
         this.records = this.records.filter((record) => record.order !== order);
     }
 
@@ -151,9 +151,9 @@ class AdminFeedbacksPage extends React.Component<recordProps, {}> {
     render() {
         return (
             <div>
-                <WelcomeHeader classes={this.props.headerClasses}/>
                 <div className={this.props.classes.root}>
-                    <Typography variant={"h4"} className={this.props.classes.title}>请确认您的预约信息</Typography>
+                    <WelcomeHeader classes={this.props.headerClasses}/>
+                    <Typography variant={"h4"} className={this.props.classes.title}>反馈管理</Typography>
                     <Paper>
                         <TableContainer className={this.props.classes.container}>
                             <Table stickyHeader aria-label="sticky table">

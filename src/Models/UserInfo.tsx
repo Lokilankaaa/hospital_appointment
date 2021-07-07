@@ -18,6 +18,11 @@ export interface getinfo {
     login_token: string;
 }
 
+export interface adminViewDoctor {
+    login_token: string;
+    did: string;
+}
+
 export interface changePasswordRequest {
     login_token: string,
     password_old: string,
@@ -26,6 +31,16 @@ export interface changePasswordRequest {
 
 export interface changeUserInfoRequest {
     login_token: string,
+    name: string,
+    gender: string,
+    birthday: string,
+    id_number: string,
+    telephone: string
+}
+
+export interface adminChangeUserInfoRequest {
+    login_token: string,
+    username: string,
     name: string,
     gender: string,
     birthday: string,

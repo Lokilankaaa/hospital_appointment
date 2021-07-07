@@ -20,41 +20,46 @@ import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import history from '../Helpers/History';
 import {
-    getAdminDoctorInfoRoute,
-    getAdminUserInfoRoute,
+    getAdminDoctorInfoRoute, getAdminLoginRoute,
+    getAdminUserInfoRoute, getAdminRoute,
     getUserInfoRoute
 } from "../Helpers/Routers";
 import moment from "moment";
+import {adminStateInfoManager} from "../Helpers/AdminStateInfoManager";
+import WelcomeHeader from "./welcomeHeader";
 class AdminUserInfoFrontPage extends React.Component<SignUpProps, {}> {
 
     constructor(props: SignUpProps) {
         super(props);
+        if(!adminStateInfoManager.isLogin()){
+            alert("请先登录")
+            history.push(getAdminLoginRoute())
+        }
     }
 
     images = [
         {
-            url: Register,
-            title: '个人信息管理',
-            width: '33%',
-            Onclick: () => { history.push(getUserInfoRoute()) }
-        },
-        {
             url: login,
             title: '医生信息管理',
-            width: '33%',
+            width: '50%',
             Onclick: () => { history.push(getAdminDoctorInfoRoute()) }
         },
         {
             url: lookup,
             title: '用户信息管理',
-            width: '33%',
+            width: '50%',
             Onclick: () => { history.push(getAdminUserInfoRoute())}
         }
     ];
 
+    goBack(){
+        history.push(getAdminRoute())
+    }
+
     private renderTabs() {
         return (
             <div className={this.props.classes.tabsRoot}>
+                <WelcomeHeader classes={this.props.headerClasses}/>
                 <Container maxWidth="xl" component="main">
 
                     <Box display="flex" p={1} >
@@ -69,20 +74,11 @@ class AdminUserInfoFrontPage extends React.Component<SignUpProps, {}> {
                             </Typography>
                         </Box>
 
-                        <Box p={1} flexShrink={1}>
-                            <Typography
-                                component="span"
-                                variant="subtitle1"
-                                color="inherit"
-                                className={this.props.classes.FrontText}  >
-                                { "欢迎, XXX!" }
-                            </Typography>
-                        </Box>
-
                         <Box p={1} flexShrink={0}>
                             <Button className={this.props.classes.FrontText}
+                                    onClick = {this.goBack}
                                     style={{backgroundColor: "#F67665", color: "white", width: 80, height: "100%"}}  >
-                                { "退出" }
+                                { "返回" }
                             </Button>
                         </Box>
                     </Box >

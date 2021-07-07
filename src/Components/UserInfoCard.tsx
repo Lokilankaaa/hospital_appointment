@@ -11,6 +11,7 @@ import {getDoctorReviewHistoryRoute, getLoginRoute, getLookup, getUserInfoRoute}
 import history from '../Helpers/History';
 import {userStateInfoManager} from "../Helpers/UserStateInfoManager";
 import {requestManager} from "../Helpers/RequestManager";
+import {adminStateInfoManager} from "../Helpers/AdminStateInfoManager";
 
 class UserInfoCard extends React.Component<UserInfoProps, {}> {
     constructor(props: UserInfoProps) {
@@ -31,7 +32,7 @@ class UserInfoCard extends React.Component<UserInfoProps, {}> {
                 />
                 <CardContent>
                     <Typography className={this.props.classes.title} color="textSecondary" gutterBottom>
-                        ID: {this.props.ID_Number}
+                        Age: {this.props.Birthday}
                     </Typography>
                     <Typography className={this.props.classes.title} color="textSecondary" gutterBottom>
                         Phone Number: {this.props.PhoneNumber}
@@ -39,10 +40,9 @@ class UserInfoCard extends React.Component<UserInfoProps, {}> {
                 </CardContent>
                 <CardActions>
                     <Button size="small" onClick={() => {
-                        // TODO: There should be a method that can modify other user's information
+                        adminStateInfoManager.AdminModifyUser(this.props.Name)
                         history.push(getUserInfoRoute());
                     }} >修改信息</Button>
-                    <Button size="small" onClick={() => history.push(getDoctorReviewHistoryRoute(this.props.ID_Number))}>相关评价</Button>
                 </CardActions>
             </Card>
         )

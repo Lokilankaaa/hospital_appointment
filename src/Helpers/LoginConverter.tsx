@@ -1,5 +1,5 @@
 import { SignUpForm, SignupResponse, SignupRequest } from '../Models/SignUp'
-import { LoginFrom, LoginResponse, LoginRequest, DoctorLoginFrom, DoctorLoginResponse, DoctorLoginRequest } from '../Models/Login'
+import { LoginFrom, LoginResponse, LoginRequest, DoctorLoginFrom, DoctorLoginResponse, DoctorLoginRequest, AdminLoginFrom, AdminLoginRequest, AdminLoginResponse} from '../Models/Login'
 
 export function convertSignupFormToRequest(info: SignUpForm) : SignupRequest{
     return {
@@ -33,6 +33,13 @@ export function convertDoctorLoginFormToRequest(info: DoctorLoginFrom) : DoctorL
     }
 }
 
+export function convertAdminLoginFromToRequest(info: AdminLoginFrom) : AdminLoginRequest{
+    return {
+        aid: info.aid,
+        password: info.password,
+    }
+}
+
 export function convertFromLoginResponse(data: any) : LoginResponse{
     return {
         success: data["success"],
@@ -48,3 +55,12 @@ export function convertFromDoctorLoginResponse(data: any) : DoctorLoginResponse{
       login_token: data["login_token"],
     }
 }
+
+export function convertFromAdminLoginResponse(data: any) : AdminLoginResponse{
+    return {
+        success: data["success"],
+        err: data["err"],
+        login_token: data["login_token"],
+    }
+}
+

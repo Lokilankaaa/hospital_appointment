@@ -73,6 +73,7 @@ class AppointmentReview extends React.Component<SignUpProps, {}> {
     }
 
     @observable private review: UserReview = {
+        cid: -1,
         rating: "未知",
         content: "",
         date: "未知",

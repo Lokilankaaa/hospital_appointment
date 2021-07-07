@@ -23,12 +23,13 @@ import Alert from '@material-ui/lab/Alert';
 class DoctorInfo extends React.Component<SignUpProps, {}> {
     @observable private doctor: DoctorInfoProps = {
         classes: {},
-        name: "",
-        birthday: "",
-        gender: "",
-        rankk: "",
-        depart: "",
-        info: "",
+        Name: "",
+        Birthday: "",
+        DID_Number: "",
+        Gender: "",
+        Rank: "",
+        Depart: "",
+        Info: "",
     }
 
     @observable private doctorChangePassword: DoctorPasswordProps = {
@@ -79,12 +80,13 @@ class DoctorInfo extends React.Component<SignUpProps, {}> {
     private getDoctorCallBack = (data: any) => {
         this.doctor = {
             classes: {},
-            name: data['name'],
-            birthday: data['birthday'],
-            gender: data['gender'],
-            rankk: data['rankk'],
-            depart: data['depart'],
-            info: data['info'],
+            Name: data['name'],
+            Birthday: data['birthday'],
+            Gender: data['gender'],
+            Rank: data['rankk'],
+            DID_Number: "",
+            Depart: data['depart'],
+            Info: data['info'],
         }
     }
 
@@ -154,8 +156,8 @@ class DoctorInfo extends React.Component<SignUpProps, {}> {
                                     <h3 style={{ width: "100%", display: "flex", justifyContent: "flex-end" }}> {'*姓名'}: </h3>
                                 </Grid>
                                 <Grid color="primary" item xs={8} style={{ marginTop: "1.5%", marginLeft: "3%", height: "20%", width: "75%", color: "black" }}>
-                                    <TextField disabled fullWidth variant="outlined" id={"userinfo" + '*姓名'} value={info.name}
-                                        onChange={(data) => { this.doctor.name = data.target.value }} />
+                                    <TextField disabled fullWidth variant="outlined" id={"userinfo" + '*姓名'} value={info.Name}
+                                        onChange={(data) => { this.doctor.Name = data.target.value }} />
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -165,8 +167,8 @@ class DoctorInfo extends React.Component<SignUpProps, {}> {
                                     <h3 style={{ width: "100%", display: "flex", justifyContent: "flex-end" }}> {'*生日'}: </h3>
                                 </Grid>
                                 <Grid item xs={8} style={{ marginTop: "1.5%", marginLeft: "3%", height: "20%", width: "75%" }}>
-                                    <TextField fullWidth variant="outlined" id={"userinfo" + '*生日'} value={info.birthday}
-                                        onChange={(data) => { this.doctor.birthday = data.target.value }} />
+                                    <TextField fullWidth variant="outlined" id={"userinfo" + '*生日'} value={info.Birthday}
+                                        onChange={(data) => { this.doctor.Birthday = data.target.value }} />
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -176,8 +178,8 @@ class DoctorInfo extends React.Component<SignUpProps, {}> {
                                     <h3 style={{ width: "100%", display: "flex", justifyContent: "flex-end" }}> {'*性别'}: </h3>
                                 </Grid>
                                 <Grid item xs={8} style={{ marginTop: "1.5%", marginLeft: "3%", height: "20%", width: "75%" }}>
-                                    <TextField fullWidth variant="outlined" id={"userinfo" + '*性别'} value={info.gender}
-                                        onChange={(data) => { this.doctor.gender = data.target.value }} />
+                                    <TextField fullWidth variant="outlined" id={"userinfo" + '*性别'} value={info.Gender}
+                                        onChange={(data) => { this.doctor.Gender = data.target.value }} />
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -187,8 +189,8 @@ class DoctorInfo extends React.Component<SignUpProps, {}> {
                                     <h3 style={{ width: "100%", display: "flex", justifyContent: "flex-end" }}> {'*职称'}: </h3>
                                 </Grid>
                                 <Grid color="primary" item xs={8} style={{ marginTop: "1.5%", marginLeft: "3%", height: "20%", width: "75%", color: "black" }}>
-                                    <TextField fullWidth variant="outlined" id={"userinfo" + '*职称'} value={info.rankk}
-                                        onChange={(data) => { this.doctor.rankk = data.target.value }} />
+                                    <TextField fullWidth variant="outlined" id={"userinfo" + '*职称'} value={info.Rank}
+                                        onChange={(data) => { this.doctor.Rank = data.target.value }} />
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -198,8 +200,8 @@ class DoctorInfo extends React.Component<SignUpProps, {}> {
                                     <h3 style={{ width: "100%", display: "flex", justifyContent: "flex-end" }}> {'*部门'} </h3>
                                 </Grid>
                                 <Grid item xs={8} style={{ marginTop: "1.5%", marginLeft: "3%", height: "20%", width: "75%" }}>
-                                    <TextField fullWidth variant="outlined" id={"userinfo" + '*部门'} value={info.depart}
-                                        onChange={(data) => { this.doctor.depart = data.target.value }} />
+                                    <TextField fullWidth variant="outlined" id={"userinfo" + '*部门'} value={info.Depart}
+                                        onChange={(data) => { this.doctor.Depart = data.target.value }} />
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -209,8 +211,8 @@ class DoctorInfo extends React.Component<SignUpProps, {}> {
                                     <h3 style={{ width: "100%", display: "flex", justifyContent: "flex-end" }}> {'*个人信息'} </h3>
                                 </Grid>
                                 <Grid item xs={8} style={{ marginTop: "1.5%", marginLeft: "3%", height: "20%", width: "75%", color: "black" }}>
-                                    <TextField fullWidth variant="outlined" id={"userinfo" + '*个人信息'} value={info.info}
-                                        onChange={(data) => { this.doctor.info = data.target.value }} />
+                                    <TextField fullWidth variant="outlined" id={"userinfo" + '*个人信息'} value={info.Info}
+                                        onChange={(data) => { this.doctor.Info = data.target.value }} />
                                 </Grid>
                             </Grid>
                         </Grid>

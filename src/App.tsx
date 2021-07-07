@@ -4,6 +4,7 @@ import SignUp from './Components/SignUp'
 import UserInfo from './Components/UserInfo'
 import UserFrontPage from './Components/UserFrontPage'
 import AdminFrontPage from './Components/AdminFrontPage'
+import AdminLogin from './Components/AdminLogin'
 import AdminUserInfoFrontPage from './Components/AdminUserInfoFrontPage';
 import AdminDoctorListPage from './Components/AdminDoctorListPage';
 import AdminUserListPage from "./Components/AdminUserListPage";
@@ -28,6 +29,7 @@ import {
     getAdminRoute,
     getAppointmentReviewRoute,
     getDoctorReviewHistoryRoute,
+    getAdminLoginRoute,
     getAdminUserInfoFrontRoute,
     getAdminDoctorInfoRoute,
     getAdminUserInfoRoute,
@@ -37,7 +39,8 @@ import {
     getDoctorFrontPageRoute,
     getDoctorTimeRoute,
     getDoctorAppointmentRoute,
-    getDoctorInfoRoute
+    getDoctorInfoRoute,
+    getAdminToModifyTheDoctorInfo
 } from "./Helpers/Routers";
 import { Provider, observer } from "mobx-react";
 
@@ -45,6 +48,7 @@ import history from './Helpers/History';
 import RecordPage from "./Components/registeryRecords";
 import AdminRecordsPage from "./Components/AdminRecordsPage";
 import AdminFeedbacksPage from "./Components/AdminFeedbacksPage";
+import DoctorInfoForAdminToModify from "./Components/AdminToModifyTheDoctorInfo";
 
 // page navigation https://rookiecoder.medium.com/react-button-click-navigate-to-new-page-6af7397ea220
 function App() {
@@ -59,12 +63,14 @@ function App() {
                 <Route exact path={getLookup()} component={fnLookup} />
                 <Route exact path={getUserInfoRoute()} component={fnUserInfoPage} />
                 <Route exact path={getAdminRoute()} component={fnAdminFrontPage} />
+                <Route exact path={getAdminLoginRoute()} component={fnAdminLogin} />
                 <Route exact path={getAdminUserInfoFrontRoute()} component={fnAdminUserInfoFrontPage} />
                 <Route exact path={getAdminDoctorInfoRoute()} component={fnAdminDoctorInfo} />
                 <Route exact path={getAdminUserInfoRoute()} component={fnAdminUserInfo} />
                 <Route exact path={getAdminRecordsRoute()} component={fnAdminRecords} />
                 <Route exact path={getAdminFeedbacksRoute()} component={fnAdminFeedback} />
                 <Route exact path={getAppointmentReviewRoute()} component={fnAdminAppointmentReview} />
+                <Route exact path={getAdminToModifyTheDoctorInfo(`:docID`)} component={fnAdminToModifyTheDoctorInfo}/>
                 <Route exact path={getDoctorReviewHistoryRoute(`:docID`)} component={fnDoctorReviewHistory} />
                 <Route exact path={getDoctorLoginRoute()} component={fnDoctorLogin} />
                 <Route exact path={getDoctorFrontPageRoute()} component={fnDoctorFrontPage} />
@@ -110,6 +116,13 @@ function fnLookup() {
 function fnUserInfoPage() {
     return (
         <UserInfo classes={UserInfoStyles()} headerClasses={headerClasses()}></UserInfo>
+    )
+}
+
+
+function fnAdminLogin(){
+    return(
+        <AdminLogin classes={loginClasses()} identity={"Admin"} headerClasses = {headerClasses()}></AdminLogin>
     )
 }
 
@@ -189,6 +202,12 @@ function fnDoctorAppointment() {
 function fnDoctorInfo() {
     return (
         <DoctorInfo classes={DoctorInfoStyles()} headerClasses={headerClasses()}></DoctorInfo>
+    )
+}
+
+function fnAdminToModifyTheDoctorInfo() {
+    return (
+        <DoctorInfoForAdminToModify classes={UserInfoStyles()} headerClasses={headerClasses()}></DoctorInfoForAdminToModify>
     )
 }
 
