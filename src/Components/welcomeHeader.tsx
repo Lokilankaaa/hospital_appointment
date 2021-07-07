@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import moment from "moment";
 import {userStateInfoManager} from "../Helpers/UserStateInfoManager";
 import {adminStateInfoManager} from "../Helpers/AdminStateInfoManager";
+import {doctorStateInfoManager} from "../Helpers/DoctorStateInfoManager";
 import history from '../Helpers/History';
 import {getLoginRoute, getDoctorLoginRoute, getAdminLoginRoute} from "../Helpers/Routers";
 import {requestManager} from "../Helpers/RequestManager";
@@ -44,6 +45,11 @@ class WelcomeHeader extends React.Component<headerProps, {}> {
     }
 
     doctorLogin() {
+        history.push(getDoctorLoginRoute())
+    }
+
+    doctorLogout(){
+        doctorStateInfoManager.DoctorLogout()
         history.push(getDoctorLoginRoute())
     }
 
@@ -96,7 +102,40 @@ class WelcomeHeader extends React.Component<headerProps, {}> {
                )
         }
         //TODO doctor
+        if(doctorStateInfoManager.isLogin()){
+            return (
+                <Paper className={this.props.classes.root} elevation={0}>
+                    <Grid container style={{display: "flex"}}>
+                        <Grid item xs={4}>
+                            <img className={this.props.classes.img} src={welcomelogo} alt={"浙江大学某某医院"}/>
+                            <Typography className={this.props.classes.title1}>浙江大学某某医院</Typography>
+                        </Grid>
 
+                        <Grid item xs={8} style={{display: "flex", justifyContent: "flex-end"}}>
+                            <Grid container spacing={1} style={{display: "flex", justifyContent: "flex-end"}}>
+                                <Grid item style={{display: "flex", alignItems: "flex-end"}}>
+                                    {
+                                        (() => {
+                                            return <Typography>欢迎您，{doctorStateInfoManager.getdID()}</Typography>
+                                        })()
+                                    }
+                                </Grid>
+                                <Grid item>
+                                    <Button variant={"contained"} className={this.props.classes.button}
+                                            onClick={() => this.doctorLogout()} >
+                                        {"登出"}
+                                    </Button>
+                                </Grid>
+
+                                <Grid item  style={{display: "flex", justifyContent: "flex-end", marginRight: "2%"}}>
+                                    <Typography className={this.props.classes.title2} style={{display: "flex", justifyContent: "flex-end"}}>{this.currentTime}</Typography>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Paper>
+            )
+        }
 
         if(userStateInfoManager.isLogin()){
             return (
