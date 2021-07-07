@@ -43,6 +43,9 @@ class DocDetails extends React.Component<detailPageProps, {}> {
             // a.map((aa) => this.types.push(aa))
             requestManager.search_depart("", this.types);
         }
+        if (this.details.length > 0)
+            this.details = Array<detailProps>();
+        requestManager.search_docs(this.currentType === null ? this.types[0] : this.currentType, "", this.details, this.props.cardClasses);
     }
 
     requestDocs(date: Date) {

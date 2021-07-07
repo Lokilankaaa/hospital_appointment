@@ -97,7 +97,8 @@ class RecordPage extends React.Component<recordProps, {}> {
     }
 
     cancel_appointment(order: number) {
-        requestManager.cancel_appointment(this.records[order - 1].tid)
+        console.log(this.records[0].order)
+        requestManager.cancel_appointment(this.records[order].tid)
         this.records = this.records.filter((record) => record.order !== order);
     }
 

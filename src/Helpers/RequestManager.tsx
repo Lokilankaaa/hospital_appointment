@@ -56,6 +56,8 @@ class RequestManager {
     private d_path: string = '/doctor/';
     private a_path: string = '/admin/'
 
+    private doctimes: Array<timesForm> = new Array<timesForm>();
+
     constructor() {
         axios.defaults.baseURL = "http://60.205.206.96";
         axios.defaults.headers.post['Content-Type'] = "text/plain";
@@ -560,56 +562,43 @@ class RequestManager {
         }).then((response) => {
             if (response.status === 200) {
                 response.data['doctors'].map((doctor: search_doctor_response) => {
-                    const doctimes = new Array<timesForm>();
-                    this.search_time(doctor['did'], doctimes)
-                    if (doctimes.length > 0)
-                        for (let i = 0; i < doctimes.length; i++)
-                            res.push({
-                                classes: classes,
-                                tid: doctimes[i]['tid'],
-                                did: doctor['did'],
-                                docName: doctor["name"],
-                                docTitle: doctor["rank"],
-                                fee: 10,
-                                docImg: doctor['gender'] === '男' ? avatar_b : avatar_g,
-                                gender: doctor['gender'] === '男',
-                                isam: doctimes[i]['time'] === '上午',
-                                capacity: doctimes[i]['capacity'],
-                                rest: doctimes[i]['rest'],
-                            })
+                    this.doctimes = new Array<timesForm>();
+                    this.search_time(doctor['name'], doctor, res, classes);
 
-                    else
-                        res.push({
-                            classes: classes,
-                            tid: -1,
-                            did: doctor['did'],
-                            docName: doctor["name"],
-                            docTitle: doctor["rank"],
-                            fee: 10,
-                            docImg: doctor['gender'] === '男' ? avatar_b : avatar_g,
-                            gender: doctor['gender'] === '男',
-                            isam: true,
-                            capacity: 1,
-                            rest: 1,
-                        })
+                    console.log('doc' + this.doctimes.length)
                 })
             }
         })
     }
 
     // TODO: did or docName
-    search_time(did: string, times: Array<timesForm>) {
+    search_time(doctor_name: string, doctor: search_doctor_response, res: Array<detailProps>, classes: ClassNameMap) {
         const path = this.m_path + 'search_time';
         axios.post(path, {
-            'did': did,
+            'doctor_name': doctor_name,
             'date': moment().format('YYYY-MM-DD'),
             'first_index': 0,
             'limit': 20,
         }).then((response) => {
             if (response.status === 200) {
                 response.data['times'].map((time: timesForm) =>
-                    times.push(time)
+                    this.doctimes.push(time)
                 )
+                if (this.doctimes.length > 0)
+                    for (let i = 0; i < this.doctimes.length; i++)
+                        res.push({
+                            classes: classes,
+                            tid: this.doctimes[i]['tid'],
+                            did: doctor['did'],
+                            docName: doctor["name"],
+                            docTitle: doctor["rank"],
+                            fee: 10,
+                            docImg: doctor['gender'] === '男' ? avatar_b : avatar_g,
+                            gender: doctor['gender'] === '男',
+                            isam: this.doctimes[i]['time'] === '上午',
+                            capacity: this.doctimes[i]['capacity'],
+                            rest: this.doctimes[i]['rest'],
+                        })
             }
         }).catch(e => {
             console.log(e);
