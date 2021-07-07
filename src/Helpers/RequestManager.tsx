@@ -212,14 +212,26 @@ class RequestManager {
     }
 
     doctor_getinfo(callback: any)  {
-        const path = this.d_path + 'view_info';
-        axios.post(path, convertDoctorinfoToRequest()).then((response) => {
-            console.log(response.status);
-            callback(response.data)
+        if(adminStateInfoManager.isLogin()) {
+            const path = this.a_path + 'view_info';
+            axios.post(path, convertDoctorinfoToRequest()).then((response) => {
+                console.log(response.status);
+                callback(response.data)
 
-        }).catch((e) => {
-            console.log(e);
-        })
+            }).catch((e) => {
+                console.log(e);
+            })
+        }
+        else {
+            const path = this.d_path + 'view_info';
+            axios.post(path, convertDoctorinfoToRequest()).then((response) => {
+                console.log(response.status);
+                callback(response.data)
+
+            }).catch((e) => {
+                console.log(e);
+            })
+        }
     }
 
     user_changePassword(pass: UserPasswordProps, status: OperationStateManager)  {
@@ -295,21 +307,39 @@ class RequestManager {
     }
 
     doctor_changeDoctorInfo(info: DoctorInfoProps, status: OperationStateManager)  {
-        const path = this.d_path + 'modify_info';
-        status.Trigged();
-        axios.post(path, convertToDoctorInfoRequest(info)).then((response) => {
-            console.log(response.status);
-            let result = convertFromSimpleResponse(response.data)
-            if (response.status === 200) {
-                if(result.success) {
-                    status.Successful();
-                } else{
-                status.Failed(result.err);
+        if (adminStateInfoManager.isLogin()){
+            const path = this.a_path + 'modify_doctor';
+            status.Trigged();
+            axios.post(path, convertToDoctorInfoRequest(info)).then((response) => {
+                console.log(response.status);
+                let result = convertFromSimpleResponse(response.data)
+                if (response.status === 200) {
+                    if (result.success) {
+                        status.Successful();
+                    } else {
+                        status.Failed(result.err);
+                    }
                 }
-            }
-        }).catch((e) => {
-            console.log(e);
-        })
+            }).catch((e) => {
+                console.log(e);
+            })
+        }else {
+            const path = this.d_path + 'modify_info';
+            status.Trigged();
+            axios.post(path, convertToDoctorInfoRequest(info)).then((response) => {
+                console.log(response.status);
+                let result = convertFromSimpleResponse(response.data)
+                if (response.status === 200) {
+                    if (result.success) {
+                        status.Successful();
+                    } else {
+                        status.Failed(result.err);
+                    }
+                }
+            }).catch((e) => {
+                console.log(e);
+            })
+        }
     }
 
     // TODO: doctor add, modify, delete, search time

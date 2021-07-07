@@ -6,6 +6,8 @@ export interface DoctorInfoProps {
     DID_Number: string;
     Birthday: string;
     Info: string;
+    Depart: string;
+    Rank: string;
 }
 
 export interface UserInfoPageProps {
@@ -26,10 +28,12 @@ export interface changeDoctorPasswordRequest {
 
 export interface changeDoctorInfoRequest {
     login_token: string,
+    did: string,
     name: string,
     birthday: string,
     gender: string,
-    info: string
+    depart: string,
+    rank: string,
 }
 
 export interface DoctorPasswordProps {

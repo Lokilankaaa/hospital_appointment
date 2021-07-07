@@ -72,10 +72,12 @@ export function convertToAdminToUserInfoRequest(info: UserInfoProps): adminChang
 
 export function convertToDoctorInfoRequest(info: DoctorInfoProps): changeDoctorInfoRequest {
     return {
+        did: info.DID_Number,
         login_token: adminStateInfoManager.getLoginToken(),
         name: info.Name,
         birthday: info.Birthday,
         gender: info.Gender,
-        info: info.Info
+        rank: info.Rank,
+        depart: info.Depart
     }
 }

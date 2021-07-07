@@ -141,7 +141,7 @@ class UserInfo extends React.Component<SignUpProps, {}> {
     }
 
     private changeInfo = () => {
-        // requestManager.user_changeUserInfo(this.user, this.ChangeInfoStatusManager)
+         requestManager.user_changeUserInfo(this.user, this.ChangeInfoStatusManager)
     }
 
 

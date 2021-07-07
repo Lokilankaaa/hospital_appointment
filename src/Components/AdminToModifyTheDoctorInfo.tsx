@@ -24,6 +24,7 @@ import MenuList from '@material-ui/core/MenuList';
 import WelcomeHeader from "./welcomeHeader";
 import { requestManager } from "../Helpers/RequestManager";
 import { UserInfoProps, UserPasswordProps, InfoTypes } from "../Models/UserInfo"
+import {DoctorInfoProps} from "../Models/DoctorInfo";
 import  OperationStateManager  from "../Helpers/OperationStateManager"
 import { OperationStates, OPerationStatus } from '../Models/OperationState'
 import Alert from '@material-ui/lab/Alert';
@@ -31,13 +32,15 @@ import Alert from '@material-ui/lab/Alert';
 @observer
 class DoctorInfoForAdminToModify extends React.Component<SignUpProps, {}> {
 
-    @observable private user: UserInfoProps = {
+    @observable private user: DoctorInfoProps = {
         classes : {},
         Name : " ",
         Gender : "",
-        ID_Number : " ",
         Birthday: " ",
-        PhoneNumber : " ",
+        DID_Number: " ",
+        Depart: " ",
+        Rank: " ",
+        Info: " ",
     }
 
     @observable private userChangePassword: UserPasswordProps = {
@@ -91,21 +94,23 @@ class DoctorInfoForAdminToModify extends React.Component<SignUpProps, {}> {
             classes: {},
             Name : data['name'],
             Gender : data['gender'],
-            ID_Number : data['id_number'],
+            DID_Number : data['did_number'],
             Birthday : data['birthday'],
-            PhoneNumber : data['telephone'],
+            Depart: data['depart'],
+            Rank: data['rank'],
+            Info: "",
         }
     }
 
     constructor(props: SignUpProps) {
         super(props);
         makeObservable(this);
-        requestManager.user_getinfo(this.getUserCallBack)
+        requestManager.doctor_getinfo(this.getUserCallBack)
     }
 
     componentDidMount() {
    
-        requestManager.user_getinfo(this.getUserCallBack)
+        requestManager.doctor_getinfo(this.getUserCallBack)
     }
 
     private getButtonTextClass = (infoType: InfoTypes) =>
@@ -141,7 +146,7 @@ class DoctorInfoForAdminToModify extends React.Component<SignUpProps, {}> {
     }
 
     private changeInfo = () => {
-        requestManager.user_changeUserInfo(this.user, this.ChangeInfoStatusManager)
+        requestManager.doctor_changeDoctorInfo(this.user, this.ChangeInfoStatusManager)
     }
 
 
@@ -187,8 +192,8 @@ class DoctorInfoForAdminToModify extends React.Component<SignUpProps, {}> {
                                         <h3 style={{width:"100%", display:"flex", justifyContent:"flex-end"}}> {'*科室'}: </h3>
                                 </Grid>
                                 <Grid item xs={8} style={{marginTop:"1.5%", marginLeft:"3%", height: "20%", width:"75%"}}>
-                                    <TextField fullWidth variant="outlined" id={ "userinfo" + '*科室' } value={ info.ID_Number }
-                                             onChange={(data) => { this.user.ID_Number = data.target.value } }/>
+                                    <TextField fullWidth variant="outlined" id={ "userinfo" + '*科室' } value={ info.DID_Number }
+                                             onChange={(data) => { this.user.DID_Number = data.target.value } }/>
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -210,8 +215,8 @@ class DoctorInfoForAdminToModify extends React.Component<SignUpProps, {}> {
                                         <h3 style={{width:"100%", display:"flex", justifyContent:"flex-end"}}> {'*职称'} </h3>
                                 </Grid>
                                 <Grid item xs={8} style={{marginTop:"1.5%", marginLeft:"3%", height: "20%", width:"75%", color:"black"}}>
-                                    <TextField fullWidth variant="outlined" id={ "userinfo" + '*职称' } value={ info.PhoneNumber }
-                                             onChange={(data) => { this.user.PhoneNumber = data.target.value } }/>
+                                    <TextField fullWidth variant="outlined" id={ "userinfo" + '*职称' } value={ info.Rank }
+                                             onChange={(data) => { this.user.Rank = data.target.value } }/>
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -238,7 +243,7 @@ class DoctorInfoForAdminToModify extends React.Component<SignUpProps, {}> {
         return(
             <div style={{marginLeft:"5%"}}>
                 <Grid container style={{display: "flex", justifyContent: "center"}}>
-                <h3 style={{width:"100%"}}>用户管理信息</h3>
+                <h3 style={{width:"100%"}}>医生管理信息</h3>
                     <Grid item>
                         <Grid item>
                             <MenuList 

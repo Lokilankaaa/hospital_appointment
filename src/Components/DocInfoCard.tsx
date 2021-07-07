@@ -40,7 +40,10 @@ class DocInfoCard extends React.Component<detailProps, {}> {
                 />
                 <CardContent>
                     <Typography className={this.props.classes.title} color="textSecondary" gutterBottom>
-                        TID: {this.props.tid}
+                        余号: {this.props.rest}
+                    </Typography>
+                    <Typography className={this.props.classes.title} color="textSecondary" gutterBottom>
+                        挂号费: {this.props.fee}¥
                     </Typography>
                     <Typography className={this.props.classes.title} color="textSecondary" gutterBottom>
                         DID: {this.props.did}
