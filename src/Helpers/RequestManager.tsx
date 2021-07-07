@@ -1,7 +1,7 @@
 import axios from "axios";
-import {userStateInfoManager} from './UserStateInfoManager';
-import {doctorStateInfoManager} from './DoctorStateInfoManager';
-import {adminStateInfoManager} from "./AdminStateInfoManager";
+import { userStateInfoManager } from './UserStateInfoManager';
+import { doctorStateInfoManager } from './DoctorStateInfoManager';
+import { adminStateInfoManager } from "./AdminStateInfoManager";
 import {
     appointment,
     search_doctor_response,
@@ -9,7 +9,7 @@ import {
     appointmentForDoctor,
     search_user_response
 } from "../Models/ResponseForm";
-import {detailProps} from "../Models/DocDetail";
+import { detailProps } from "../Models/DocDetail";
 import avatar_g from '../Assets/per_girl.png';
 import avatar_b from '../Assets/per_boy.png';
 import moment from "moment";
@@ -21,7 +21,7 @@ import {
     getAdminLoginRoute,
     getDoctorReviewHistoryRoute
 } from "./Routers";
-import {ClassNameMap} from "@material-ui/styles/withStyles";
+import { ClassNameMap } from "@material-ui/styles/withStyles";
 import { SignUpForm, SignupResponse } from '../Models/SignUp'
 
 import {
@@ -30,9 +30,9 @@ import {
     convertAdminLoginFromToRequest,
     convertFromAdminLoginResponse
 } from './LoginConverter'
-import { LoginFrom, LoginResponse, DoctorLoginFrom, DoctorLoginResponse ,AdminLoginFrom, AdminLoginResponse} from '../Models/Login'
+import { LoginFrom, LoginResponse, DoctorLoginFrom, DoctorLoginResponse, AdminLoginFrom, AdminLoginResponse } from '../Models/Login'
 import { convertLoginFormToRequest, convertFromLoginResponse, convertDoctorLoginFormToRequest, convertFromDoctorLoginResponse } from './LoginConverter'
-import  OperationStateManager  from "../Helpers/OperationStateManager"
+import OperationStateManager from "../Helpers/OperationStateManager"
 
 import { UserPasswordProps, UserInfoProps } from '../Models/UserInfo'
 import { DoctorPasswordProps, DoctorInfoProps } from '../Models/DoctorInfo'
@@ -45,6 +45,7 @@ import {
     convertToDoctorInfoRequest,
     convertAdminModifyToRequest, convertToAdminToUserInfoRequest, convertAdminViewDoctorRequest
 } from './InfoConverter'
+import { convertAppointmentToRequest } from './InfoConverter'
 
 import { convertToDoctorReviewHistoryRequest, convertToDoctorReviewHistoryResonse, convertToReviewRequest, convertToDoctorSearchCommentRequest } from './ReviewConverter'
 import { DoctorReviewFilter, UserReview, DoctorSearchCommentRequest } from '../Models/ReviewHistory'
@@ -67,13 +68,13 @@ class RequestManager {
             console.log(response.status);
             if (response.status === 200) {
                 let result = convertFromLoginResponse(response.data)
-                if(result.success) {
+                if (result.success) {
                     userStateInfoManager.UserLogin(result.login_token, info.username);
                     status.Successful();
-                } else{
+                } else {
                     status.Failed(result.err);
                 }
-                
+
             }
         }).catch((e) => {
             console.log(e);
@@ -87,13 +88,13 @@ class RequestManager {
             console.log(response.status);
             if (response.status === 200) {
                 let result = convertFromDoctorLoginResponse(response.data)
-                if(result.success) {
+                if (result.success) {
                     doctorStateInfoManager.DoctorLogin(result.login_token, info.did);
                     status.Successful();
-                } else{
+                } else {
                     status.Failed(result.err);
                 }
-                
+
             }
         }).catch((e) => {
             console.log(e);
@@ -107,11 +108,11 @@ class RequestManager {
             console.log(response.status);
             if (response.status === 200) {
                 let result = convertFromAdminLoginResponse(response.data)
-                if(result.success) {
+                if (result.success) {
                     adminStateInfoManager.AdminLogin(result.login_token, info.aid);
                     status.Successful();
                     history.push(getAdminRoute())
-                } else{
+                } else {
                     status.Failed(result.err);
                 }
             }
@@ -123,11 +124,11 @@ class RequestManager {
 
     user_logout(callBack: any) {
         const path = this.m_path + 'logout';
-        axios.post(path, {login_token: userStateInfoManager.getLoginToken()}).then((response) => {
+        axios.post(path, { login_token: userStateInfoManager.getLoginToken() }).then((response) => {
             console.log(response.status);
             if (response.status === 200) {
                 let result = convertFromLoginResponse(response.data)
-                if(result.success) {
+                if (result.success) {
                     userStateInfoManager.UserLogout();
                     callBack();
                 }
@@ -139,11 +140,11 @@ class RequestManager {
 
     doctor_logout(callBack: any) {
         const path = this.d_path + 'logout';
-        axios.post(path, {login_token: doctorStateInfoManager.getLoginToken()}).then((response) => {
+        axios.post(path, { login_token: doctorStateInfoManager.getLoginToken() }).then((response) => {
             console.log(response.status);
             if (response.status === 200) {
                 let result = convertFromDoctorLoginResponse(response.data)
-                if(result.success) {
+                if (result.success) {
                     doctorStateInfoManager.DoctorLogout();
                     callBack();
                 }
@@ -155,11 +156,11 @@ class RequestManager {
 
     admin_logout(callBack: any) {
         const path = this.a_path + 'logout';
-        axios.post(path, {login_token: adminStateInfoManager.getLoginToken()}).then((response) => {
+        axios.post(path, { login_token: adminStateInfoManager.getLoginToken() }).then((response) => {
             console.log(response.status);
             if (response.status === 200) {
                 let result = convertFromAdminLoginResponse(response.data)
-                if(result.success) {
+                if (result.success) {
                     adminStateInfoManager.AdminLogout();
                     callBack();
                 }
@@ -169,17 +170,17 @@ class RequestManager {
         })
     }
 
-    user_signup(info: SignUpForm, status: OperationStateManager)  {
+    user_signup(info: SignUpForm, status: OperationStateManager) {
         const path = this.m_path + 'register';
         status.Trigged();
         axios.post(path, convertSignupFormToRequest(info)).then((response) => {
             console.log(response.status);
             let result = convertFromSimpleResponse(response.data)
             if (response.status === 200) {
-                if(result.success) {
+                if (result.success) {
                     status.Successful();
-                } else{
-                status.Failed(result.err);
+                } else {
+                    status.Failed(result.err);
                 }
             }
         }).catch((e) => {
@@ -187,7 +188,7 @@ class RequestManager {
         })
     }
 
-    user_getinfo(callback: any)  {
+    user_getinfo(callback: any) {
         console.log('userState :', adminStateInfoManager.getToModify())
         if (adminStateInfoManager.getToModify() === "") {
             const path = this.m_path + 'view_info';
@@ -211,8 +212,8 @@ class RequestManager {
         }
     }
 
-    doctor_getinfo(callback: any)  {
-        if(adminStateInfoManager.isLogin()) {
+    doctor_getinfo(callback: any) {
+        if (adminStateInfoManager.isLogin()) {
             const path = this.a_path + 'view_doctor';
             axios.post(path, convertAdminViewDoctorRequest()).then((response) => {
                 console.log(response.status);
@@ -234,17 +235,28 @@ class RequestManager {
         }
     }
 
-    user_changePassword(pass: UserPasswordProps, status: OperationStateManager)  {
+    appointment_getinfo(callback: any) {
+        const path = this.d_path + 'search_appoint';
+        axios.post(path, convertAppointmentToRequest()).then((response) => {
+            console.log(response.status);
+            callback(response.data)
+
+        }).catch((e) => {
+            console.log(e);
+        })
+    }
+
+    user_changePassword(pass: UserPasswordProps, status: OperationStateManager) {
         const path = this.m_path + 'modify_password';
         status.Trigged();
         axios.post(path, convertToChangePasswordRequest(pass)).then((response) => {
             console.log(response.status);
             let result = convertFromSimpleResponse(response.data)
             if (response.status === 200) {
-                if(result.success) {
+                if (result.success) {
                     status.Successful();
-                } else{
-                status.Failed(result.err);
+                } else {
+                    status.Failed(result.err);
                 }
             }
         }).catch((e) => {
@@ -252,17 +264,17 @@ class RequestManager {
         })
     }
 
-    doctor_changePassword(pass: DoctorPasswordProps, status: OperationStateManager)  {
+    doctor_changePassword(pass: DoctorPasswordProps, status: OperationStateManager) {
         const path = this.d_path + 'modify_password';
         status.Trigged();
         axios.post(path, convertToDoctorChangePasswordRequest(pass)).then((response) => {
             console.log(response.status);
             let result = convertFromSimpleResponse(response.data)
             if (response.status === 200) {
-                if(result.success) {
+                if (result.success) {
                     status.Successful();
-                } else{
-                status.Failed(result.err);
+                } else {
+                    status.Failed(result.err);
                 }
             }
         }).catch((e) => {
@@ -270,7 +282,7 @@ class RequestManager {
         })
     }
 
-    user_changeUserInfo(info: UserInfoProps, status: OperationStateManager)  {
+    user_changeUserInfo(info: UserInfoProps, status: OperationStateManager) {
         if (adminStateInfoManager.getToModify() == "") {
             const path = this.m_path + 'modify_info';
             status.Trigged();
@@ -306,8 +318,8 @@ class RequestManager {
         }
     }
 
-    doctor_changeDoctorInfo(info: DoctorInfoProps, status: OperationStateManager)  {
-        if (adminStateInfoManager.isLogin()){
+    doctor_changeDoctorInfo(info: DoctorInfoProps, status: OperationStateManager) {
+        if (adminStateInfoManager.isLogin()) {
             const path = this.a_path + 'modify_doctor';
             status.Trigged();
             axios.post(path, convertToDoctorInfoRequest(info)).then((response) => {
@@ -323,7 +335,7 @@ class RequestManager {
             }).catch((e) => {
                 console.log(e);
             })
-        }else {
+        } else {
             const path = this.d_path + 'modify_info';
             status.Trigged();
             axios.post(path, convertToDoctorInfoRequest(info)).then((response) => {
@@ -374,10 +386,10 @@ class RequestManager {
         }).then((response) => {
             let result = convertFromSimpleResponse(response.data)
             if (response.status === 200) {
-                if(result.success) {
+                if (result.success) {
                     status.Successful();
-                } else{
-                status.Failed(result.err);
+                } else {
+                    status.Failed(result.err);
                 }
             }
         }).catch(e => {
@@ -421,40 +433,18 @@ class RequestManager {
         })
     }
 
-    search_reviews(filter: DoctorReviewFilter, status: OperationStateManager, callBack: any)  {
+    search_reviews(filter: DoctorReviewFilter, status: OperationStateManager, callBack: any) {
         const path = this.m_path + 'search_comment';
         status.Trigged();
         axios.post(path, convertToDoctorReviewHistoryRequest(filter)).then((response) => {
             console.log(response.status);
             let result = convertFromSimpleResponse(response.data)
             if (response.status === 200) {
-                if(result.success) {
+                if (result.success) {
                     let comments = convertToDoctorReviewHistoryResonse(response.data['comments'])
                     callBack(comments)
                     status.Successful();
-                } else{
-                status.Failed(result.err);
-                }
-            }
-        }).catch((e) => {
-            console.log(e);
-        })
-    }
-
-    // TODO: may build independent convertToDoctorReviewHistoryResonse
-    doctor_searchComment(status: OperationStateManager, callBack: any)  {
-        const path = this.d_path + 'search_comment';
-        status.Trigged();
-        axios.post(path, convertToDoctorSearchCommentRequest()).then((response) => {
-            console.log(response.status);
-            let result = convertFromSimpleResponse(response.data)
-            if (response.status === 200) {
-                if(result.success) {
-                    let comments = convertToDoctorReviewHistoryResonse(response.data['comments'])
-                    callBack(comments)
-                    status.Successful();
-                } 
-                else{
+                } else {
                     status.Failed(result.err);
                 }
             }
@@ -463,16 +453,38 @@ class RequestManager {
         })
     }
 
-    post_review(review: UserReview, status: OperationStateManager)  {
+    // TODO: may build independent convertToDoctorReviewHistoryResonse
+    doctor_searchComment(status: OperationStateManager, callBack: any) {
+        const path = this.d_path + 'search_comment';
+        status.Trigged();
+        axios.post(path, convertToDoctorSearchCommentRequest()).then((response) => {
+            console.log(response.status);
+            let result = convertFromSimpleResponse(response.data)
+            if (response.status === 200) {
+                if (result.success) {
+                    let comments = convertToDoctorReviewHistoryResonse(response.data['comments'])
+                    callBack(comments)
+                    status.Successful();
+                }
+                else {
+                    status.Failed(result.err);
+                }
+            }
+        }).catch((e) => {
+            console.log(e);
+        })
+    }
+
+    post_review(review: UserReview, status: OperationStateManager) {
         const path = this.m_path + 'comment';
         status.Trigged();
         axios.post(path, convertToReviewRequest(review)).then((response) => {
             console.log(response.status);
             let result = convertFromSimpleResponse(response.data)
             if (response.status === 200) {
-                if(result.success) {
+                if (result.success) {
                     status.Successful();
-                } else{
+                } else {
                     status.Failed(result.err);
                 }
             }
@@ -503,19 +515,19 @@ class RequestManager {
         const path = this.a_path + 'search_user';
         if (userName == "") {
             axios.post(path, {}).then((response) => {
-                    if (response.status === 200) {
-                        response.data['users'].map((user: search_user_response) => {
-                            res.push({
-                                classes: classes,
-                                Name: user.name,
-                                Gender: user.gender,
-                                Birthday: user.age.toString(),
-                                ID_Number: "",
-                                PhoneNumber: user.telephone,
-                            })
+                if (response.status === 200) {
+                    response.data['users'].map((user: search_user_response) => {
+                        res.push({
+                            classes: classes,
+                            Name: user.name,
+                            Gender: user.gender,
+                            Birthday: user.age.toString(),
+                            ID_Number: "",
+                            PhoneNumber: user.telephone,
                         })
-                    }
+                    })
                 }
+            }
             )
         } else {
             axios.post(path, {
@@ -661,7 +673,7 @@ class RequestManager {
                     })
                 )
             })
-        } 
+        }
         else {
             alert("请先登陆！");
             history.replace(getDoctorLoginRoute());
@@ -741,8 +753,8 @@ class RequestManager {
                 "login_token": adminStateInfoManager.getLoginToken(),
                 "cid": cid,
             }).then((response) => {
-                if(response.status === 200) {
-                    if(response.data['success'] === true) {
+                if (response.status === 200) {
+                    if (response.data['success'] === true) {
                         alert('Successfully deleted');
                     } else {
                         alert(response.data['err']);
@@ -752,7 +764,6 @@ class RequestManager {
             }).catch((err) => {
                 console.log(err);
             })
-
         }
     }
 
@@ -767,33 +778,33 @@ class RequestManager {
             }).then((response) => {
                 if (response.data['success'] === true) {
                     alert('finished!');
-                } else {
-                    alert(response.data['err']);
-                }
-            }).catch((err) => {
-                console.log(err);
-            })
+        } else {
+            alert(response.data['err']);
+        }
+    }).catch((err) => {
+        console.log(err);
+    })
         }
     }
 
-    appoint(tid: number) {
-        if (userStateInfoManager.isLogin()) {
-            const path = this.m_path + 'appoint';
-            console.log(userStateInfoManager.getLoginToken())
-            axios.post(path, {
-                "login_token": userStateInfoManager.getLoginToken(),
-                "tid": tid
-            }).then((response) => {
-                if (response.data['success'] === true) {
-                    alert('appointment done!');
-                } else {
-                    alert(response.data['err']);
-                }
-            }).catch((err) => {
-                console.log(err);
-            })
-        }
+appoint(tid: number) {
+    if (userStateInfoManager.isLogin()) {
+        const path = this.m_path + 'appoint';
+        console.log(userStateInfoManager.getLoginToken())
+        axios.post(path, {
+            "login_token": userStateInfoManager.getLoginToken(),
+            "tid": tid
+        }).then((response) => {
+            if (response.data['success'] === true) {
+                alert('appointment done!');
+            } else {
+                alert(response.data['err']);
+            }
+        }).catch((err) => {
+            console.log(err);
+        })
     }
+}
 }
 
 export const requestManager = new RequestManager();

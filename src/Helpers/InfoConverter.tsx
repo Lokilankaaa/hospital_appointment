@@ -6,7 +6,7 @@ import {
     adminChangeUserInfoRequest,
     adminViewDoctor
 } from '../Models/UserInfo'
-import { DoctorInfoProps, changeDoctorInfoRequest } from '../Models/DoctorInfo'
+import { DoctorInfoProps, changeDoctorInfoRequest, getappoinfo } from '../Models/DoctorInfo'
 import { changePasswordRequest, UserPasswordProps } from '../Models/UserInfo' 
 import { changeDoctorPasswordRequest, DoctorPasswordProps } from '../Models/DoctorInfo' 
 import {userStateInfoManager} from './UserStateInfoManager'; 
@@ -37,6 +37,17 @@ export function convertAdminViewDoctorRequest(): adminViewDoctor{
     return {
         login_token: adminStateInfoManager.getLoginToken(),
         did: adminStateInfoManager.getToModify()
+    }
+}
+
+export function convertAppointmentToRequest(): getappoinfo {
+    return {
+        login_token: doctorStateInfoManager.getLoginToken(),
+        start_time: "0000-00-00T00:00:00.0000",
+        end_time: "0000-00-00T00:00:00.0000",
+        status: "",
+        first_index: 0,
+        limit: 0,
     }
 }
 

@@ -1,5 +1,7 @@
 import * as React from "react";
 import Grid from '@material-ui/core/Grid';
+import { observable, makeObservable } from "mobx";
+import { observer } from "mobx-react";
 import frontPage from '../Assets/frontPage.png'
 import { SignUpProps } from '../Models/Login';
 import Typography from '@material-ui/core/Typography';
@@ -23,12 +25,10 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import { AppointmentProps } from "../Models/DoctorInfo";
+import { requestManager } from "../Helpers/RequestManager";
 
-interface Data {
-    name: string;
-    submitTime: string;
-    appointTime: string;
-    status: string;
+interface Data extends AppointmentProps {
 }
 
 function createData(
@@ -39,16 +39,6 @@ function createData(
 ): Data {
     return { name, submitTime, appointTime, status };
 }
-
-const rows = [
-    createData('Cupcake', '305', '3.7', '67'),
-    createData('Donut', '452', '25.0', '51'),
-    createData('Eclair', '262', '16.0', '24'),
-    createData('Frozen yoghurt', '159', '6.0', '24'),
-    createData('Gingerbread', '356', '16.0', '49'),
-    createData('Honeycomb', '408', '3.2', '87'),
-    createData('Ice cream sandwich', '237', '9.0', '37'),
-];
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
     if (b[orderBy] < a[orderBy]) {
@@ -236,7 +226,12 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-function EnhancedTable() {
+interface ETProps {
+    rows: Data[];
+}
+
+function EnhancedTable(props: ETProps) {
+    const { rows } = props;
     const classes = useStyles();
     const [order, setOrder] = React.useState<Order>('asc');
     const [orderBy, setOrderBy] = React.useState<keyof Data>('appointTime');
@@ -244,6 +239,18 @@ function EnhancedTable() {
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+    // let rows = [
+    //     createData('Cupcake', '305', '3.7', '67'),
+    //     // createData('Donut', '452', '25.0', '51'),
+    //     // createData('Eclair', '262', '16.0', '24'),
+    //     // createData('Frozen yoghurt', '159', '6.0', '24'),
+    //     // createData('Gingerbread', '356', '16.0', '49'),
+    //     // createData('Honeycomb', '408', '3.2', '87'),
+    //     // createData('Ice cream sandwich', '237', '9.0', '37'),
+    // ];
+
+    // requestManager.appointment_getinfo(getAppointmentCallBack);
 
     const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof Data) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -376,9 +383,31 @@ function EnhancedTable() {
 }
 
 class DoctorAppointment extends React.Component<SignUpProps, {}> {
+    @observable private appointment: Data = {
+        name: "",
+        submitTime: "",
+        appointTime: "",
+        status: "",
+    }
+
+    @observable private rows = [
+        createData('Donut', '452', '25.0', '51'),
+        createData('Eclair', '262', '16.0', '24'),
+        createData('Frozen yoghurt', '159', '6.0', '24'),
+        createData('Gingerbread', '356', '16.0', '49'),
+        createData('Honeycomb', '408', '3.2', '87'),
+        createData('Ice cream sandwich', '237', '9.0', '37'),
+    ]
+
+    private getAppointmentCallBack = (data: any) => {
+        this.appointment = createData(data['appointments']['name'],data['appointments']['date'],data['appointments']['appo_time'],data['appointments']['status']);
+        this.rows.push(this.appointment);
+    }
 
     constructor(props: SignUpProps) {
         super(props);
+        makeObservable(this);
+        requestManager.appointment_getinfo(this.getAppointmentCallBack)
     }
 
     render() {
@@ -390,7 +419,7 @@ class DoctorAppointment extends React.Component<SignUpProps, {}> {
                     </Grid>
                     <Grid xs={12} item className={this.props.classes.footTextBox}>
                         <span className={this.props.classes.backgroundImg} style={{ backgroundImage: `url(${frontPage})` }}>
-                            <EnhancedTable></EnhancedTable>
+                            <EnhancedTable rows={this.rows}></EnhancedTable>
                         </span>
                     </Grid>
                 </Grid>
