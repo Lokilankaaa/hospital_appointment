@@ -625,7 +625,8 @@ class RequestManager {
                         docName: appointment['doctor_name'],
                         time: appointment['time'],
                         fee: 10,
-                        status: appointment['status']
+                        status: appointment['status'],
+                        tid: appointment['tid'],
                     })
                 )
             })

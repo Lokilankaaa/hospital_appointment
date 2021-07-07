@@ -35,7 +35,8 @@ export interface appointment {
     "start_time": string,
     "end_time": string,
     "status": string,
-    "time": string
+    "time": string,
+    "tid": number,
 }
 
 export interface appointmentForDoctor {
