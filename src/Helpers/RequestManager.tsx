@@ -43,7 +43,7 @@ import {
     convertDoctorinfoToRequest,
     convertToDoctorChangePasswordRequest,
     convertToDoctorInfoRequest,
-    convertAdminModifyToRequest, convertToAdminToUserInfoRequest
+    convertAdminModifyToRequest, convertToAdminToUserInfoRequest, convertAdminViewDoctorRequest
 } from './InfoConverter'
 
 import { convertToDoctorReviewHistoryRequest, convertToDoctorReviewHistoryResonse, convertToReviewRequest, convertToDoctorSearchCommentRequest } from './ReviewConverter'
@@ -213,8 +213,8 @@ class RequestManager {
 
     doctor_getinfo(callback: any)  {
         if(adminStateInfoManager.isLogin()) {
-            const path = this.a_path + 'view_info';
-            axios.post(path, convertDoctorinfoToRequest()).then((response) => {
+            const path = this.a_path + 'view_doctor';
+            axios.post(path, convertAdminViewDoctorRequest()).then((response) => {
                 console.log(response.status);
                 callback(response.data)
 

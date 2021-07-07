@@ -1,4 +1,11 @@
-import {UserInfoProps, InfoTypes, getinfo, changeUserInfoRequest, adminChangeUserInfoRequest} from '../Models/UserInfo'
+import {
+    UserInfoProps,
+    InfoTypes,
+    getinfo,
+    changeUserInfoRequest,
+    adminChangeUserInfoRequest,
+    adminViewDoctor
+} from '../Models/UserInfo'
 import { DoctorInfoProps, changeDoctorInfoRequest } from '../Models/DoctorInfo'
 import { changePasswordRequest, UserPasswordProps } from '../Models/UserInfo' 
 import { changeDoctorPasswordRequest, DoctorPasswordProps } from '../Models/DoctorInfo' 
@@ -22,7 +29,15 @@ export function convertUserinfoToRequest() : getinfo{
 export function convertDoctorinfoToRequest() : getinfo{
     return {
         login_token: doctorStateInfoManager.getLoginToken()
+
       }
+}
+
+export function convertAdminViewDoctorRequest(): adminViewDoctor{
+    return {
+        login_token: adminStateInfoManager.getLoginToken(),
+        did: adminStateInfoManager.getToModify()
+    }
 }
 
 export function convertUserinfoToResponse() : getinfo{

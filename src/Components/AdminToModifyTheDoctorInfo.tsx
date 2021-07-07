@@ -94,7 +94,7 @@ class DoctorInfoForAdminToModify extends React.Component<SignUpProps, {}> {
             classes: {},
             Name : data['name'],
             Gender : data['gender'],
-            DID_Number : data['did_number'],
+            DID_Number : data['did'],
             Birthday : data['birthday'],
             Depart: data['depart'],
             Rank: data['rank'],
@@ -106,10 +106,10 @@ class DoctorInfoForAdminToModify extends React.Component<SignUpProps, {}> {
         super(props);
         makeObservable(this);
         requestManager.doctor_getinfo(this.getUserCallBack)
+        console.log(this.user)
     }
 
     componentDidMount() {
-   
         requestManager.doctor_getinfo(this.getUserCallBack)
     }
 
@@ -170,7 +170,7 @@ class DoctorInfoForAdminToModify extends React.Component<SignUpProps, {}> {
                                         <h3 style={{width:"100%", display:"flex", justifyContent:"flex-end"}}> {'*姓名'}: </h3>
                                 </Grid>
                                 <Grid color="primary" item xs={8} style={{marginTop:"1.5%", marginLeft:"3%", height: "20%", width:"75%", color:"black"}}>
-                                    <TextField disabled fullWidth variant="outlined" id={ "userinfo" + '*姓名' } value={ info.Name }
+                                    <TextField fullWidth variant="outlined" id={ "userinfo" + '*姓名' } value={ info.Name }
                                              onChange={(data) => { this.user.Name = data.target.value } }/> 
                                 </Grid>
                             </Grid>
@@ -192,8 +192,8 @@ class DoctorInfoForAdminToModify extends React.Component<SignUpProps, {}> {
                                         <h3 style={{width:"100%", display:"flex", justifyContent:"flex-end"}}> {'*科室'}: </h3>
                                 </Grid>
                                 <Grid item xs={8} style={{marginTop:"1.5%", marginLeft:"3%", height: "20%", width:"75%"}}>
-                                    <TextField fullWidth variant="outlined" id={ "userinfo" + '*科室' } value={ info.DID_Number }
-                                             onChange={(data) => { this.user.DID_Number = data.target.value } }/>
+                                    <TextField fullWidth variant="outlined" id={ "userinfo" + '*科室' } value={ info.Depart }
+                                             onChange={(data) => { this.user.Depart = data.target.value } }/>
                                 </Grid>
                             </Grid>
                         </Grid>

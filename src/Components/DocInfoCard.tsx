@@ -17,6 +17,7 @@ import {
 import history from '../Helpers/History';
 import {userStateInfoManager} from "../Helpers/UserStateInfoManager";
 import {requestManager} from "../Helpers/RequestManager";
+import {adminStateInfoManager} from "../Helpers/AdminStateInfoManager";
 
 class DocInfoCard extends React.Component<detailProps, {}> {
     constructor(props: detailProps) {
@@ -51,6 +52,7 @@ class DocInfoCard extends React.Component<detailProps, {}> {
                 </CardContent>
                 <CardActions>
                     <Button size="small" onClick={() => {
+                        adminStateInfoManager.AdminModifyUser(this.props.did)
                         history.push(getAdminToModifyTheDoctorInfo(this.props.did));
                     }} >修改信息</Button>
                     <Button size="small" onClick={() => history.push(getDoctorReviewHistoryRoute(this.props.did))}>相关评价</Button>
